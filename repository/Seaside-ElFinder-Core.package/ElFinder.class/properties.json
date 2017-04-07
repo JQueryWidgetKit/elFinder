@@ -1,0 +1,14 @@
+{
+	"category" : "Seaside-ElFinder-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"connector" ],
+	"name" : "ElFinder",
+	"pools" : [
+		 ],
+	"super" : "JQWidget",
+	"type" : "normal" }

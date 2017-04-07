@@ -1,0 +1,14 @@
+{
+	"category" : "Seaside-ElFinder-Connector",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"mimeMap" ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "ElFinderMimeMap",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

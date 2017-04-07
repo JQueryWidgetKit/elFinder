@@ -1,0 +1,16 @@
+{
+	"category" : "Seaside-ElFinder-Drivers",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"id",
+		"osPath",
+		"url" ],
+	"name" : "ElFinderLocalFileSystem",
+	"pools" : [
+		 ],
+	"super" : "ElFinderLocalDirectory",
+	"type" : "normal" }

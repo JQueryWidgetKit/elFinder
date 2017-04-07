@@ -1,0 +1,19 @@
+{
+	"category" : "Seaside-ElFinder-Commands",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"connector",
+		"arguments",
+		"request",
+		"response",
+		"mimeType",
+		"payload" ],
+	"name" : "ElFinderCommand",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }
