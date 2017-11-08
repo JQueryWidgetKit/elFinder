@@ -249,9 +249,11 @@ class elFinderSimpleLogger {
  * @return bool|null
  **/
 function access($attr, $path, $data, $volume, $isDir) {
-	return strpos(basename($path), '.') === 0       // if file/folder begins with '.' (dot)
-		? !($attr == 'read' || $attr == 'write')    // set read+write to false, other (locked+hidden) set to true
-		:  null;                                    // else elFinder decide it itself
+	$basename = basename($path);
+	return $basename[0] === '.'                  // if file/folder begins with '.' (dot)
+			 && strlen($relpath) !== 1           // but with out volume root
+		? !($attr == 'read' || $attr == 'write') // set read+write to false, other (locked+hidden) set to true
+		:  null;                                 // else elFinder decide it itself
 }
 
 /**
@@ -309,6 +311,8 @@ $opts = array(
 			'path'       => '../files/',
 			'startPath'  => '../files/test/',
 			'URL'        => dirname($_SERVER['PHP_SELF']) . '/../files/',
+			'trashHash'  => 't1_Lw',                     // elFinder's hash of trash folder
+			'winHashFix' => DIRECTORY_SEPARATOR !== '/', // to make hash same to Linux one on windows too
 			// 'treeDeep'   => 3,
 			// 'alias'      => 'File system',
 			'mimeDetect' => 'internal',
@@ -336,11 +340,24 @@ $opts = array(
 			'uploadAllow' => array('image', 'text/plain'),// Mimetype `image` and `text/plain` allowed to upload
 			'uploadOrder' => array('deny', 'allow'),      // allowed Mimetype `image` and `text/plain` only
 		),
+		// Trash volume
+		array(
+			'id'            => '1',
+			'driver'        => 'Trash',
+			'path'          => '../files/.trash/',
+			'tmbURL'        => dirname($_SERVER['PHP_SELF']) . '/../files/.trash/.tmb/',
+			'winHashFix'    => DIRECTORY_SEPARATOR !== '/', // to make hash same to Linux one on windows too
+			'uploadDeny'    => array('all'),                // Recomend the same settings as the original volume that uses the trash
+			'uploadAllow'   => array('image', 'text/plain'),// Same as above
+			'uploadOrder'   => array('deny', 'allow'),      // Same as above
+			'accessControl' => 'access',                    // Same as above
+		),
 		// array(
 		// 	'driver'     => 'LocalFileSystem',
 		// 	'path'       => '../files2/',
 		// 	// 'URL'        => dirname($_SERVER['PHP_SELF']) . '/../files2/',
 		// 	'alias'      => 'File system',
+		//	'winHashFix' => DIRECTORY_SEPARATOR !== '/', // to make hash same to Linux one on windows too
 		// 	'mimeDetect' => 'internal',
 		// 	'tmbPath'    => '.tmb',
 		// 	'utf8fix'    => true,
@@ -408,6 +425,7 @@ $opts = array(
 		// 	'driver'     => 'LocalFileSystem',
 		// 	'path'       => '../files2/',
 		// 	'URL'        => dirname($_SERVER['PHP_SELF']) . '/../files2/',
+		//	'winHashFix' => DIRECTORY_SEPARATOR !== '/', // to make hash same to Linux one on windows too
 		// 	'alias'      => 'Files',
 		// 	'mimeDetect' => 'internal',
 		// 	'tmbPath'    => '.tmb',

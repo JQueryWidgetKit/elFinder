@@ -54,7 +54,7 @@ class elFinderConnector {
 		$this->elFinder = $elFinder;
 		$this->reqMethod = strtoupper($_SERVER["REQUEST_METHOD"]);
 		if ($debug) {
-			self::$contentType = 'Content-Type: text/html; charset=utf-8';
+			self::$contentType = 'Content-Type: text/plain; charset=utf-8';
 		}
 	}
 	
@@ -152,7 +152,14 @@ class elFinderConnector {
 			$args['FILES'] = $_FILES;
 		}
 		
-		$this->output($this->elFinder->exec($cmd, $args));
+		try {
+			$this->output($this->elFinder->exec($cmd, $args));
+		} catch (elFinderAbortException $e) {
+			// connection aborted
+			// unlock session data for multiple access
+			$this->elFinder->getSession()->close();
+			exit();
+		}
 	}
 	
 	/**
@@ -173,6 +180,9 @@ class elFinderConnector {
 		}
 		
 		if (isset($data['pointer'])) {
+			// set time limit to 0
+			elFinder::extendTimeLimit(0);
+			
 			// send optional header
 			if (!empty($data['header'])) {
 				self::sendHeader($data['header']);
@@ -183,7 +193,8 @@ class elFinderConnector {
 			
 			$toEnd = true;
 			$fp = $data['pointer'];
-			if (($this->reqMethod === 'GET' || $this->reqMethod === 'HEAD')
+			$sendData = !($this->reqMethod === 'HEAD' || !empty($data['info']['xsendfile']));
+			if (($this->reqMethod === 'GET' || !$sendData)
 					&& elFinder::isSeekableStream($fp)
 					&& (array_search('Accept-Ranges: none', headers_list()) === false)) {
 				header('Accept-Ranges: bytes');
@@ -212,11 +223,24 @@ class elFinderConnector {
 							header('Content-Length: ' . $psize);
 							header('Content-Range: bytes ' . $start . '-' . $end . '/' . $size);
 							
-							fseek($fp, $start);
+							// Apache mod_xsendfile dose not support range request
+							if (isset($data['info']['xsendfile']) && strtolower($data['info']['xsendfile']) === 'x-sendfile') {
+								if (function_exists('header_remove')) {
+									header_remove($data['info']['xsendfile']);
+								} else {
+									header($data['info']['xsendfile'] . ':');
+								}
+								unset($data['info']['xsendfile']);
+								if ($this->reqMethod !== 'HEAD') {
+									$sendData = true;
+								}
+							}
+							
+							$sendData && fseek($fp, $start);
 						}
 					}
 				}
-				if (is_null($psize)){
+				if ($sendData && is_null($psize)){
 					elFinder::rewind($fp);
 				}
 			} else {
@@ -230,7 +254,7 @@ class elFinderConnector {
 				}
 			}
 
-			if ($reqMethod !== 'HEAD') {
+			if ($sendData) {
 				if ($toEnd) {
 					fpassthru($fp);
 				} else {

@@ -535,9 +535,6 @@ class elFinderVolumeDropbox2 extends elFinderVolumeDriver
             }
         }
 
-        if (!$this->tmp && is_writable($this->options['tmbPath'])) {
-            $this->tmp = $this->options['tmbPath'];
-        }
         if (!$this->tmp && ($tmp = elFinder::getStaticVar('commonTempPath'))) {
             $this->tmp = $tmp;
         }
@@ -559,6 +556,11 @@ class elFinderVolumeDropbox2 extends elFinderVolumeDriver
     protected function configure()
     {
         parent::configure();
+
+        // fallback of $this->tmp
+        if (!$this->tmp && $this->tmbPathWritable) {
+            $this->tmp = $this->tmbPath;
+        }
 
         $this->disabled[] = 'archive';
         $this->disabled[] = 'extract';
@@ -833,6 +835,13 @@ class elFinderVolumeDropbox2 extends elFinderVolumeDriver
      */
     public function getContentUrl($hash, $options = [])
     {
+        if (!empty($options['temporary'])) {
+            // try make temporary file
+            $url = parent::getContentUrl($hash, $options);
+            if ($url) {
+                return $url;
+            }
+        }
         $file = $this->file($hash);
         if (($file = $this->file($hash)) !== false && (!$file['url'] || $file['url'] == 1)) {
             $path = $this->decode($hash);
@@ -1100,7 +1109,11 @@ class elFinderVolumeDropbox2 extends elFinderVolumeDriver
             file_put_contents($tmp, $data);
             $size = getimagesize($tmp);
             if ($size) {
-                return $size[0].'x'.$size[1];
+                $ret = array('dim' => $size[0].'x'.$size[1]);
+                $srcfp = fopen($tmp, 'rb');
+                if ($subImgLink = $this->getSubstituteImgLink(elFinder::$currentArgs['target'], $size, $srcfp)) {
+                	$ret['url'] = $subImgLink;
+                }
             }
         }
 
@@ -1201,7 +1214,7 @@ class elFinderVolumeDropbox2 extends elFinderVolumeDriver
      **/
     protected function _mkfile($path, $name)
     {
-        return $this->_save(tmpfile(), $path, $name, []);
+        return $this->_save($this->tmpfile(), $path, $name, []);
     }
 
     /**
