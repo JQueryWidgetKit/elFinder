@@ -1,4 +1,3 @@
-"use strict";
 /**
  * @class elFinder command "download". 
  * Download selected files.
@@ -8,6 +7,7 @@
  **/
 elFinder.prototype.commands.zipdl = function() {};
 elFinder.prototype.commands.download = function() {
+	"use strict";
 	var self   = this,
 		fm     = this.fm,
 		czipdl = null,
@@ -65,8 +65,8 @@ elFinder.prototype.commands.download = function() {
 		pattern     : 'shift+enter'
 	}];
 	
-	this.getstate = function(sel) {
-		var sel    = this.hashes(sel),
+	this.getstate = function(select) {
+		var sel    = this.hashes(select),
 			cnt    = sel.length,
 			maxReq = this.options.maxRequests || 10,
 			mixed  = false,
@@ -176,8 +176,8 @@ elFinder.prototype.commands.download = function() {
 		}
 	});
 	
-	this.exec = function(hashes) {
-		var hashes  = this.hashes(hashes),
+	this.exec = function(select) {
+		var hashes  = this.hashes(select),
 			fm      = this.fm,
 			base    = fm.options.url,
 			files   = filter(hashes, true),
@@ -235,7 +235,7 @@ elFinder.prototype.commands.download = function() {
 							} else {
 								dlName = zipdl.name;
 							}
-							if (html5dl || linkdl) {
+							if ((html5dl && (!fm.UA.Safari || fm.isSameOrigin(fm.options.url))) || linkdl) {
 								url = fm.options.url + (fm.options.url.indexOf('?') === -1 ? '?' : '&')
 								+ 'cmd=zipdl&download=1';
 								$.each([hashes[0], zipdl.file, dlName, zipdl.mime], function(key, val) {
@@ -349,7 +349,7 @@ elFinder.prototype.commands.download = function() {
 		} else {
 			for (i = 0; i < files.length; i++) {
 				url = fm.openUrl(files[i].hash, true);
-				if (html5dl) {
+				if (html5dl && (!fm.UA.Safari || fm.isSameOrigin(url))) {
 					click(link.attr('href', url)
 						.attr('download', fm.escape(files[i].name))
 						.attr('target', '_blank')

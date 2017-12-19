@@ -2,7 +2,7 @@
  * Japanese translation
  * @author Tomoaki Yoshida <info@yoshida-studio.jp>
  * @author Naoki Sawada <hypweb@gmail.com>
- * @version 2017-11-02
+ * @version 2017-12-08
  */
 (function(root, factory) {
 	if (typeof define === 'function' && define.amd) {
@@ -13,7 +13,7 @@
 		factory(root.elFinder);
 	}
 }(this, function(elFinder) {
-	elFinder.prototype.i18.jp = {
+	elFinder.prototype.i18.ja = {
 		translator : 'Tomoaki Yoshida &lt;info@yoshida-studio.jp&gt;, Naoki Sawada &lt;hypweb@gmail.com&gt;',
 		language   : 'Japanese',
 		direction  : 'ltr',
@@ -194,9 +194,9 @@
 			'ntfreload'   : 'フォルダを再読込しています',
 			'ntfmkdir'    : 'フォルダを作成しています',
 			'ntfmkfile'   : 'ファイルを作成しています',
-			'ntfrm'       : 'ファイルを削除しています',
-			'ntfcopy'     : 'ファイルをコピーしています',
-			'ntfmove'     : 'ファイルを移動しています',
+			'ntfrm'       : 'アイテムを削除しています',
+			'ntfcopy'     : 'アイテムをコピーしています',
+			'ntfmove'     : 'アイテムを移動しています',
 			'ntfprepare'  : '既存アイテムを確認しています',
 			'ntfrename'   : 'ファイル名を変更しています',
 			'ntfupload'   : 'ファイルをアップロードしています',
@@ -289,7 +289,7 @@
 
 			/********************************** messages **********************************/
 			'confirmReq'      : '処理を実行しますか？',
-			'confirmRm'       : 'アイテムを完全に削除してもよろしいですか？<br/>この操作は取り消せません！',
+			'confirmRm'       : 'アイテムを完全に削除してもよろしいですか？<br/>この操作は取り消しできません！',
 			'confirmRepl'     : '古いアイテムを新しいアイテムで上書きしますか？',
 			'confirmRest'     : '既存のアイテムをごみ箱のアイテムで上書きしますか？', // fromv2.1.24 added 5.5.2017
 			'confirmConvUTF8' : 'UTF-8 以外の文字が含まれています。<br/>UTF-8  に変換しますか？<br/>変換後の保存でコンテンツは UTF-8 になります。', // from v2.1 added 08.04.2014
@@ -307,10 +307,10 @@
 			'noaccess'        : 'アクセス禁止',
 			'and'             : ',',
 			'unknown'         : '不明',
-			'selectall'       : '全てのファイルを選択',
-			'selectfiles'     : 'ファイル選択',
-			'selectffile'     : '最初のファイルを選択',
-			'selectlfile'     : '最後のファイルを選択',
+			'selectall'       : 'すべてのアイテムを選択',
+			'selectfiles'     : 'アイテム選択',
+			'selectffile'     : '最初のアイテムを選択',
+			'selectlfile'     : '最後のアイテムを選択',
 			'viewlist'        : 'リスト形式で表示',
 			'viewicons'       : 'アイコン形式で表示',
 			'places'          : 'お気に入り',
@@ -327,7 +327,7 @@
 			'link'            : 'リンク',
 			'searcresult'     : '検索結果',
 			'selected'        : '選択されたアイテム',
-			'about'           : 'アバウト',
+			'about'           : '概要',
 			'shortcuts'       : 'ショートカット',
 			'help'            : 'ヘルプ',
 			'webfm'           : 'ウェブファイルマネージャー',
@@ -434,6 +434,16 @@
 			'sum'             : '合計', // from v2.1.29 added 28.9.2017
 			'roughFileSize'   : '大まかなファイルサイズ', // from v2.1.30 added 2.11.2017
 			'autoFocusDialog' : 'マウスオーバーでダイアログの要素にフォーカスする',  // from v2.1.30 added 2.11.2017
+			'select'          : '選択', // from v2.1.30 added 23.11.2017
+			'selectAction'    : 'ファイル選択時の動作', // from v2.1.30 added 23.11.2017
+			'useStoredEditor' : '前回使用したエディターで開く', // from v2.1.30 added 23.11.2017
+			'selectinvert'    : '選択アイテムを反転', // from v2.1.30 added 25.11.2017
+			'renameMultiple'  : '選択した $1 個のアイテムを $2 のようにリネームしますか？<br/>この操作は取り消しできません！', // from v2.1.31 added 4.12.2017
+			'batchRename'     : '一括リネーム', // from v2.1.31 added 8.12.2017
+			'plusNumber'      : '+ 連番', // from v2.1.31 added 8.12.2017
+			'asPrefix'        : '先頭に追加', // from v2.1.31 added 8.12.2017
+			'asSuffix'        : '末尾に追加', // from v2.1.31 added 8.12.2017
+			'changeExtention' : '拡張子変更', // from v2.1.31 added 8.12.2017
 
 			/********************************** mimetypes **********************************/
 			'kindUnknown'     : '不明',

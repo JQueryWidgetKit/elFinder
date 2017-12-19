@@ -1,4 +1,3 @@
-"use strict";
 /**
  * @class  elFinder command "netmount"
  * Mount network volume with user credentials.
@@ -6,6 +5,7 @@
  * @author Dmitry (dio) Levashov
  **/
 elFinder.prototype.commands.netmount = function() {
+	"use strict";
 	var self = this,
 		content;
 
@@ -18,11 +18,11 @@ elFinder.prototype.commands.netmount = function() {
 		load : function() {
 			this.drivers = this.fm.netDrivers;
 		}
-	}
+	};
 
 	this.getstate = function() {
 		return this.drivers.length ? 0 : -1;
-	}
+	};
 	
 	this.exec = function() {
 		var fm = self.fm,
@@ -60,13 +60,12 @@ elFinder.prototype.commands.netmount = function() {
 						title          : fm.i18n('netMountDialogTitle'),
 						resizable      : false,
 						modal          : true,
-						destroyOnClose : true,
+						destroyOnClose : false,
 						open           : function() {
 							$(window).on('focus.'+fm.namespace, winFocus);
 							inputs.protocol.change();
 						},
 						close          : function() { 
-							//delete self.dialog; 
 							dfrd.state() == 'pending' && dfrd.reject();
 							$(window).off('focus.'+fm.namespace, winFocus);
 						},
@@ -77,11 +76,14 @@ elFinder.prototype.commands.netmount = function() {
 							data = {cmd : 'netmount', protocol: protocol},
 							cur = o[protocol];
 						$.each(content.find('input.elfinder-netmount-inputs-'+protocol), function(name, input) {
-							var val;
-							if (typeof input.val == 'function') {
-								val = $.trim(input.val());
+							var val, elm;
+							elm = $(input);
+							if (elm.is(':radio,:checkbox')) {
+								if (elm.is(':checked')) {
+									val = $.trim(elm.val());
+								}
 							} else {
-								val = $.trim(input.value);
+								val = $.trim(elm.val());
 							}
 							if (val) {
 								data[input.name] = val;
@@ -189,7 +191,7 @@ elFinder.prototype.commands.netmount = function() {
 		}
 
 		return dfrd.promise();
-	}
+	};
 
 	self.fm.bind('netmount', function(e) {
 		var d = e.data || null,
@@ -203,7 +205,7 @@ elFinder.prototype.commands.netmount = function() {
 		}
 	});
 
-}
+};
 
 elFinder.prototype.commands.netunmount = function() {
 	var self = this;

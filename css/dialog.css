@@ -8,15 +8,20 @@
 	position:absolute;
 	left:auto;
 	right:auto;
+	box-sizing: border-box;
 }
 .std42-dialog.elfinder-dialog-minimized {
 	overFlow: hidden;
 	position: relative;
 	float: left;
 	width: auto;
+	cursor: pointer;
 }
 .elfinder-rtl .std42-dialog.elfinder-dialog-minimized {
 	float: right;
+}
+.std42-dialog input {
+	border:1px solid;
 }
 
 /* titlebar */
@@ -121,7 +126,14 @@
 .std42-dialog.elfinder-dialog-minimized .ui-dialog-titlebar select {
 	display: none;
 }
-
+.elfinder-spinner { 
+	width:14px;
+	height:14px;
+	background: url("../img/spinner-mini.gif") center center no-repeat;
+	margin:0 5px;
+	display: inline-block;
+	vertical-align: middle;
+}
 /* resize handle for touch devices */
 .elfinder-touch .std42-dialog.ui-dialog:not(ui-resizable-disabled) .ui-resizable-se {
 	width: 12px;
@@ -323,7 +335,6 @@
 
 .elfinder-netmount-tb { margin:0 auto; }
 .elfinder-netmount-tb select,
-.elfinder-netmount-tb input { border:1px solid #ccc; }
 .elfinder-netmount-tb .elfinder-button-icon { cursor: pointer; }
 
 button.elfinder-info-button {

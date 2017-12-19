@@ -13,15 +13,18 @@ elFinder.prototype._options = {
 	cdns : {
 		// for editor etc.
 		ace        : '//cdnjs.cloudflare.com/ajax/libs/ace/1.2.9',
-		codemirror : '//cdnjs.cloudflare.com/ajax/libs/codemirror/5.31.0',
-		ckeditor   : '//cdnjs.cloudflare.com/ajax/libs/ckeditor/4.7.3',
-		tinymce    : '//cdnjs.cloudflare.com/ajax/libs/tinymce/4.7.1',
+		codemirror : '//cdnjs.cloudflare.com/ajax/libs/codemirror/5.32.0',
+		ckeditor   : '//cdnjs.cloudflare.com/ajax/libs/ckeditor/4.8.0',
+		tinymce    : '//cdnjs.cloudflare.com/ajax/libs/tinymce/4.7.4',
 		simplemde  : '//cdnjs.cloudflare.com/ajax/libs/simplemde/1.11.2',
 		// for quicklook etc.
-		hls        : '//cdnjs.cloudflare.com/ajax/libs/hls.js/0.8.5/hls.min.js',
-		dash       : '//cdnjs.cloudflare.com/ajax/libs/dashjs/2.6.2/dash.all.min.js',
-		prettify   : '//cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js',
-		psd        : '//cdnjs.cloudflare.com/ajax/libs/psd.js/3.2.0/psd.min.js'
+		hls        : '//cdnjs.cloudflare.com/ajax/libs/hls.js/0.8.8/hls.min.js',
+		dash       : '//cdnjs.cloudflare.com/ajax/libs/dashjs/2.6.4/dash.all.min.js',
+		prettify   : '//cdn.rawgit.com/google/code-prettify/05ad1b76f8af1232da963c17bad144107b07e59a/loader/run_prettify.js',
+		psd        : '//cdnjs.cloudflare.com/ajax/libs/psd.js/3.2.0/psd.min.js',
+		rar        : '//cdn.rawgit.com/nao-pon/rar.js/6cef13ec66dd67992fc7f3ea22f132d770ebaf8b/rar.min.js',
+		zlibUnzip  : '//cdn.rawgit.com/imaya/zlib.js/0.3.1/bin/unzip.min.js', // need check unzipFiles() in quicklook.plugins.js when update
+		zlibGunzip : '//cdn.rawgit.com/imaya/zlib.js/0.3.1/bin/gunzip.min.js'
 	},
 	
 	/**
@@ -39,6 +42,13 @@ elFinder.prototype._options = {
 	 */
 	requestType : 'get',
 	
+	/**
+	 * Use CORS to connector url
+	 * 
+	 * @type Boolean|null  true|false|null(Auto detect)
+	 */
+	cors : null,
+
 	/**
 	 * Maximum number of concurrent connections on request
 	 * 
@@ -285,7 +295,9 @@ elFinder.prototype._options = {
 			// Example ['application/pdf', 'image/tiff', 'application/vnd.ms-office', 'application/msword', 'application/vnd.ms-word', 'application/vnd.ms-excel', 'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']
 			googleDocsMimes : [],
 			// File size (byte) threshold when using the dim command for obtain the image size necessary to image preview
-			getDimThreshold : 200000
+			getDimThreshold : 200000,
+			// MIME-Type regular expression that does not check empty files
+			mimeRegexNotEmptyCheck : /^application\/vnd\.google-apps\./
 		},
 		// "quicklook" command options.
 		edit : {
@@ -294,6 +306,9 @@ elFinder.prototype._options = {
 			// list of allowed mimetypes to edit of text files
 			// if empty - any text files can be edited
 			mimes : [],
+			// Use the editor stored in the browser (do not display the choices)
+			// This value allowd overwrite with user preferences
+			useStoredEditor : false,
 			// edit files in wysisyg's
 			editors : [
 				// {
@@ -390,10 +405,11 @@ elFinder.prototype._options = {
 			extraOptions : {
 				// Specify the Creative Cloud API key when using Creative SDK image editor of Creative Cloud.
 				// You can get the API key at https://console.adobe.io/.
-				//creativeCloudApiKey : '',
+				creativeCloudApiKey : '',
 				// Browsing manager URL for CKEditor, TinyMCE
 				// Uses self location with the empty value or not defined.
 				//managerUrl : 'elfinder.html'
+				managerUrl : null
 			}
 		},
 		search : {
@@ -489,7 +505,10 @@ elFinder.prototype._options = {
 			// Tabs to show
 			view : ['about', 'shortcuts', 'help', 'preference', 'debug'],
 			// HTML source URL of the heip tab
-			helpSource : ''
+			helpSource : '',
+			// Command list of action when select file
+			// Array value are 'Command Name' or 'Command Name1/CommandName2...'
+			selectActions : ['open', 'edit/download', 'resize/edit/download', 'download', 'quicklook']
 		}
 	},
 	

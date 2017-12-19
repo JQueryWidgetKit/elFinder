@@ -1,4 +1,3 @@
-"use strict";
 /**
  * @class  elFinder command "resize"
  * Open dialog to resize image
@@ -9,6 +8,7 @@
  * @author Sergio Jovani
  **/
 elFinder.prototype.commands.resize = function() {
+	"use strict";
 	var losslessRotate = 0,
 		getBounceBox = function(w, h, theta) {
 			var srcPts = [
@@ -44,9 +44,9 @@ elFinder.prototype.commands.resize = function() {
 		return sel.length == 1 && sel[0].read && sel[0].write && sel[0].mime.indexOf('image/') !== -1 ? 0 : -1;
 	};
 	
-	this.resizeRequest = function(data, file, dfrd) {
+	this.resizeRequest = function(data, f, dfrd) {
 		var fm   = this.fm,
-			file = file || fm.file(data.target),
+			file = f || fm.file(data.target),
 			tmb  = file? file.tmb : null,
 			enabled = fm.isCommandEnabled('resize', data.target);
 		
@@ -63,7 +63,9 @@ elFinder.prototype.commands.resize = function() {
 				}
 			})
 			.done(function() {
-				fm.storage('jpgQuality', data.quality === fm.option('jpgQuality')? null : data.quality);
+				if (data.quality) {
+					fm.storage('jpgQuality', data.quality === fm.option('jpgQuality')? null : data.quality);
+				}
 				dfrd && dfrd.resolve();
 			});
 		} else {
@@ -86,7 +88,7 @@ elFinder.prototype.commands.resize = function() {
 			}
 			return $.Deferred().reject(error);
 		}
-	}
+	};
 	
 	this.exec = function(hashes) {
 		var self  = this,
@@ -98,13 +100,14 @@ elFinder.prototype.commands.resize = function() {
 			dialogWidth = 650,
 			fmnode = fm.getUI(),
 			ctrgrup = $().controlgroup? 'controlgroup' : 'buttonset',
-			grid8Def = typeof options.grid8px === 'undefind' || options.grid8px !== 'disable'? true : false,
+			grid8Def = typeof options.grid8px === 'undefined' || options.grid8px !== 'disable'? true : false,
 			presetSize = Array.isArray(options.presetSize)? options.presetSize : [],
 			dlcls = 'elfinder-dialog-resize',
 			clactive = 'elfinder-dialog-active',
+			clsediting = fm.res('class', 'editing'),
 			open = function(file, id) {
 				var isJpeg   = (file.mime === 'image/jpeg'),
-					dialog   = $('<div class="elfinder-dialog-resize '+fm.res('class', 'editing')+'"/>'),
+					dialog   = $('<div class="elfinder-dialog-resize"/>'),
 					input    = '<input type="number" class="ui-corner-all"/>',
 					row      = '<div class="elfinder-resize-row"/>',
 					label    = '<div class="elfinder-resize-label"/>',
@@ -259,7 +262,7 @@ elFinder.prototype.commands.resize = function() {
 					offsetX = $(input).change(function(){crop.updateView('w');}),
 					offsetY = $(input).change(function(){crop.updateView('h');}),
 					quality = isJpeg && api2?
-						$(input).val(fm.storage('jpgQuality') || fm.option('jpgQuality'))
+						$(input).val(fm.storage('jpgQuality') > 0? fm.storage('jpgQuality') : fm.option('jpgQuality'))
 							.addClass('elfinder-resize-quality')
 							.attr('min', '1').attr('max', '100').attr('title', '1 - 100')
 							.on('blur', function(){
@@ -525,10 +528,10 @@ elFinder.prototype.commands.resize = function() {
 								data = pickctx.getImageData(0, 0, w, h).data;
 			
 								// Range to detect the dominant color
-								tx1 = w * .1;
-								tx2 = w * .9;
-								ty1 = h * .1;
-								ty2 = h * .9;
+								tx1 = w * 0.1;
+								tx2 = w * 0.9;
+								ty1 = h * 0.1;
+								ty2 = h * 0.9;
 			
 								for (var y = 0; y < h - 1; y++) {
 									for (var x = 0; x < w - 1; x++) {
@@ -1133,9 +1136,10 @@ elFinder.prototype.commands.resize = function() {
 					},
 					saveAs = function() {
 						var fail = function() {
-								dialogs.fadeIn(function() {
+								dialogs.addClass(clsediting).fadeIn(function() {
 									base.addClass(clactive);
 								});
+								fm.disable();
 							},
 							make = function() {
 								self.mime = file.mime;
@@ -1188,7 +1192,7 @@ elFinder.prototype.commands.resize = function() {
 							dialogs;
 						
 						if (checkVals()) {
-							dialogs = fmnode.children('.'+dlcls).fadeOut();
+							dialogs = fmnode.children('.' + dlcls + ':visible').removeClass(clsediting).fadeOut();
 							base.removeClass(clactive);
 							fm.enable();
 							if (fm.searchStatus.state < 2 && file.phash !== fm.cwd().hash) {
@@ -1205,7 +1209,7 @@ elFinder.prototype.commands.resize = function() {
 					vline   = 'elfinder-resize-handle-vline',
 					rpoint  = 'elfinder-resize-handle-point',
 					src     = fm.openUrl(file.hash),
-					canvSrc = fm.openUrl(file.hash, fm.isCORS? true : false),
+					canvSrc = fm.openUrl(file.hash, !fm.isSameOrigin(src)),
 					sizeImg = quality? $('<img>').attr('crossorigin', fm.isCORS? 'use-credentials' : '').attr('src', canvSrc).on('load', function() {
 						try {
 							var canv = document.createElement('canvas');
@@ -1446,7 +1450,7 @@ elFinder.prototype.commands.resize = function() {
 									}
 									return init();
 								}
-							})
+							});
 						} else if (hasSize) {
 							return init();
 						}
@@ -1465,7 +1469,7 @@ elFinder.prototype.commands.resize = function() {
 							dinit();
 						}
 					}
-				}).attr('id', id).closest('.ui-dialog').addClass(dlcls);
+				}).attr('id', id).closest('.ui-dialog').addClass(dlcls + ' ' + clsediting);
 				
 				// for IE < 9 dialog mising at open second+ time.
 				if (fm.UA.ltIE8) {
@@ -1549,13 +1553,14 @@ elFinder.prototype.commands.resize = function() {
 	};
 	
 	$.fn.rotate = function(val) {
+		var r;
 		if (typeof val == 'undefined') {
 			if (!!window.opera) {
-				var r = this.css('transform').match(/rotate\((.*?)\)/);
+				r = this.css('transform').match(/rotate\((.*?)\)/);
 				return  ( r && r[1])?
 					Math.round(parseFloat(r[1]) * 180 / Math.PI) : 0;
 			} else {
-				var r = this.css('transform').match(/rotate\((.*?)\)/);
+				r = this.css('transform').match(/rotate\((.*?)\)/);
 				return  ( r && r[1])? parseInt(r[1]) : 0;
 			}
 		}
@@ -1646,7 +1651,7 @@ elFinder.prototype.commands.resize = function() {
 	  		var ow = parseInt(element.style.width || element.width || 0 );
 	  		var oh = parseInt(element.style.height || element.height || 0 );
 
-			var radian = rotate * Math.PI / 180;
+			radian = rotate * Math.PI / 180;
 			var absCosX =Math.abs(Math.cos(radian));
 			var absSinY =Math.abs(Math.sin(radian));
 
