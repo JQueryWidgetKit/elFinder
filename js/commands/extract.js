@@ -1,4 +1,3 @@
-"use strict";
 /**
  * @class  elFinder command "extract"
  * Extract files from archive
@@ -6,14 +5,14 @@
  * @author Dmitry (dio) Levashov
  **/
 elFinder.prototype.commands.extract = function() {
+	"use strict";
 	var self    = this,
 		fm      = self.fm,
 		mimes   = [],
 		filter  = function(files) {
 			return $.map(files, function(file) { 
-				return file.read && $.inArray(file.mime, mimes) !== -1 ? file : null
-				
-			})
+				return file.read && $.inArray(file.mime, mimes) !== -1 ? file : null;
+			});
 		};
 	
 	this.variants = [];
@@ -23,25 +22,25 @@ elFinder.prototype.commands.extract = function() {
 	fm.bind('open reload', function() {
 		mimes = fm.option('archivers')['extract'] || [];
 		if (fm.api > 2) {
-			self.variants = [['makedir', fm.i18n('cmdmkdir')], ['intohere', fm.i18n('btnCwd')]];
+			self.variants = [[{makedir: true}, fm.i18n('cmdmkdir')], [{}, fm.i18n('btnCwd')]];
 		} else {
-			self.variants = [['intohere', fm.i18n('btnCwd')]];
+			self.variants = [[{}, fm.i18n('btnCwd')]];
 		}
 		self.change();
 	});
 	
-	this.getstate = function(sel) {
-		var sel = this.files(sel),
+	this.getstate = function(select) {
+		var sel = this.files(select),
 			cnt = sel.length;
 		
 		return cnt && this.fm.cwd().write && filter(sel).length == cnt ? 0 : -1;
-	}
+	};
 	
-	this.exec = function(hashes, extractTo) {
+	this.exec = function(hashes, opts) {
 		var files    = this.files(hashes),
 			dfrd     = $.Deferred(),
 			cnt      = files.length,
-			makedir  = (extractTo == 'makedir')? 1 : 0,
+			makedir  = opts && opts.makedir ? 1 : 0,
 			i, error,
 			decision;
 
@@ -77,7 +76,15 @@ elFinder.prototype.commands.extract = function() {
 				fm.request({
 					data:{cmd:'extract', target:file.hash, makedir:makedir},
 					notify:{type:'extract', cnt:1},
-					syncOnFail:true
+					syncOnFail:true,
+					navigate:{
+						toast : makedir? {
+							incwd    : {msg: fm.i18n(['complete', fm.i18n('cmdextract')]), action: {cmd: 'open', msg: 'cmdopen'}},
+							inbuffer : {msg: fm.i18n(['complete', fm.i18n('cmdextract')]), action: {cmd: 'open', msg: 'cmdopen'}}
+						} : {
+							inbuffer : {msg: fm.i18n(['complete', fm.i18n('cmdextract')])}
+						}
+					}
 				})
 				.fail(function (error) {
 					if (dfrd.state() != 'rejected') {
@@ -91,7 +98,7 @@ elFinder.prototype.commands.extract = function() {
 		
 		var confirm = function(files, index) {
 			var file = files[index],
-			name = file.name.replace(/\.((tar\.(gz|bz|bz2|z|lzo))|cpio\.gz|ps\.gz|xcf\.(gz|bz2)|[a-z0-9]{1,4})$/ig, ''),
+			name = fm.splitFileExtention(file.name)[0],
 			existed = ($.inArray(name, names) >= 0),
 			next = function(){
 				if((index+1) < cnt) {
@@ -195,6 +202,6 @@ elFinder.prototype.commands.extract = function() {
 		}
 
 		return dfrd;
-	}
+	};
 
 };

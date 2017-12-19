@@ -1,4 +1,3 @@
-"use strict";
 /**
  * @class  elFinder command "search"
  * Find files
@@ -6,8 +5,9 @@
  * @author Dmitry (dio) Levashov
  **/
 elFinder.prototype.commands.search = function() {
+	"use strict";
 	this.title          = 'Find files';
-	this.options        = {ui : 'searchbutton'}
+	this.options        = {ui : 'searchbutton'};
 	this.alwaysEnabled  = true;
 	this.updateOnSelect = false;
 	
@@ -19,7 +19,7 @@ elFinder.prototype.commands.search = function() {
 	 **/
 	this.getstate = function() {
 		return 0;
-	}
+	};
 	
 	/**
 	 * Send search request to backend.
@@ -31,7 +31,7 @@ elFinder.prototype.commands.search = function() {
 		var fm = this.fm,
 			reqDef = [],
 			onlyMimes = fm.options.onlyMimes,
-			phash;
+			phash, targetVolids = [];
 		
 		if (typeof q == 'string' && q) {
 			if (typeof target == 'object') {
@@ -45,8 +45,8 @@ elFinder.prototype.commands.search = function() {
 					mime = $.map(mime, function(m){ 
 						m = $.trim(m);
 						return m && ($.inArray(m, onlyMimes) !== -1
-									|| $.map(onlyMimes, function(om) { return m.indexOf(om) === 0? true : null }).length
-									)? m : null 
+									|| $.map(onlyMimes, function(om) { return m.indexOf(om) === 0? true : null; }).length
+									)? m : null;
 					});
 				}
 			} else {
@@ -78,6 +78,8 @@ elFinder.prototype.commands.search = function() {
 							while(phash) {
 								if (target === phash) {
 									$.each(roots, function() {
+										var f = fm.file(this);
+										f && f.volumeid && targetVolids.push(f.volumeid);
 										reqDef.push(fm.request({
 											data   : {cmd : 'search', q : q, target : this, mimes : mime},
 											notify : {type : 'search', cnt : 1, hideCnt : false},
@@ -95,7 +97,7 @@ elFinder.prototype.commands.search = function() {
 				reqDef = [$.Deferred().resolve({files: []})];
 			}
 			
-			fm.searchStatus.mixed = (reqDef.length > 1);
+			fm.searchStatus.mixed = (reqDef.length > 1)? targetVolids : false;
 			
 			return $.when.apply($, reqDef).done(function(data) {
 				var argLen = arguments.length,
@@ -114,6 +116,9 @@ elFinder.prototype.commands.search = function() {
 					}
 				}
 				
+				// because "preventDone : true" so update files cache
+				data.files && data.files.length && fm.cache(data.files);
+				
 				fm.lazy(function() {
 					fm.trigger('search', data);
 				}).then(function() {
@@ -129,6 +134,6 @@ elFinder.prototype.commands.search = function() {
 		}
 		fm.getUI('toolbar').find('.'+fm.res('class', 'searchbtn')+' :text').focus();
 		return $.Deferred().reject();
-	}
+	};
 
 };

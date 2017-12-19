@@ -1,4 +1,3 @@
-"use strict";
 /**
  * @class elFinder command "chmod".
  * Chmod files.
@@ -7,24 +6,25 @@
  * @author Naoki Sawada
  */
 elFinder.prototype.commands.chmod = function() {
+	"use strict";
 	this.updateOnSelect = false;
 	var fm  = this.fm,
-	level = {
-		0 : 'owner',
-		1 : 'group',
-		2 : 'other'
-	},
-	msg = {
-		read     : fm.i18n('read'),
-		write    : fm.i18n('write'),
-		execute  : fm.i18n('execute'),
-		perm     : fm.i18n('perm'),
-		kind     : fm.i18n('kind'),
-		files    : fm.i18n('files')
-	},
-	isPerm = function(perm){
-		return (!isNaN(parseInt(perm, 8) && parseInt(perm, 8) <= 511) || perm.match(/^([r-][w-][x-]){3}$/i));
-	};
+		level = {
+			0 : 'owner',
+			1 : 'group',
+			2 : 'other'
+		},
+		msg = {
+			read     : fm.i18n('read'),
+			write    : fm.i18n('write'),
+			execute  : fm.i18n('execute'),
+			perm     : fm.i18n('perm'),
+			kind     : fm.i18n('kind'),
+			files    : fm.i18n('files')
+		},
+		isPerm = function(perm){
+			return (!isNaN(parseInt(perm, 8) && parseInt(perm, 8) <= 511) || perm.match(/^([r-][w-][x-]){3}$/i));
+		};
 
 	this.tpl = {
 		main       : '<div class="ui-helper-clearfix elfinder-info-title"><span class="elfinder-cwd-icon {class} ui-corner-all"/>{title}</div>'
@@ -61,8 +61,9 @@ elFinder.prototype.commands.chmod = function() {
 		return (cnt == chk)? true : false;
 	};
 
-	this.exec = function(hashes) {
-		var files   = this.files(hashes);
+	this.exec = function(select) {
+		var hashes  = this.hashes(select),
+			files   = this.files(hashes);
 		if (! files.length) {
 			hashes = [ this.fm.cwd().hash ];
 			files   = this.files(hashes);
@@ -72,7 +73,6 @@ elFinder.prototype.commands.chmod = function() {
 			fm.enable();
 		}),
 		tpl     = this.tpl,
-		hashes  = this.hashes(hashes),
 		cnt     = files.length,
 		file    = files[0],
 		id = fm.namespace + '-perm-' + file.hash,
@@ -85,24 +85,50 @@ elFinder.prototype.commands.chmod = function() {
 			return buttons;
 		},
 		save = function() {
-			var perm = $.trim($('#'+id+'-perm').val());
+			var perm = $.trim($('#'+id+'-perm').val()),
+				reqData;
 			
 			if (!isPerm(perm)) return false;
 			
 			dialog.elfinderdialog('close');
 			
+			reqData = {
+				cmd     : 'chmod',
+				targets : hashes,
+				mode    : perm
+			};
 			fm.request({
-				data : {
-					cmd     : 'chmod',
-					targets : hashes,
-					mode    : perm
-				},
+				data : reqData,
 				notify : {type : 'chmod', cnt : cnt}
 			})
 			.fail(function(error) {
 				dfrd.reject(error);
 			})
 			.done(function(data) {
+				if (data.changed && data.changed.length) {
+					data.undo = {
+						cmd : 'chmod',
+						callback : function() {
+							var reqs = [];
+							$.each(prevVals, function(perm, hashes) {
+								reqs.push(fm.request({
+									data : {cmd : 'chmod', targets : hashes, mode : perm},
+									notify : {type : 'undo', cnt : hashes.length}
+								}));
+							});
+							return $.when.apply(null, reqs);
+						}
+					};
+					data.redo = {
+						cmd : 'chmod',
+						callback : function() {
+							return fm.request({
+								data : reqData,
+								notify : {type : 'redo', cnt : hashes.length}
+							});
+						}
+					};
+				}
 				dfrd.resolve(data);
 			});
 		},
@@ -147,7 +173,11 @@ elFinder.prototype.commands.chmod = function() {
 			var perm = '777', ret = '', chk, _chk, _perm;
 			var len = files.length;
 			for (var i2 = 0; i2 < len; i2++) {
-				chk = getPerm(files[i2].perm);;
+				chk = getPerm(files[i2].perm);
+				if (! prevVals[chk]) {
+					prevVals[chk] = [];
+				}
+				prevVals[chk].push(files[i2].hash);
 				ret = '';
 				for (var i = 0; i < 3; i++){
 					_chk = parseInt(chk.slice(i, i+1), 8);
@@ -222,7 +252,7 @@ elFinder.prototype.commands.chmod = function() {
 			
 				for (var j = 0, m = b_array.length; j < m; j++) {
 					var p = parseInt(b_array[j], 2).toString(8);
-					c.push(p)
+					c.push(p);
 				}
 
 				perm = c.join('');
@@ -238,6 +268,7 @@ elFinder.prototype.commands.chmod = function() {
 			close : function() { $(this).elfinderdialog('destroy'); }
 		},
 		dialog = fm.getUI().find('#'+id),
+		prevVals = {},
 		tmb = '', title, dataTable;
 
 		if (dialog.length) {

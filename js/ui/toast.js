@@ -1,4 +1,3 @@
-"use strict";
 /**
  * @class  elFinder toast
  * 
@@ -8,6 +7,7 @@
  * @author Naoki Sawada
  **/
 $.fn.elfindertoast = function(opts, fm) {
+	"use strict";
 	var defOpts = {
 		mode: 'success',
 		msg: '',
@@ -23,7 +23,7 @@ $.fn.elfindertoast = function(opts, fm) {
 		extNode: undefined
 	};
 	return this.each(function() {
-		opts = $.extend({}, defOpts, opts || {});
+		opts = Object.assign({}, defOpts, opts || {});
 		
 		var self = $(this),
 			show = function(notm) {

@@ -1,4 +1,3 @@
-"use strict";
 /**
  * @class  elFinder command "netmount"
  * Mount network volume with user credentials.
@@ -6,6 +5,7 @@
  * @author Dmitry (dio) Levashov
  **/
 elFinder.prototype.commands.netmount = function() {
+	"use strict";
 	var self = this,
 		content;
 
@@ -18,11 +18,11 @@ elFinder.prototype.commands.netmount = function() {
 		load : function() {
 			this.drivers = this.fm.netDrivers;
 		}
-	}
+	};
 
 	this.getstate = function() {
 		return this.drivers.length ? 0 : -1;
-	}
+	};
 	
 	this.exec = function() {
 		var fm = self.fm,
@@ -33,7 +33,16 @@ elFinder.prototype.commands.netmount = function() {
 						inputs.protocol.trigger('change', 'winfocus');
 					},
 					inputs = {
-						protocol : $('<select/>').on('change', function(e, data){
+						protocol : $('<select/>')
+						.on('click',function() {
+							var $this = $(this);
+							if ($this.data('keepFocus')) {
+								$this.removeData('keepFocus');
+							} else {
+								$this.data('keepFocus', true);
+							}
+						})
+						.on('change', function(e, data){
 							var protocol = this.value;
 							content.find('.elfinder-netmount-tr').hide();
 							content.find('.elfinder-netmount-tr-'+protocol).show();
@@ -51,19 +60,85 @@ elFinder.prototype.commands.netmount = function() {
 						title          : fm.i18n('netMountDialogTitle'),
 						resizable      : false,
 						modal          : true,
-						destroyOnClose : true,
+						destroyOnClose : false,
 						open           : function() {
 							$(window).on('focus.'+fm.namespace, winFocus);
 							inputs.protocol.change();
 						},
 						close          : function() { 
-							//delete self.dialog; 
 							dfrd.state() == 'pending' && dfrd.reject();
 							$(window).off('focus.'+fm.namespace, winFocus);
 						},
 						buttons        : {}
 					},
-					form = $('<form autocomplete="off"/>'),
+					doMount = function() {
+						var protocol = inputs.protocol.val(),
+							data = {cmd : 'netmount', protocol: protocol},
+							cur = o[protocol];
+						$.each(content.find('input.elfinder-netmount-inputs-'+protocol), function(name, input) {
+							var val, elm;
+							elm = $(input);
+							if (elm.is(':radio,:checkbox')) {
+								if (elm.is(':checked')) {
+									val = $.trim(elm.val());
+								}
+							} else {
+								val = $.trim(elm.val());
+							}
+							if (val) {
+								data[input.name] = val;
+							}
+						});
+	
+						if (!data.host) {
+							return fm.trigger('error', {error : 'errNetMountHostReq', opts : {modal: true}});
+						}
+	
+						fm.request({data : data, notify : {type : 'netmount', cnt : 1, hideCnt : true}})
+							.done(function(data) {
+								var pdir;
+								if (data.added && data.added.length) {
+									if (data.added[0].phash) {
+										if (pdir = fm.file(data.added[0].phash)) {
+											if (! pdir.dirs) {
+												pdir.dirs = 1;
+												fm.change({ changed: [ pdir ] });
+											}
+										}
+									}
+									fm.one('netmountdone', function() {
+										fm.exec('open', data.added[0].hash);
+									});
+								}
+								dfrd.resolve();
+							})
+							.fail(function(error) {
+								if (cur.fail && typeof cur.fail == 'function') {
+									cur.fail(fm, error);
+								}
+								dfrd.reject(error);
+							});
+	
+						self.dialog.elfinderdialog('close');
+					},
+					form = $('<form autocomplete="off"/>').on('keydown', 'input', function(e) {
+						var comp = true,
+							next;
+						if (e.keyCode === $.ui.keyCode.ENTER) {
+							$.each(form.find('input:visible:not(.elfinder-input-optional)'), function() {
+								if ($(this).val() === '') {
+									comp = false;
+									next = $(this);
+									return false;
+								}
+							});
+							if (comp) {
+								doMount();
+							} else {
+								next.focus();
+							}
+						}
+					}),
 					hidden  = $('<div/>'),
 					dialog;
 
@@ -91,54 +166,7 @@ elFinder.prototype.commands.netmount = function() {
 				
 				content.find('.elfinder-netmount-tr').hide();
 
-				opts.buttons[fm.i18n('btnMount')] = function() {
-					var protocol = inputs.protocol.val(),
-						data = {cmd : 'netmount', protocol: protocol},
-						cur = o[protocol];
-					$.each(content.find('input.elfinder-netmount-inputs-'+protocol), function(name, input) {
-						var val;
-						if (typeof input.val == 'function') {
-							val = $.trim(input.val());
-						} else {
-							val = $.trim(input.value);
-						}
-						if (val) {
-							data[input.name] = val;
-						}
-					});
-
-					if (!data.host) {
-						return fm.trigger('error', {error : 'errNetMountHostReq'});
-					}
-
-					fm.request({data : data, notify : {type : 'netmount', cnt : 1, hideCnt : true}})
-						.done(function(data) {
-							var pdir;
-							if (data.added && data.added.length) {
-								if (data.added[0].phash) {
-									if (pdir = fm.file(data.added[0].phash)) {
-										if (! pdir.dirs) {
-											pdir.dirs = 1;
-											fm.change({ changed: [ pdir ] });
-										}
-									}
-								}
-								fm.one('netmountdone', function() {
-									fm.exec('open', data.added[0].hash);
-								});
-							}
-							dfrd.resolve();
-						})
-						.fail(function(error) {
-							//self.dialog.elfinderdialog('open');
-							if (cur.fail && typeof cur.fail == 'function') {
-								cur.fail(fm, error);
-							}
-							dfrd.reject(error);
-						});
-
-					self.dialog.elfinderdialog('close');
-				};
+				opts.buttons[fm.i18n('btnMount')] = doMount;
 
 				opts.buttons[fm.i18n('btnCancel')] = function() {
 					self.dialog.elfinderdialog('close');
@@ -163,7 +191,7 @@ elFinder.prototype.commands.netmount = function() {
 		}
 
 		return dfrd.promise();
-	}
+	};
 
 	self.fm.bind('netmount', function(e) {
 		var d = e.data || null,
@@ -177,7 +205,7 @@ elFinder.prototype.commands.netmount = function() {
 		}
 	});
 
-}
+};
 
 elFinder.prototype.commands.netunmount = function() {
 	var self = this;
@@ -235,13 +263,13 @@ elFinder.prototype.commands.netunmount = function() {
 								if (navTo.length) {
 									open = fm.navId2Hash(navTo[0].id);
 								} else {
-									var files = fm.files();
-									for (var i in files) {
-										if (fm.file(i).mime == 'directory') {
-											open = i;
-											break;
+									// fallback
+									$.each(fm.files(), function(h, f) {
+										if (f.mime == 'directory') {
+											open = h;
+											return null;
 										}
-									}
+									});
 								}
 								fm.exec('open', open);
 							}
