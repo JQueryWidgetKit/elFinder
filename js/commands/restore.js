@@ -187,7 +187,7 @@
 													if (files.length) {
 														if (fm.file(hashes[dir])) {
 															fm.clipboard(files, true);
-															cmdPaste.exec([ hashes[dir] ], {_cmd : 'restore', noToast : (opts.noToast || dir !== dirTop)})
+															fm.exec('paste', [ hashes[dir] ], {_cmd : 'restore', noToast : (opts.noToast || dir !== dirTop)})
 															.done(function(data) {
 																if (data && (data.error || data.warning)) {
 																	hasErr = true;
@@ -201,7 +201,7 @@
 																	dfrd[hasErr? 'reject' : 'resolve']();
 																	if (others.length) {
 																		// Restore items of other trash
-																		self.exec(others);
+																		fm.exec('restore', others);
 																	}
 																}
 															});
@@ -213,7 +213,7 @@
 															dfrd.resolve();
 															if (others.length) {
 																// Restore items of other trash
-																self.exec(others);
+																fm.exec('restore', others);
 															}
 														}
 													}
@@ -238,15 +238,21 @@
 			});
 		};
 	
+	// for to be able to overwrite
+	this.restore = restore;
+
 	this.linkedCmds = ['copy', 'paste', 'mkdir', 'rm'];
 	this.updateOnSelect = false;
-	//this.shortcuts = [{
-	//	pattern     : 'ctrl+z'
-	//}];
 	
+	this.init = function() {
+		// re-assign for extended command
+		self = this;
+		fm = this.fm;
+	};
+
 	this.getstate = function(sel, e) {
 		sel = sel || fm.selected();
-		return sel.length && $.map(sel, function(h) {var f = fm.file(h); return f && ! f.locked && ! fm.isRoot(f)? h : null; }).length == sel.length
+		return sel.length && $.grep(sel, function(h) {var f = fm.file(h); return f && ! f.locked && ! fm.isRoot(f)? true : false; }).length == sel.length
 			? 0 : -1;
 	};
 	
@@ -271,7 +277,7 @@
 		});
 
 		if (dfrd.state() === 'pending') {
-			restore(dfrd, files, hashes, opts);
+			this.restore(dfrd, files, hashes, opts);
 		}
 			
 		return dfrd;

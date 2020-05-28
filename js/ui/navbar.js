@@ -7,37 +7,52 @@ $.fn.elfindernavbar = function(fm, opts) {
 	"use strict";
 	this.not('.elfinder-navbar').each(function() {
 		var nav    = $(this).hide().addClass('ui-state-default elfinder-navbar'),
-			parent = nav.parent(),
+			parent = nav.css('overflow', 'hidden').parent(),
 			wz     = parent.children('.elfinder-workzone').append(nav),
-			delta  = nav.outerHeight() - nav.height(),
 			ltr    = fm.direction == 'ltr',
-			handle, swipeHandle, autoHide, setWidth, navdock,
+			delta, deltaW, handle, swipeHandle, autoHide, setWidth, navdock,
 			setWzRect = function() {
 				var cwd = fm.getUI('cwd'),
 					wz  = fm.getUI('workzone'),
 					wzRect = wz.data('rectangle'),
 					cwdOffset = cwd.offset();
 				wz.data('rectangle', Object.assign(wzRect, { cwdEdge: (fm.direction === 'ltr')? cwdOffset.left : cwdOffset.left + cwd.width() }));
+			},
+			setDelta = function() {
+				nav.css('overflow', 'hidden');
+				delta  = Math.round(nav.outerHeight() - nav.height());
+				deltaW = Math.round(navdock.outerWidth() - navdock.innerWidth());
+				nav.css('overflow', 'auto');
 			};
 
-			fm.one('cssloaded', function() {
-				delta = nav.outerHeight() - nav.height();
-			}).bind('wzresize', function() {
-				var navdockH = 0;
-				if (! navdock) {
-					navdock =fm.getUI('navdock');
-				}
-				navdock.width(nav.get(0).offsetWidth - 2);
-				if (navdock.children().length > 1) {
-					navdockH = navdock.outerHeight(true);
-				}
-				nav.height(wz.height() - navdockH - delta);
-			});
+		fm.one('init', function() {
+			navdock = fm.getUI('navdock');
+			var set = function() {
+					setDelta();
+					fm.bind('wzresize', function() {
+						var navdockH = 0;
+						navdock.width(nav.outerWidth() - deltaW);
+						if (navdock.children().length > 1) {
+							navdockH = navdock.outerHeight(true);
+						}
+						nav.height(wz.height() - navdockH - delta);
+					}).trigger('wzresize');
+				};
+			if (fm.cssloaded) {
+				set();
+			} else {
+				fm.one('cssloaded', set);
+			}
+		})
+		.one('opendone',function() {
+			handle && handle.trigger('resize');
+			nav.css('overflow', 'auto');
+		}).bind('themechange', setDelta);
 		
 		if (fm.UA.Touch) {
 			autoHide = fm.storage('autoHide') || {};
 			if (typeof autoHide.navbar === 'undefined') {
-				autoHide.navbar = (opts.autoHideUA && opts.autoHideUA.length > 0 && $.map(opts.autoHideUA, function(v){ return fm.UA[v]? true : null; }).length);
+				autoHide.navbar = (opts.autoHideUA && opts.autoHideUA.length > 0 && $.grep(opts.autoHideUA, function(v){ return fm.UA[v]? true : false; }).length);
 				fm.storage('autoHide', autoHide);
 			}
 			
@@ -51,7 +66,7 @@ $.fn.elfindernavbar = function(fm, opts) {
 			
 			fm.bind('load', function() {
 				if (nav.children().length) {
-					swipeHandle = $('<div class="elfinder-navbar-swipe-handle"/>').hide().appendTo(wz);
+					swipeHandle = $('<div class="elfinder-navbar-swipe-handle"></div>').hide().appendTo(wz);
 					if (swipeHandle.css('pointer-events') !== 'none') {
 						swipeHandle.remove();
 						swipeHandle = null;
@@ -105,13 +120,15 @@ $.fn.elfindernavbar = function(fm, opts) {
 					}
 				})
 				.on('resize scroll', function(e) {
+					var $this = $(this),
+						tm = $this.data('posinit');
 					e.preventDefault();
 					e.stopPropagation();
 					if (! ltr && e.type === 'resize') {
 						nav.css('left', 0);
 					}
-					clearTimeout($(this).data('posinit'));
-					$(this).data('posinit', setTimeout(function() {
+					tm && cancelAnimationFrame(tm);
+					$this.data('posinit', requestAnimationFrame(function() {
 						var offset = (fm.UA.Opera && nav.scrollLeft())? 20 : 2;
 						handle.css('top', 0).css({
 							top  : parseInt(nav.scrollTop())+'px',
@@ -121,20 +138,16 @@ $.fn.elfindernavbar = function(fm, opts) {
 						if (e.type === 'resize') {
 							fm.getUI('cwd').trigger('resize');
 						}
-					}, 50));
+					}));
 				})
 				.children('.ui-resizable-handle').addClass('ui-front');
-
-			fm.one('opendone', function() {
-				handle.trigger('resize');
-			});
 		}
 
 		if (setWidth = fm.storage('navbarWidth')) {
 			nav.width(setWidth);
 		} else {
 			if (fm.UA.Mobile) {
-				fm.one('cssloaded', function() {
+				fm.one(fm.cssloaded? 'init' : 'cssloaded', function() {
 					var set = function() {
 						setWidth = nav.parent().width() / 2;
 						if (nav.data('defWidth') > setWidth) {

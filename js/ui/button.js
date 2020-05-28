@@ -17,26 +17,55 @@ $.fn.elfinderbutton = function(cmd) {
 			selected = 'elfinder-button-menu-item-selected',
 			menu,
 			text     = $('<span class="elfinder-button-text">'+cmd.title+'</span>'),
+			prvCname = cmd.className? cmd.className : cmd.name,
 			button   = $(this).addClass('ui-state-default elfinder-button')
 				.attr('title', cmd.title)
-				.append('<span class="elfinder-button-icon elfinder-button-icon-' + (cmd.className? cmd.className : cmd.name) + '"/>', text)
-				.hover(function(e) { !button.hasClass(disabled) && button[e.type == 'mouseleave' ? 'removeClass' : 'addClass'](hover);})
-				.click(function(e) { 
+				.append('<span class="elfinder-button-icon elfinder-button-icon-' + prvCname + '"></span>', text)
+				.on('mouseenter mouseleave', function(e) { !button.hasClass(disabled) && button[e.type == 'mouseleave' ? 'removeClass' : 'addClass'](hover);})
+				.on('click', function(e) { 
 					if (!button.hasClass(disabled)) {
 						if (menu && cmd.variants.length >= 1) {
 							// close other menus
-							menu.is(':hidden') && cmd.fm.getUI().click();
+							menu.is(':hidden') && fm.getUI().click();
 							e.stopPropagation();
-							menu.slideToggle(100);
+							menu.css(getMenuOffset()).slideToggle({
+								duration: 100,
+								done: function(e) {
+									fm[menu.is(':visible')? 'toFront' : 'toHide'](menu);
+								}
+							});
 						} else {
-							fm.exec(cmd.name, void(0), {_userAction: true, _currentType: 'toolbar', _currentNode: button });
+							fm.exec(cmd.name, getSelected(), {_userAction: true, _currentType: 'toolbar', _currentNode: button });
 						}
 						
 					}
 				}),
 			hideMenu = function() {
-				menu.hide();
-			};
+				fm.toHide(menu);
+			},
+			getMenuOffset = function() {
+				var fmNode = fm.getUI(),
+					baseOffset = fmNode.offset(),
+					buttonOffset = button.offset();
+				return {
+					top : buttonOffset.top - baseOffset.top,
+					left : buttonOffset.left - baseOffset.left,
+					maxHeight : fmNode.height() - 40
+				};
+			},
+			getSelected = function() {
+				var sel = fm.selected(),
+					cwd;
+				if (!sel.length) {
+					if (cwd = fm.cwd()) {
+						sel = [ fm.cwd().hash ];
+					} else {
+						sel = void(0);
+					}
+				}
+				return sel;
+			},
+			tm;
 			
 		text.hide();
 		
@@ -47,26 +76,27 @@ $.fn.elfinderbutton = function(cmd) {
 		if (Array.isArray(cmd.variants)) {
 			button.addClass('elfinder-menubutton');
 			
-			menu = $('<div class="ui-front ui-widget ui-widget-content elfinder-button-menu ui-corner-all"/>')
+			menu = $('<div class="ui-front ui-widget ui-widget-content elfinder-button-menu elfinder-button-' + prvCname + '-menu ui-corner-all"></div>')
 				.hide()
-				.appendTo(button)
+				.appendTo(fm.getUI())
 				.on('mouseenter mouseleave', '.'+item, function() { $(this).toggleClass(hover); })
 				.on('click', '.'+item, function(e) {
 					var opts = $(this).data('value');
 					e.preventDefault();
 					e.stopPropagation();
 					button.removeClass(hover);
-					menu.hide();
+					fm.toHide(menu);
 					if (typeof opts === 'undefined') {
 						opts = {};
 					}
 					if (typeof opts === 'object') {
 						opts._userAction = true;
 					}
-					fm.exec(cmd.name, fm.selected(), opts);
-				});
+					fm.exec(cmd.name, getSelected(), opts);
+				})
+				.on('close', hideMenu);
 
-			cmd.fm.bind('disable select', hideMenu).getUI().click(hideMenu);
+			fm.bind('disable select', hideMenu).getUI().on('click', hideMenu);
 			
 			cmd.change(function() {
 				menu.html('');
@@ -77,16 +107,28 @@ $.fn.elfinderbutton = function(cmd) {
 		}	
 			
 		cmd.change(function() {
-			if (cmd.disabled()) {
-				button.removeClass(active+' '+hover).addClass(disabled);
-			} else {
-				button.removeClass(disabled);
-				button[cmd.active() ? 'addClass' : 'removeClass'](active);
-			}
-			if (cmd.syncTitleOnChange) {
-				text.html(cmd.title);
-				button.attr('title', cmd.title);
-			}
+			var cName;
+			tm && cancelAnimationFrame(tm);
+			tm = requestAnimationFrame(function() {
+				if (cmd.disabled()) {
+					button.removeClass(active+' '+hover).addClass(disabled);
+				} else {
+					button.removeClass(disabled);
+					button[cmd.active() ? 'addClass' : 'removeClass'](active);
+				}
+				if (cmd.syncTitleOnChange) {
+					cName = cmd.className? cmd.className : cmd.name;
+					if (prvCname !== cName) {
+						button.children('.elfinder-button-icon').removeClass('elfinder-button-icon-' + prvCname).addClass('elfinder-button-icon-' + cName);
+						if (menu) {
+							menu.removeClass('elfinder-button-' + prvCname + '-menu').addClass('elfinder-button-' + cName + '-menu');
+						}
+						prvCname = cName;
+					}
+					text.html(cmd.title);
+					button.attr('title', cmd.title);
+				}
+			});
 		})
 		.change();
 	});

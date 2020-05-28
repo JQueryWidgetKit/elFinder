@@ -27,16 +27,16 @@ elFinder.prototype.commands.chmod = function() {
 		};
 
 	this.tpl = {
-		main       : '<div class="ui-helper-clearfix elfinder-info-title"><span class="elfinder-cwd-icon {class} ui-corner-all"/>{title}</div>'
+		main       : '<div class="ui-helper-clearfix elfinder-info-title"><span class="elfinder-cwd-icon {class} ui-corner-all"></span>{title}</div>'
 					+'{dataTable}',
 		itemTitle  : '<strong>{name}</strong><span id="elfinder-info-kind">{kind}</span>',
 		groupTitle : '<strong>{items}: {num}</strong>',
 		dataTable  : '<table id="{id}-table-perm"><tr><td>{0}</td><td>{1}</td><td>{2}</td></tr></table>'
-					+'<div class="">'+msg.perm+': <input id="{id}-perm" type="text" size="4" maxlength="3" value="{value}"></div>',
+					+'<div class="">'+msg.perm+': <input class="elfinder-tabstop elfinder-focus" id="{id}-perm" type="text" size="4" maxlength="3" value="{value}"></div>',
 		fieldset   : '<fieldset id="{id}-fieldset-{level}"><legend>{f_title}{name}</legend>'
-					+'<input type="checkbox" value="4" id="{id}-read-{level}-perm"{checked-r}> <label for="{id}-read-{level}-perm">'+msg.read+'</label><br>'
-					+'<input type="checkbox" value="6" id="{id}-write-{level}-perm"{checked-w}> <label for="{id}-write-{level}-perm">'+msg.write+'</label><br>'
-					+'<input type="checkbox" value="5" id="{id}-execute-{level}-perm"{checked-x}> <label for="{id}-execute-{level}-perm">'+msg.execute+'</label><br>'
+					+'<input type="checkbox" value="4" class="elfinder-tabstop" id="{id}-read-{level}-perm"{checked-r}> <label for="{id}-read-{level}-perm">'+msg.read+'</label><br>'
+					+'<input type="checkbox" value="6" class="elfinder-tabstop" id="{id}-write-{level}-perm"{checked-w}> <label for="{id}-write-{level}-perm">'+msg.write+'</label><br>'
+					+'<input type="checkbox" value="5" class="elfinder-tabstop" id="{id}-execute-{level}-perm"{checked-x}> <label for="{id}-execute-{level}-perm">'+msg.execute+'</label><br>'
 	};
 
 	this.shortcuts = [{
@@ -55,8 +55,8 @@ elFinder.prototype.commands.chmod = function() {
 	this.checkstate = function(sel) {
 		var cnt = sel.length;
 		if (!cnt) return false;
-		var chk = $.map(sel, function(f) {
-			return (f.isowner && f.perm && isPerm(f.perm) && (cnt == 1 || f.mime != 'directory')) ? f : null;
+		var chk = $.grep(sel, function(f) {
+			return (f.isowner && f.perm && isPerm(f.perm) && (cnt == 1 || f.mime != 'directory')) ? true : false;
 		}).length;
 		return (cnt == chk)? true : false;
 	};
@@ -288,7 +288,7 @@ elFinder.prototype.commands.chmod = function() {
 
 		view = view.replace('{title}', title).replace('{dataTable}', dataTable).replace(/{id}/g, id);
 
-		dialog = fm.dialog(view, opts);
+		dialog = this.fmDialog(view, opts);
 		dialog.attr('id', id);
 
 		// load thumbnail
@@ -301,16 +301,16 @@ elFinder.prototype.commands.chmod = function() {
 		$('#' + id + '-table-perm :checkbox').on('click', function(){setperm('perm');});
 		$('#' + id + '-perm').on('keydown', function(e) {
 			var c = e.keyCode;
-			e.stopPropagation();
 			if (c == $.ui.keyCode.ENTER) {
+				e.stopPropagation();
 				save();
 				return;
 			}
 		}).on('focus', function(e){
-			$(this).select();
+			$(this).trigger('select');
 		}).on('keyup', function(e) {
 			if ($(this).val().length == 3) {
-				$(this).select();
+				$(this).trigger('select');
 				setcheck($(this).val());
 			}
 		});

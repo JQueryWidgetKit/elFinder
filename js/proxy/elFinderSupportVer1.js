@@ -166,8 +166,8 @@ window.elFinderSupportVer1 = function(upload) {
 			files = {}, 
 			filter = function(file) { return file && file.hash && file.name && file.mime ? file : null; },
 			getDirs = function(items) {
-				return $.map(items, function(i) {
-					return i && i.mime && i.mime === 'directory'? i : null;
+				return $.grep(items, function(i) {
+					return i && i.mime && i.mime === 'directory'? true : false;
 				});
 			},
 			getTreeDiff = function(files) {
@@ -271,7 +271,7 @@ window.elFinderSupportVer1 = function(upload) {
 		if (isCwd) {
 			diff = fm.diff($.map(files, filter));
 		} else {
-			if (data.tree) {
+			if (data.tree && cmd !== 'paste') {
 				diff = getTreeDiff(files);
 			} else {
 				diff = {
@@ -279,9 +279,9 @@ window.elFinderSupportVer1 = function(upload) {
 					removed : [],
 					changed : []
 				};
-			}
-			if (cmd === 'paste') {
-				diff.sync = true;
+				if (cmd === 'paste') {
+					diff.sync = true;
+				}
 			}
 		}
 		

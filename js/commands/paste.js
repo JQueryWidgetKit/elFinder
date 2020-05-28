@@ -56,7 +56,7 @@ elFinder.prototype.commands.paste = function() {
 				}),
 			copy  = function(files) {
 				return files.length && fm._commands.duplicate
-					? fm.getCommand('duplicate').exec(files)
+					? fm.exec('duplicate', files)
 					: $.Deferred().resolve();
 			},
 			paste = function(files) {
@@ -167,7 +167,7 @@ elFinder.prototype.commands.paste = function() {
 									} else {
 										// support to >=2.1.11 plugin Normalizer, Sanitizer
 										existedArr = existedArr.concat(n);
-										return null;
+										return false;
 									}
 								});
 								if (existedArr.length) {
@@ -181,28 +181,32 @@ elFinder.prototype.commands.paste = function() {
 					},
 					paste     = function(selFiles) {
 						var renames = [],
-							files  = $.map(selFiles, function(file) { 
+							files  = $.grep(selFiles, function(file) { 
 								if (file.rename) {
 									renames.push(file.name);
 								}
-								return !file.remove ? file : null;
+								return !file.remove ? true : false;
 							}),
 							cnt    = files.length,
 							groups = {},
 							args   = [],
-							src, targets, reqData;
+							targets, reqData;
 
 						if (!cnt) {
 							return dfrd.resolve();
 						}
 
-						//src = files[0].phash;
 						targets = $.map(files, function(f) { return f.hash; });
 						
 						reqData = {cmd : 'paste', dst : dst.hash, targets : targets, cut : cut ? 1 : 0, renames : renames, hashes : hashes, suffix : fm.options.backupSuffix};
+						if (fm.api < 2.1) {
+							reqData.src = files[0].phash;
+						}
+						
 						fm.request({
 								data   : reqData,
 								notify : {type : cmd, cnt : cnt},
+								cancel : true,
 								navigate : { 
 									toast  : opts.noToast? {} : {
 										inbuffer : {msg: fm.i18n(['complete', fm.i18n('cmd' + cmd)]), action: {
@@ -268,8 +272,12 @@ elFinder.prototype.commands.paste = function() {
 								}
 								dfrd.resolve(data);
 							})
-							.fail(function() {
+							.fail(function(flg) {
 								dfrd.reject();
+								if (flg === 0) {
+									// canceling
+									fm.sync();
+								}
 							})
 							.always(function() {
 								fm.unlockfiles({files : files});
@@ -304,7 +312,7 @@ elFinder.prototype.commands.paste = function() {
 				
 				return dfrd;
 			},
-			parents, fparents;
+			parents, fparents, cutDfrd;
 
 
 		if (!cnt || !dst || dst.mime != 'directory') {
@@ -338,7 +346,7 @@ elFinder.prototype.commands.paste = function() {
 			fparents.pop();
 			if ($.inArray(dst.hash, fparents) !== -1) {
 				
-				if ($.map(fparents, function(h) { var d = fm.file(h); return d.phash == dst.hash && d.name == file.name ? d : null; }).length) {
+				if ($.grep(fparents, function(h) { var d = fm.file(h); return d.phash == dst.hash && d.name == file.name ? true : false; }).length) {
 					return !dfrd.reject(['errReplByChild', file.name]);
 				}
 			}
@@ -354,22 +362,48 @@ elFinder.prototype.commands.paste = function() {
 			}
 		});
 
-		if (dfrd.state() == 'rejected') {
+		if (dfrd.state() === 'rejected') {
 			return dfrd;
 		}
 
-		$.when(
-			copy(fcopy),
-			paste(fpaste)
-		)
-		.done(function(cr, pr) {
-			dfrd.resolve(pr && pr.undo? pr : void(0));
-		})
-		.fail(function() {
+		cutDfrd = $.Deferred();
+		if (cut && self.options.moveConfirm) {
+			fm.confirm({
+				title  : 'moveFiles',
+				text   : fm.i18n('confirmMove', dst.i18 || dst.name),
+				accept : {
+					label    : 'btnYes',
+					callback : function() {  
+						cutDfrd.resolve();
+					}
+				},
+				cancel : {
+					label    : 'btnCancel',
+					callback : function() {
+						cutDfrd.reject();
+					}
+				}
+			});
+		} else {
+			cutDfrd.resolve();
+		}
+
+		cutDfrd.done(function() {
+			$.when(
+				copy(fcopy),
+				paste(fpaste)
+			)
+			.done(function(cr, pr) {
+				dfrd.resolve(pr && pr.undo? pr : void(0));
+			})
+			.fail(function() {
+				dfrd.reject();
+			})
+			.always(function() {
+				cut && fm.clipboard([]);
+			});
+		}).fail(function() {
 			dfrd.reject();
-		})
-		.always(function() {
-			cut && fm.clipboard([]);
 		});
 		
 		return dfrd;

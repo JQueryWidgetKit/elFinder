@@ -9,12 +9,12 @@ elFinder.prototype.commands.rm = function() {
 	"use strict";
 	var self = this,
 		fm = this.fm,
-		tpl = '<div class="ui-helper-clearfix elfinder-rm-title"><span class="elfinder-cwd-icon {class} ui-corner-all"/>{title}<div class="elfinder-rm-desc">{desc}</div></div>',
+		tpl = '<div class="ui-helper-clearfix elfinder-rm-title"><span class="elfinder-cwd-icon {class} ui-corner-all"></span>{title}<div class="elfinder-rm-desc">{desc}</div></div>',
 		confirm = function(dfrd, targets, files, tHash, addTexts) {
 			var cnt = targets.length,
 				cwd = fm.cwd().hash,
 				descs = [],
-				spinner = '<span class="elfinder-info-spinner"/>' + fm.i18n('calc'),
+				spinner = fm.i18n('calc') + '<span class="elfinder-spinner"></span>',
 				dialog, text, tmb, size, f, fname;
 			
 			if (cnt > 1) {
@@ -56,7 +56,7 @@ elFinder.prototype.commands.rm = function() {
 					label    : 'btnRm',
 					callback : function() {  
 						if (tHash) {
-							toTrash(dfrd, targets, tHash);
+							self.toTrash(dfrd, targets, tHash);
 						} else {
 							remove(dfrd, targets);
 						}
@@ -84,9 +84,9 @@ elFinder.prototype.commands.rm = function() {
 			
 			if (getSize) {
 				getSize = fm.getSize($.map(files, function(f) { return f.mime === 'directory'? f.hash : null; })).done(function(data) {
-					dialog.find('span.elfinder-info-spinner').parent().html(fm.i18n('size')+': '+data.formated);
+					dialog.find('span.elfinder-spinner').parent().html(fm.i18n('size')+': '+data.formated);
 				}).fail(function() {
-					dialog.find('span.elfinder-info-spinner').parent().html(fm.i18n('size')+': '+fm.i18n('unknown'));
+					dialog.find('span.elfinder-spinner').parent().html(fm.i18n('size')+': '+fm.i18n('unknown'));
 				}).always(function() {
 					getSize = false;
 				});
@@ -101,7 +101,7 @@ elFinder.prototype.commands.rm = function() {
 				req, dirs, cnt;
 			
 			if (itemCnt > maxCnt) {
-				confirm(dfrd, targets, self.files(targets), null, [fm.i18n('tooManyToTrash')]);
+				self.confirm(dfrd, targets, self.files(targets), null, [fm.i18n('tooManyToTrash')]);
 				return;
 			}
 			
@@ -183,14 +183,13 @@ elFinder.prototype.commands.rm = function() {
 								if (data.added && data.added.length) {
 									undo = function() {
 										var targets = [],
-											restore = fm.getCommand('restore'),
 											dirs    = $.map(data.added, function(f) { return f.mime === 'directory'? f.hash : null; });
 										$.each(data.added, function(i, f) {
 											if ($.inArray(f.phash, dirs) === -1) {
 												targets.push(f.hash);
 											}
 										});
-										return restore.exec(targets, {noToast: true});
+										return fm.exec('restore', targets, {noToast: true});
 									};
 									redo = function() {
 										return fm.request({
@@ -232,7 +231,8 @@ elFinder.prototype.commands.rm = function() {
 								fm.notify({type : 'trash', cnt : 1, hideCnt : true, progress : prgSt});
 							}, fm.notifyDelay);
 							$.each(dsts, function(dir, files) {
-								var reqData;
+								var phash = fm.file(files[0]).phash,
+									reqData;
 								if (hashes[dir]) {
 									reqData = {cmd : 'paste', dst : hashes[dir], targets : files, cut : 1};
 									fm.request({
@@ -245,7 +245,6 @@ elFinder.prototype.commands.rm = function() {
 										}
 									})
 									.done(function(data) {
-										var phash = fm.file(files[0]).phash;
 										data = fm.normalize(data);
 										fm.updateCache(data);
 										margeRes(data, phash, reqData);
@@ -265,7 +264,7 @@ elFinder.prototype.commands.rm = function() {
 										data.sync && fm.sync();
 									})
 									.always(function() {
-										var hashes, addTexts, end = 2;
+										var hashes = [], addTexts, end = 2;
 										if (hasNtf()) {
 											fm.notify({type : 'trash', cnt : 0, hideCnt : true, progress : prg});
 										} else {
@@ -278,15 +277,16 @@ elFinder.prototype.commands.rm = function() {
 											if (Object.keys(res).length) {
 												if (err.length > 1) {
 													if (res.removed || res.removed.length) {
-														hashes = $.map(targets, function(h) {
-															return $.inArray(h, res.removed) === -1? h : null;
+														hashes = $.grep(targets, function(h) {
+															return $.inArray(h, res.removed) === -1? true : false;
 														});
 													}
 													if (hashes.length) {
-														if (err > end) {
+														if (err.length > end) {
 															end = (fm.messages[err[end-1]] || '').indexOf('$') === -1? end : end + 1;
 														}
-														self.exec(hashes, { addTexts: err.slice(0, end), forceRm: true });
+														dfrd.reject();
+														fm.exec('rm', hashes, { addTexts: err.slice(0, end), forceRm: true });
 													} else {
 														fm.error(err);
 													}
@@ -320,7 +320,7 @@ elFinder.prototype.commands.rm = function() {
 					fm.unlockfiles({files : targets});
 				}
 			}).fail(function() {
-				confirm(dfrd, targets, self.files(targets), null, [fm.i18n('tooManyToTrash')]);
+				self.confirm(dfrd, targets, self.files(targets), null, [fm.i18n('tooManyToTrash')]);
 			});
 		},
 		remove = function(dfrd, targets, quiet) {
@@ -350,7 +350,7 @@ elFinder.prototype.commands.rm = function() {
 			if (targets && targets.length) {
 				if (targets.length > 1 && fm.searchStatus.state === 2) {
 					root1st = fm.file(fm.root(targets[0])).volumeid;
-					if (!$.map(targets, function(h) { return h.indexOf(root1st) !== 0? 1 : null ; }).length) {
+					if (!$.grep(targets, function(h) { return h.indexOf(root1st) !== 0? true : false ; }).length) {
 						thash = fm.option('trashHash', targets[0]);
 					}
 				} else {
@@ -361,20 +361,23 @@ elFinder.prototype.commands.rm = function() {
 		},
 		getSize = false;
 	
+	// for to be able to overwrite
+	this.confirm = confirm;
+	this.toTrash = toTrash;
+	this.remove = remove;
+
 	this.syncTitleOnChange = true;
 	this.updateOnSelect = false;
 	this.shortcuts = [{
 		pattern     : 'delete ctrl+backspace shift+delete'
 	}];
-	this.handlers = {
-		'select' : function(e) {
-			var targets = e.data && e.data.selected && e.data.selected.length? e.data.selected : null;
-			self.update(void(0), (targets? getTHash(targets) : fm.option('trashHash'))? 'trash' : 'rm');
-		}
-	};
 	this.value = 'rm';
 	
 	this.init = function() {
+		// re-assign for extended command
+		self = this;
+		fm = this.fm;
+		// bind function of change
 		self.change(function() {
 			var targets;
 			delete self.extra;
@@ -384,7 +387,7 @@ elFinder.prototype.commands.rm = function() {
 			if (self.value === 'trash') {
 				self.extra = {
 					icon: 'rm',
-					node: $('<span/>')
+					node: $('<span></span>')
 						.attr({title: fm.i18n('cmdrm')})
 						.on('ready', function(e, data) {
 							targets = data.targets;
@@ -406,7 +409,7 @@ elFinder.prototype.commands.rm = function() {
 	this.getstate = function(select) {
 		var sel   = this.hashes(select);
 		
-		return sel.length && $.map(sel, function(h) { var f = fm.file(h); return f && ! f.locked && ! fm.isRoot(f)? h : null; }).length == sel.length
+		return sel.length && $.grep(sel, function(h) { var f = fm.file(h); return f && ! f.locked && ! fm.isRoot(f)? true : false; }).length == sel.length
 			? 0 : -1;
 	};
 	
@@ -460,17 +463,24 @@ elFinder.prototype.commands.rm = function() {
 			fm.lockfiles({files : targets});
 			
 			if (tHash && self.options.quickTrash) {
-				toTrash(dfrd, targets, tHash);
+				self.toTrash(dfrd, targets, tHash);
 			} else {
 				if (quiet) {
 					remove(dfrd, targets, quiet);
 				} else {
-					confirm(dfrd, targets, files, tHash, addTexts);
+					self.confirm(dfrd, targets, files, tHash, addTexts);
 				}
 			}
 		}
 			
 		return dfrd;
 	};
+
+	fm.bind('select contextmenucreate closecontextmenu', function(e) {
+		var targets = (e.data? (e.data.selected || e.data.targets) : null) || fm.selected();
+		if (targets && targets.length) {
+			self.update(void(0), (targets? getTHash(targets) : fm.option('trashHash'))? 'trash' : 'rm');
+		}
+	});
 
 };

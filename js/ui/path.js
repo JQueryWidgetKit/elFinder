@@ -14,7 +14,7 @@ $.fn.elfinderpath = function(fm, options) {
 			place  = 'statusbar',
 			clHover= fm.res('class', 'hover'),
 			prefix = 'path' + (elFinder.prototype.uniqueid? elFinder.prototype.uniqueid : '') + '-',
-			wzbase = $('<div class="ui-widget-header ui-helper-clearfix elfinder-workzone-path"/>'),
+			wzbase = $('<div class="ui-widget-header ui-helper-clearfix elfinder-workzone-path"></div>'),
 			path   = $(this).addClass('elfinder-path').html('&nbsp;')
 				.on('mousedown', 'span.elfinder-path-dir', function(e) {
 					var hash = $(this).attr('id').substr(prefix.length);
@@ -29,7 +29,7 @@ $.fn.elfinderpath = function(fm, options) {
 					}
 				})
 				.prependTo(fm.getUI('statusbar').show()),
-			roots = $('<div class="elfinder-path-roots"/>').on('click', function(e) {
+			roots = $('<div class="elfinder-path-roots"></div>').on('click', function(e) {
 				e.stopPropagation();
 				e.preventDefault();
 				
@@ -54,7 +54,7 @@ $.fn.elfinderpath = function(fm, options) {
 					x: e.pageX,
 					y: e.pageY
 				});
-			}).append('<span class="elfinder-button-icon elfinder-button-icon-menu" />').appendTo(wzbase),
+			}).append('<span class="elfinder-button-icon elfinder-button-icon-menu" ></span>').appendTo(wzbase),
 			render = function(cwd) {
 				var dirs = [],
 					names = [];
@@ -74,6 +74,9 @@ $.fn.elfinderpath = function(fm, options) {
 				path.scrollLeft(prev.length? prev.position().left : 0);
 			},
 			fit = function() {
+				if (fm.UA.CSS.flex) {
+					return;
+				}
 				var dirs = path.children('span.elfinder-path-dir'),
 					cnt  = dirs.length,
 					m, bg = 0, ids;
@@ -111,10 +114,11 @@ $.fn.elfinderpath = function(fm, options) {
 					dirs.attr('style', '');
 				}
 			},
-			hasUiTree;
+			hasUiTree, hasUiStat;
 
 		fm.one('init', function() {
 			hasUiTree = fm.getUI('tree').length;
+			hasUiStat = fm.getUI('stat').length;
 			if (! hasUiTree && options.toWorkzoneWithoutNavbar) {
 				wzbase.append(path).insertBefore(fm.getUI('workzone'));
 				place = 'workzone';
@@ -139,7 +143,7 @@ $.fn.elfinderpath = function(fm, options) {
 				path.css('margin', 0);
 				roots.hide();
 			}
-			fit();
+			!hasUiStat && fit();
 		})
 		.bind('searchstart', function(e) {
 			if (e.data) {
@@ -175,6 +179,6 @@ $.fn.elfinderpath = function(fm, options) {
 			}
 			fm.trigger('uiresize');
 		})
-		.bind('resize', fit);
+		.bind('resize uistatchange', fit);
 	});
 };
