@@ -1,12 +1,10 @@
 uploaded
 jsi18nelfinderplJsContent
 	^ '/**
- * Polski translation
+ * Polskie tÅumaczenie
  * @author Marcin MikoÅajczyk <marcin@pjwstk.edu.pl>
- * @author Wojciech JabÅoÅski <www.jablonski@gmail.com>
  * @author BogusÅaw ZiÄba <bobi@poczta.fm>
- * @author BogusÅaw ZiÄba <bobi@poczta.fm>
- * @version 2016-09-04
+ * @version 2020-03-29
  */
 (function(root, factory) {
 	if (typeof define === ''function'' && define.amd) {
@@ -18,11 +16,12 @@ jsi18nelfinderplJsContent
 	}
 }(this, function(elFinder) {
 	elFinder.prototype.i18.pl = {
-		translator : ''Marcin MikoÅajczyk &lt;marcin@pjwstk.edu.pl&gt;, Wojciech JabÅoÅski &lt;www.jablonski@gmail.com&gt;, BogusÅaw ZiÄba &lt;bobi@poczta.fm&gt;'',
+		translator : ''Marcin MikoÅajczyk &lt;marcin@pjwstk.edu.pl&gt;, BogusÅaw ZiÄba &lt;bobi@poczta.fm&gt;, BogusÅaw ZiÄba &lt;bobi@poczta.fm&gt;'',
 		language   : ''Polski'',
 		direction  : ''ltr'',
-		dateFormat : ''d M Y H:i'', // Mar 13, 2012 05:27 PM
-		fancyDateFormat : ''$1 H:i'', // will produce smth like: Today 12:25 PM
+		dateFormat : ''d.m.Y H:i'', // will show like: 29.03.2020 06:58
+		fancyDateFormat : ''$1 H:i'', // will show like: Dzisiaj 06:58
+		nonameDateFormat : ''ymd-His'', // noname upload will show like: 200329-065813
 		messages   : {
 
 			/********************************** errors **********************************/
@@ -54,7 +53,8 @@ jsi18nelfinderplJsContent
 			''errLocked''            : ''"$1" jest zablokowany i nie moÅ¼e zostaÄ zmieniony, przeniesiony lub usuniÄty.'',
 			''errExists''            : ''Plik "$1" juÅ¼ istnieje.'',
 			''errInvName''           : ''NieprawidÅowa nazwa pliku.'',
-			''errFolderNotFound''    : ''Katalog nie zostaÅ znaleziony.'',
+			''errInvDirname''        : ''NieprawidÅowa nazwa folderu.'',  // from v2.1.24 added 12.4.2017
+			''errFolderNotFound''    : ''Nie znaleziono folderu.'',
 			''errFileNotFound''      : ''Plik nie zostaÅ znaleziony.'',
 			''errTrgFolderNotFound'' : ''Katalog docelowy "$1" nie zostaÅ znaleziony.'',
 			''errPopup''             : ''PrzeglÄdarka zablokowaÅa otwarcie nowego okna. Aby otworzyÄ plik, zmieÅ ustawienia przeglÄdarki.'',
@@ -79,6 +79,7 @@ jsi18nelfinderplJsContent
 			''errMove''              : ''Nie moÅ¼na przenieÅÄ "$1".'',
 			''errCopyInItself''      : ''Nie moÅ¼na skopiowaÄ "$1" w miejsce jego samego.'',
 			''errRm''                : ''Nie moÅ¼na usunÄÄ "$1".'',
+			''errTrash''             : ''Nie moÅ¼na do kosza.'', // from v2.1.24 added 30.4.2017
 			''errRmSrc''             : ''Nie naleÅ¼y usunÄÄ pliku(s) ÅºrÃ³dÅowy.'',
 			''errExtract''           : ''Nie moÅ¼na wypakowaÄ plikÃ³w z "$1".'',
 			''errArchive''           : ''Nie moÅ¼na utworzyÄ archiwum.'',
@@ -110,7 +111,13 @@ jsi18nelfinderplJsContent
 			''errConvUTF8''          : ''Nie wymienialne na UTF-8'', // from v2.1 added 08.04.2014
 			''errFolderUpload''      : ''WyprÃ³buj Google Chrome, jeÅli chcesz przesÅaÄ katalog.'', // from v2.1 added 26.6.2015
 			''errSearchTimeout''     : ''UpÅynÄÅ limit czasu podczas wyszukiwania "$1". Wynik wyszukiwania jest czÄÅciowy.'', // from v2.1 added 12.1.2016
-			''errReauthRequire''     : ''Wymagana jest ponowna autoryzacja.'', // from v2.1.10 added 3.24.2016
+			''errReauthRequire''     : ''Wymagana jest ponowna autoryzacja.'', // from v2.1.10 added 24.3.2016
+			''errMaxTargets''        : ''Maks. liczba elementÃ³w do wyboru to $1.'', // from v2.1.17 added 17.10.2016
+			''errRestore''           : ''Nie moÅ¼na przywrÃ³ciÄ z kosza. Nie moÅ¼na zidentyfikowaÄ przywrÃ³ciÄ docelowego.'', // from v2.1.24 added 3.5.2017
+			''errEditorNotFound''    : ''Nie znaleziono edytora tego typu pliku.'', // from v2.1.25 added 23.5.2017
+			''errServerError''       : ''WystÄpiÅ bÅÄd po stronie serwera .'', // from v2.1.25 added 16.6.2017
+			''errEmpty''             : ''Nie moÅ¼na do pustego folderu "$1".'', // from v2.1.25 added 22.6.2017
+			''moreErrors''           : ''Jest jeszcze $1 bÅÄd/bÅÄdy.'', // from v2.1.44 added 9.12.2018
 
 			/******************************* commands names ********************************/
 			''cmdarchive''   : ''UtwÃ³rz archiwum'',
@@ -124,22 +131,24 @@ jsi18nelfinderplJsContent
 			''cmdforward''   : ''Dalej'',
 			''cmdgetfile''   : ''Wybierz pliki'',
 			''cmdhelp''      : ''Informacje o programie'',
-			''cmdhome''      : ''Katalog gÅÃ³wny'',
+			''cmdhome''      : ''GÅÃ³wny'',
 			''cmdinfo''      : ''WÅaÅciwoÅci'',
 			''cmdmkdir''     : ''Nowy katalog'',
 			''cmdmkdirin''   : ''Do nowego katalogu'', // from v2.1.7 added 19.2.2016
-			''cmdmkfile''    : ''Nowy plik tekstowy'',
+			''cmdmkfile''    : ''Nowy plik'',
 			''cmdopen''      : ''OtwÃ³rz'',
 			''cmdpaste''     : ''Wklej'',
 			''cmdquicklook'' : ''PodglÄd'',
 			''cmdreload''    : ''OdÅwieÅ¼'',
 			''cmdrename''    : ''ZmieÅ nazwÄ'',
 			''cmdrm''        : ''UsuÅ'',
+			''cmdtrash''     : ''Do kosza'', //from v2.1.24 added 29.4.2017
+			''cmdrestore''   : ''PrzywrÃ³Ä'', //from v2.1.24 added 3.5.2017
 			''cmdsearch''    : ''Wyszukaj pliki'',
-			''cmdup''        : ''W gÃ³rÄ'',
+			''cmdup''        : ''PrzejdÅº do katalogu nadrzÄdnego'',
 			''cmdupload''    : ''WyÅlij pliki'',
 			''cmdview''      : ''Widok'',
-			''cmdresize''    : ''ZmieÅ rozmiar obrazu'',
+			''cmdresize''    : ''ZmieÅ rozmiar i ObrÃ³Ä'',
 			''cmdsort''      : ''Sortuj'',
 			''cmdnetmount''  : ''Zamontuj wolumin sieciowy'', // added 18.04.2012
 			''cmdnetunmount'': ''Odmontuj'', // from v2.1 added 30.04.2012
@@ -147,7 +156,17 @@ jsi18nelfinderplJsContent
 			''cmdchmod''     : ''Zmiana trybu'', // from v2.1 added 20.6.2015
 			''cmdopendir''   : ''OtwÃ³rz katalog'', // from v2.1 added 13.1.2016
 			''cmdcolwidth''  : ''Resetuj szerokoÅÄ kolumny'', // from v2.1.13 added 12.06.2016
+			''cmdfullscreen'': ''PeÅny ekran'', // from v2.1.15 added 03.08.2016
 			''cmdmove''      : ''PrzenieÅ'', // from v2.1.15 added 21.08.2016
+			''cmdempty''     : ''OprÃ³Å¼nij folder'', // from v2.1.25 added 22.06.2017
+			''cmdundo''      : ''Cofnij'', // from v2.1.27 added 31.07.2017
+			''cmdredo''      : ''PonÃ³w'', // from v2.1.27 added 31.07.2017
+			''cmdpreference'': ''Preferencje'', // from v2.1.27 added 03.08.2017
+			''cmdselectall'' : ''Zaznacz wszystko'', // from v2.1.28 added 15.08.2017
+			''cmdselectnone'': ''Odznacz wszystko'', // from v2.1.28 added 15.08.2017
+			''cmdselectinvert'': ''OdwrÃ³Ä wybÃ³r'', // from v2.1.28 added 15.08.2017
+			''cmdopennew''   : ''OtwÃ³rz w nowym oknie'', // from v2.1.38 added 3.4.2018
+			''cmdhide''      : ''Ukryj (osobiste)'', // from v2.1.41 added 24.7.2018
 
 			/*********************************** buttons ***********************************/
 			''btnClose''  : ''Zamknij'',
@@ -157,7 +176,7 @@ jsi18nelfinderplJsContent
 			''btnCancel'' : ''Anuluj'',
 			''btnNo''     : ''Nie'',
 			''btnYes''    : ''Tak'',
-			''btnMount''  : ''MontaÅ¼'',  // added 18.04.2012
+			''btnMount''  : ''Montuj'',  // added 18.04.2012
 			''btnApprove'': ''IdÅº do $1 & zatwierdÅº'', // from v2.1 added 26.04.2012
 			''btnUnmount'': ''Odmontuj'', // from v2.1 added 30.04.2012
 			''btnConv''   : ''Konwertuj'', // from v2.1 added 08.04.2014
@@ -168,9 +187,14 @@ jsi18nelfinderplJsContent
 			''btnFileName'':''Nazwa pliku'',  // from v2.1 added 22.5.2015
 			''btnSaveClose'': ''Zapisz & Zamknij'', // from v2.1 added 12.6.2015
 			''btnBackup'' : ''Kopia zapasowa'', // fromv2.1 added 28.11.2015
+			''btnRename''    : ''ZmieÅ nazwÄ'',      // from v2.1.24 added 6.4.2017
+			''btnRenameAll'' : ''ZmieÅ nazwÄ(Wszystkie)'', // from v2.1.24 added 6.4.2017
+			''btnPrevious'' : ''Poprz ($1/$2)'', // from v2.1.24 added 11.5.2017
+			''btnNext''     : ''Nast ($1/$2)'', // from v2.1.24 added 11.5.2017
+			''btnSaveAs''   : ''Zapisz Jako'', // from v2.1.25 added 24.5.2017
 
 			/******************************** notifications ********************************/
-			''ntfopen''     : ''OtwÃ³rz katalog'',
+			''ntfopen''     : ''Otwieranie katalogu'',
 			''ntffile''     : ''OtwÃ³rz plik'',
 			''ntfreload''   : ''OdÅwieÅ¼ zawartoÅÄ katalogu'',
 			''ntfmkdir''    : ''Tworzenie katalogu'',
@@ -197,23 +221,34 @@ jsi18nelfinderplJsContent
 			''ntfchmod''    : ''Zmiana trybu pliku'', // from v2.1 added 20.6.2015
 			''ntfpreupload'': ''Weryfikacja nazwy przesÅanego pliku'', // from v2.1 added 31.11.2015
 			''ntfzipdl''    : ''Tworzenie pliku do pobrania'', // from v2.1.7 added 23.1.2016
+			''ntfparents''  : ''Uzyskiwanie informacji o ÅcieÅ¼ce'', // from v2.1.17 added 2.11.2016
+			''ntfchunkmerge'': ''Przetwarzanie przesÅanego pliku'', // from v2.1.17 added 2.11.2016
+			''ntftrash''    : ''Wykonuje wrzucanie do kosza'', // from v2.1.24 added 2.5.2017
+			''ntfrestore''  : ''Wykonuje przywracanie z kosza'', // from v2.1.24 added 3.5.2017
+			''ntfchkdir''   : ''Sprawdzanie folderu docelowego'', // from v2.1.24 added 3.5.2017
+			''ntfundo''     : ''Cofanie poprzedniej operacji'', // from v2.1.27 added 31.07.2017
+			''ntfredo''     : ''Ponownie poprzednio cofniÄte'', // from v2.1.27 added 31.07.2017
+			''ntfchkcontent'' : ''Sprawdzanie zawartoÅci'', // from v2.1.41 added 3.8.2018
+
+			/*********************************** volumes *********************************/
+			''volume_Trash'' : ''Åmieci'', //from v2.1.24 added 29.4.2017
 
 			/************************************ dates **********************************/
 			''dateUnknown'' : ''nieznana'',
 			''Today''       : ''Dzisiaj'',
 			''Yesterday''   : ''Wczoraj'',
-			''msJan''       : ''sty'',
-			''msFeb''       : ''lut'',
-			''msMar''       : ''mar'',
-			''msApr''       : ''kwi'',
-			''msMay''       : ''maj'',
-			''msJun''       : ''cze'',
-			''msJul''       : ''lip'',
-			''msAug''       : ''sie'',
-			''msSep''       : ''wrz'',
-			''msOct''       : ''paÅº'',
-			''msNov''       : ''lis'',
-			''msDec''       : ''gru'',
+			''msJan''       : ''Sty'',
+			''msFeb''       : ''Lut'',
+			''msMar''       : ''Mar'',
+			''msApr''       : ''Kwi'',
+			''msMay''       : ''Maj'',
+			''msJun''       : ''Cze'',
+			''msJul''       : ''Lip'',
+			''msAug''       : ''Sie'',
+			''msSep''       : ''Wrz'',
+			''msOct''       : ''PaÅº'',
+			''msNov''       : ''Lis'',
+			''msDec''       : ''Gru'',
 			''January''     : ''StyczeÅ'',
 			''February''    : ''Luty'',
 			''March''       : ''Marzec'',
@@ -226,26 +261,26 @@ jsi18nelfinderplJsContent
 			''October''     : ''PaÅºdziernik'',
 			''November''    : ''Listopad'',
 			''December''    : ''GrudzieÅ'',
-			''Sunday''      : ''niedziela'',
-			''Monday''      : ''poniedziaÅek'',
-			''Tuesday''     : ''wtorek'',
-			''Wednesday''   : ''Åroda'',
-			''Thursday''    : ''czwartek'',
-			''Friday''      : ''piÄtek'',
-			''Saturday''    : ''sobota'',
-			''Sun''         : ''nie'',
-			''Mon''         : ''pon'',
-			''Tue''         : ''wto'',
-			''Wed''         : ''Åro'',
-			''Thu''         : ''czw'',
-			''Fri''         : ''piÄ'',
-			''Sat''         : ''sob'',
+			''Sunday''      : ''Niedziela'',
+			''Monday''      : ''PoniedziaÅek'',
+			''Tuesday''     : ''Wtorek'',
+			''Wednesday''   : ''Åroda'',
+			''Thursday''    : ''Czwartek'',
+			''Friday''      : ''PiÄtek'',
+			''Saturday''    : ''Sobota'',
+			''Sun''         : ''Nie'',
+			''Mon''         : ''Pon'',
+			''Tue''         : ''Wto'',
+			''Wed''         : ''Åro'',
+			''Thu''         : ''Czw'',
+			''Fri''         : ''PiÄ'',
+			''Sat''         : ''Sob'',
 
 			/******************************** sort variants ********************************/
-			''sortname''          : ''po nazwie'',
-			''sortkind''          : ''po typie'',
-			''sortsize''          : ''po rozmiarze'',
-			''sortdate''          : ''po dacie'',
+			''sortname''          : ''w/g nazwy'',
+			''sortkind''          : ''w/g typu'',
+			''sortsize''          : ''w/g rozmiaru'',
+			''sortdate''          : ''w/g daty'',
 			''sortFoldersFirst''  : ''katalogi pierwsze'',
 			''sortperm''          : ''wg/nazwy'', // from v2.1.13 added 13.06.2016
 			''sortmode''          : ''wg/trybu'',       // from v2.1.13 added 13.06.2016
@@ -254,16 +289,23 @@ jsi18nelfinderplJsContent
 			''sortAlsoTreeview''  : ''RÃ³wnieÅ¼ drzewa katalogÃ³w'',  // from v2.1.15 added 01.08.2016
 
 			/********************************** new items **********************************/
-			''untitled file.txt'' : ''NewFile.txt'', // added 10.11.2015
-			''untitled folder''   : ''NewFolder'',   // added 10.11.2015
-			''Archive''           : ''NewArchive'',  // from v2.1 added 10.11.2015
+			''untitled file.txt'' : ''NowyPlik.txt'', // added 10.11.2015
+			''untitled folder''   : ''NowyFolder'',   // added 10.11.2015
+			''Archive''           : ''NoweArchiwum'',  // from v2.1 added 10.11.2015
+			''untitled file''     : ''NowyPlik.$1'',  // from v2.1.41 added 6.8.2018
+			''extentionfile''     : ''$1 Plik'',    // from v2.1.41 added 6.8.2018
+			''extentiontype''     : ''$1: $2'',      // from v2.1.43 added 17.10.2018
 
 			/********************************** messages **********************************/
 			''confirmReq''      : ''Wymagane potwierdzenie'',
 			''confirmRm''       : ''Czy na pewno chcesz usunÄÄ pliki?<br/>Tej operacji nie moÅ¼na cofnÄÄ!'',
 			''confirmRepl''     : ''ZastÄpiÄ stary plik nowym?'',
+			''confirmRest''     : ''ZamieniÄ istniejÄcy element na pozycjÄ w koszu?'', // fromv2.1.24 added 5.5.2017
 			''confirmConvUTF8'' : ''Nie w UTF-8<br/>KonwertowaÄ na UTF-8?<br/>ZawartoÅÄ stanie siÄ  UTF-8 poprzez zapisanie po konwersji.'', // from v2.1 added 08.04.2014
+			''confirmNonUTF8''  : ''Nie moÅ¼na wykryÄ kodowania tego pliku. Musi byÄ tymczasowo przeksztaÅcony do UTF-8. <br/> ProszÄ wybraÄ kodowanie znakÃ³w tego pliku.'', // from v2.1.19 added 28.11.2016
 			''confirmNotSave''  : ''ZostaÅ zmodyfikowany.<br/>Utracisz pracÄ, jeÅli nie zapiszesz zmian.'', // from v2.1 added 15.7.2015
+			''confirmTrash''    : ''Czy na pewno chcesz przenieÅÄ elementy do kosza?'', //from v2.1.24 added 29.4.2017
+			''confirmMove''     : ''Czy na pewno chcesz przenieÅÄ elementy do "$1"?'', //from v2.1.50 added 27.7.2019
 			''apllyAll''        : ''Zastosuj do wszystkich'',
 			''name''            : ''Nazwa'',
 			''size''            : ''Rozmiar'',
@@ -281,32 +323,36 @@ jsi18nelfinderplJsContent
 			''selectlfile''     : ''Zaznacz ostatni plik'',
 			''viewlist''        : ''Widok listy'',
 			''viewicons''       : ''Widok ikon'',
+			''viewSmall''       : ''MaÅe ikony'', // from v2.1.39 added 22.5.2018
+			''viewMedium''      : ''Årednie ikony'', // from v2.1.39 added 22.5.2018
+			''viewLarge''       : ''DuÅ¼e ikony'', // from v2.1.39 added 22.5.2018
+			''viewExtraLarge''  : ''Bardzo duÅ¼e ikony'', // from v2.1.39 added 22.5.2018
 			''places''          : ''Ulubione'',
-			''calc''            : ''Oblicz'',
+			''calc''            : ''Obliczanie'',
 			''path''            : ''ÅcieÅ¼ka'',
 			''aliasfor''        : ''Alias do'',
 			''locked''          : ''Zablokowany'',
 			''dim''             : ''Wymiary'',
-			''files''           : ''Pliki'',
-			''folders''         : ''katalog'',
-			''items''           : ''Elementy'',
+			''files''           : ''Plik(Ã³w)'',
+			''folders''         : ''Katalogi'',
+			''items''           : ''Element(Ã³w)'',
 			''yes''             : ''tak'',
 			''no''              : ''nie'',
 			''link''            : ''OdnoÅnik'',
 			''searcresult''     : ''Wyniki wyszukiwania'',
-			''selected''        : ''Zaznaczonych obiektÃ³w'',
-			''about''           : ''Informacje o programie'',
+			''selected''        : ''zaznaczonych obiektÃ³w'',
+			''about''           : ''O programie'',
 			''shortcuts''       : ''SkrÃ³ty klawiaturowe'',
 			''help''            : ''Pomoc'',
 			''webfm''           : ''MenedÅ¼er plikÃ³w sieciowych'',
 			''ver''             : ''Wersja'',
-			''protocolver''     : ''wersja wydania'',
-			''homepage''        : ''Strona gÅÃ³wna projektu'',
+			''protocolver''     : ''wersja protokoÅu'',
+			''homepage''        : ''Strona projektu'',
 			''docs''            : ''Dokumentacja'',
 			''github''          : ''Obserwuj rozwÃ³j projektu na Github'',
 			''twitter''         : ''ÅledÅº nas na Twitterze'',
 			''facebook''        : ''DoÅÄcz do nas na Facebooku'',
-			''team''            : ''Autorzy'',
+			''team''            : ''ZespÃ³Å'',
 			''chiefdev''        : ''gÅÃ³wny programista'',
 			''developer''       : ''programista'',
 			''contributor''     : ''wspÃ³Åautor'',
@@ -317,10 +363,11 @@ jsi18nelfinderplJsContent
 			''shortcutsof''     : ''SkrÃ³ty klawiaturowe sÄ wyÅÄczone'',
 			''dropFiles''       : ''UpuÅÄ pliki tutaj'',
 			''or''              : ''lub'',
-			''selectForUpload'' : ''Wybierz pliki do wysÅania'',
+			''selectForUpload'' : ''Wybierz pliki'',
 			''moveFiles''       : ''PrzenieÅ pliki'',
 			''copyFiles''       : ''Kopiuj pliki'',
-			''rmFromPlaces''    : ''UsuÅ z ulubionych'',
+			''restoreFiles''    : ''PrzywrÃ³Ä elementy'', // from v2.1.24 added 5.5.2017
+			''rmFromPlaces''    : ''UsuÅ z miejsc'',
 			''aspectRatio''     : ''Zachowaj proporcje'',
 			''scale''           : ''Skala'',
 			''width''           : ''SzerokoÅÄ'',
@@ -351,8 +398,8 @@ jsi18nelfinderplJsContent
 			''perm''            : ''Uprawnienia'', // from v2.1 added 20.6.2015
 			''mode''            : ''Tryb'', // from v2.1 added 20.6.2015
 			''emptyFolder''     : ''Katalog jest pusty'', // from v2.1.6 added 30.12.2015
-			''emptyFolderDrop'' : ''Katalog jest pusty\\UpuÅÄ aby dodaÄ pozycje'', // from v2.1.6 added 30.12.2015
-			''emptyFolderLTap'' : ''Katalog jest pusty\\Dotknij dÅuÅ¼ej aby dodaÄ pozycje'', // from v2.1.6 added 30.12.2015
+			''emptyFolderDrop'' : ''Katalog jest pusty\\AUpuÅÄ aby dodaÄ pozycje'', // from v2.1.6 added 30.12.2015
+			''emptyFolderLTap'' : ''Katalog jest pusty\\ADotknij dÅuÅ¼ej aby dodaÄ pozycje'', // from v2.1.6 added 30.12.2015
 			''quality''         : ''JakoÅÄ'', // from v2.1.6 added 5.1.2016
 			''autoSync''        : ''Auto synchronizacja'',  // from v2.1.6 added 10.1.2016
 			''moveUp''          : ''PrzenieÅ w gÃ³rÄ'',  // from v2.1.6 added 18.1.2016
@@ -369,12 +416,90 @@ jsi18nelfinderplJsContent
 			''hasSelected''     : ''Masz wybranych $1 pozycji.'', // from v2.1.13 added 6.3.2016
 			''hasClipboard''    : ''Masz $1 pozycji w schowku.'', // from v2.1.13 added 6.3.2016
 			''incSearchOnly''   : ''Wyszukiwanie przyrostowe jest wyÅÄcznie z bieÅ¼Äcego widoku.'', // from v2.1.13 added 6.30.2016
-			''reinstate''       : ''PrzywrÃ³Ä'', // from v2.1.15 added 3.8.2016
-			''complete''        : ''$1 zakoÅczono'', // from v2.1.15 added 21.8.2016
+			''reinstate''       : ''Przywracanie'', // from v2.1.15 added 3.8.2016
+			''complete''        : ''$1 zakoÅczone'', // from v2.1.15 added 21.8.2016
+			''contextmenu''     : ''Menu kontekstowe'', // from v2.1.15 added 9.9.2016
+			''pageTurning''     : ''Obracanie strony'', // from v2.1.15 added 10.9.2016
+			''volumeRoots''     : ''Wolumin gÅÃ³wny'', // from v2.1.16 added 16.9.2016
+			''reset''           : ''Resetuj'', // from v2.1.16 added 1.10.2016
+			''bgcolor''         : ''Kolor tÅa'', // from v2.1.16 added 1.10.2016
+			''colorPicker''     : ''Wybierania kolorÃ³w'', // from v2.1.16 added 1.10.2016
+			''8pxgrid''         : ''8px Kratka'', // from v2.1.16 added 4.10.2016
+			''enabled''         : ''WÅÄczone'', // from v2.1.16 added 4.10.2016
+			''disabled''        : ''WyÅÄczone'', // from v2.1.16 added 4.10.2016
+			''emptyIncSearch''  : ''Wyniki wyszukiwania sÄ puste w bieÅ¼Äcym widoku.\\AWciÅnij [Enter] aby poszerzyÄ zakres wyszukiwania.'', // from v2.1.16 added 5.10.2016
+			''emptyLetSearch''  : ''Wyszukiwanie pierwszej litery brak wynikÃ³w w bieÅ¼Äcym widoku.'', // from v2.1.23 added 24.3.2017
+			''textLabel''       : ''Etykieta tekstowa'', // from v2.1.17 added 13.10.2016
+			''minsLeft''        : ''$1 min pozostaÅo'', // from v2.1.17 added 13.11.2016
+			''openAsEncoding''  : ''OtwÃ³rz ponownie z wybranym kodowaniem'', // from v2.1.19 added 2.12.2016
+			''saveAsEncoding''  : ''Zapisz z wybranym kodowaniem'', // from v2.1.19 added 2.12.2016
+			''selectFolder''    : ''Wybierz katalog'', // from v2.1.20 added 13.12.2016
+			''firstLetterSearch'': ''Wyszukiwanie pierwszej litery'', // from v2.1.23 added 24.3.2017
+			''presets''         : ''WstÄpnie ustalone'', // from v2.1.25 added 26.5.2017
+			''tooManyToTrash''  : ''To zbyt wiele rzeczy, wiÄc nie mogÄ byÄ w koszu.'', // from v2.1.25 added 9.6.2017
+			''TextArea''        : ''PoleTekstowe'', // from v2.1.25 added 14.6.2017
+			''folderToEmpty''   : ''OprÃ³Å¼nij folder "$1".'', // from v2.1.25 added 22.6.2017
+			''filderIsEmpty''   : ''Brak elementÃ³w w folderze "$1".'', // from v2.1.25 added 22.6.2017
+			''preference''      : ''Preferencje'', // from v2.1.26 added 28.6.2017
+			''language''        : ''Ustawienie jÄzyka'', // from v2.1.26 added 28.6.2017
+			''clearBrowserData'': ''Zainicjuj ustawienia zapisane w tej przeglÄdarce'', // from v2.1.26 added 28.6.2017
+			''toolbarPref''     : ''Ustawienia paska narzÄdzi'', // from v2.1.27 added 2.8.2017
+			''charsLeft''       : ''... pozostaÅo $1 znak(Ã³w).'',  // from v2.1.29 added 30.8.2017
+			''linesLeft''       : ''... pozostaÅo $1 lini.'',  // from v2.1.52 added 16.1.2020
+			''sum''             : ''Suma'', // from v2.1.29 added 28.9.2017
+			''roughFileSize''   : ''PrzybliÅ¼ony rozmiar pliku'', // from v2.1.30 added 2.11.2017
+			''autoFocusDialog'' : ''Skoncentruj siÄ na elemencie dialogowym po najechaniu myszÄ'',  // from v2.1.30 added 2.11.2017
+			''select''          : ''Wybierz'', // from v2.1.30 added 23.11.2017
+			''selectAction''    : ''DziaÅanie po wybraniu pliku'', // from v2.1.30 added 23.11.2017
+			''useStoredEditor'' : ''OtwÃ³rz za pomocÄ ostatnio uÅ¼ywanego edytora'', // from v2.1.30 added 23.11.2017
+			''selectinvert''    : ''OdwrÃ³Ä zaznaczenie'', // from v2.1.30 added 25.11.2017
+			''renameMultiple''  : ''Czy na pewno chcesz zmieniÄ nazwÄ $1 wybranych elementÃ³w takich jak $2?<br/>Tego nie da siÄ cofnÄÄ!'', // from v2.1.31 added 4.12.2017
+			''batchRename''     : ''ZmieÅ partiami'', // from v2.1.31 added 8.12.2017
+			''plusNumber''      : ''+ Liczba'', // from v2.1.31 added 8.12.2017
+			''asPrefix''        : ''Dodaj prefix'', // from v2.1.31 added 8.12.2017
+			''asSuffix''        : ''Dodaj suffix'', // from v2.1.31 added 8.12.2017
+			''changeExtention'' : ''ZmieÅ rozszerzenie'', // from v2.1.31 added 8.12.2017
+			''columnPref''      : ''Ustawienia kolumn (Widok listy)'', // from v2.1.32 added 6.2.2018
+			''reflectOnImmediate'' : ''Wszystkie zmiany widoczne natychmiast w archiwum.'', // from v2.1.33 added 2.3.2018
+			''reflectOnUnmount''   : ''Wszelkie zmiany nie bÄdÄ widoczne, dopÃ³ki nie odÅÄczysz tego woluminu.'', // from v2.1.33 added 2.3.2018
+			''unmountChildren'' : ''NastÄpujÄcy wolumin (y), zamontowany na tym urzÄdzeniu rÃ³wnieÅ¼ niezamontowany. Czy na pewno chcesz go odmontowaÄ?'', // from v2.1.33 added 5.3.2018
+			''selectionInfo''   : ''Informacje Wyboru'', // from v2.1.33 added 7.3.2018
+			''hashChecker''     : ''Algorytmy do pokazywania hash pliku'', // from v2.1.33 added 10.3.2018
+			''infoItems''       : ''Info ElementÃ³w (WybÃ³r Panelu Informacyjnego)'', // from v2.1.38 added 28.3.2018
+			''pressAgainToExit'': ''NaciÅnij ponownie, aby wyjÅÄ.'', // from v2.1.38 added 1.4.2018
+			''toolbar''         : ''Pasek narzÄdziowy'', // from v2.1.38 added 4.4.2018
+			''workspace''       : ''Obszar Pracy'', // from v2.1.38 added 4.4.2018
+			''dialog''          : ''Dialog'', // from v2.1.38 added 4.4.2018
+			''all''             : ''Wszystko'', // from v2.1.38 added 4.4.2018
+			''iconSize''        : ''Rozmiar Ikony (PodglÄd ikon)'', // from v2.1.39 added 7.5.2018
+			''editorMaximized'' : ''OtwÃ³rz zmaksymalizowane okno edytora'', // from v2.1.40 added 30.6.2018
+			''editorConvNoApi'' : ''PoniewaÅ¼ konwersja przez API nie jest obecnie dostÄpna, naleÅ¼y dokonaÄ konwersji w witrynie.'', //from v2.1.40 added 8.7.2018
+			''editorConvNeedUpload'' : ''Po konwersji musisz przesÅaÄ z adresem URL pozycji lub pobranym plikiem, aby zapisaÄ przekonwertowany plik.'', //from v2.1.40 added 8.7.2018
+			''convertOn''       : ''Konwertuj na stronie $1'', // from v2.1.40 added 10.7.2018
+			''integrations''    : ''Integracje'', // from v2.1.40 added 11.7.2018
+			''integrationWith'' : ''Ten elFinder ma zintegrowane nastÄpujÄce usÅugi zewnÄtrzne. Przed uÅ¼yciem ich sprawdÅº warunki uÅ¼ytkowania, politykÄ prywatnoÅci itp.'', // from v2.1.40 added 11.7.2018
+			''showHidden''      : ''PokaÅ¼ ukryte pozycje'', // from v2.1.41 added 24.7.2018
+			''hideHidden''      : ''Ukryj ukryte pozycje'', // from v2.1.41 added 24.7.2018
+			''toggleHidden''    : ''PokaÅ¼/Ukryj ukryte pozycje'', // from v2.1.41 added 24.7.2018
+			''makefileTypes''   : ''Typy plikÃ³w, ktÃ³re moÅ¼na wÅÄczyÄ za pomocÄ "Nowy plik"'', // from v2.1.41 added 7.8.2018
+			''typeOfTextfile''  : ''Typ pliku tekstowego'', // from v2.1.41 added 7.8.2018
+			''add''             : ''Dodaj'', // from v2.1.41 added 7.8.2018
+			''theme''           : ''Motyw'', // from v2.1.43 added 19.10.2018
+			''default''         : ''DomyÅlnie'', // from v2.1.43 added 19.10.2018
+			''description''     : ''Opis'', // from v2.1.43 added 19.10.2018
+			''website''         : ''Witryna'', // from v2.1.43 added 19.10.2018
+			''author''          : ''Autor'', // from v2.1.43 added 19.10.2018
+			''email''           : ''E-mail'', // from v2.1.43 added 19.10.2018
+			''license''         : ''Licencja'', // from v2.1.43 added 19.10.2018
+			''exportToSave''    : ''Tego elementu nie moÅ¼na zapisaÄ. Aby uniknÄÄ utraty zmian, musisz wyeksportowaÄ go na swÃ³j komputer.'', // from v2.1.44 added 1.12.2018
+			''dblclickToSelect'': ''Kliknij dwukrotnie plik, aby go wybraÄ.'', // from v2.1.47 added 22.1.2019
+			''useFullscreen''   : ''UÅ¼yj trybu peÅnoekranowego'', // from v2.1.47 added 19.2.2019
 
 			/********************************** mimetypes **********************************/
 			''kindUnknown''     : ''Nieznany'',
+			''kindRoot''        : ''GÅÃ³wny Wolumin'', // from v2.1.16 added 16.10.2016
 			''kindFolder''      : ''Katalog'',
+			''kindSelects''     : ''Zaznaczenie'', // from v2.1.29 added 29.8.2017
 			''kindAlias''       : ''Alias'',
 			''kindAliasBroken'' : ''Utracony alias'',
 			// applications

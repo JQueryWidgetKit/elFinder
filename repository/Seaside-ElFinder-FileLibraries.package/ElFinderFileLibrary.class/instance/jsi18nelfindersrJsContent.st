@@ -117,7 +117,7 @@ jsi18nelfindersrJsContent
 			''cmdhome''      : ''PoÄetna'',
 			''cmdinfo''      : ''Proveri informacije'',
 			''cmdmkdir''     : ''Novi folder'',
-			''cmdmkfile''    : ''Nova tekstualna datoteka'',
+			''cmdmkfile''    : ''Nova datoteka'',
 			''cmdopen''      : ''Otvori'',
 			''cmdpaste''     : ''Zalepi'',
 			''cmdquicklook'' : ''Pregledaj'',
@@ -135,7 +135,7 @@ jsi18nelfindersrJsContent
 			/*********************************** buttons ***********************************/ 
 			''btnClose''  : ''Zatvori'',
 			''btnSave''   : ''SaÄuvaj'',
-			''btnRm''     : ''Preimenuj'',
+			''btnRm''     : ''ObriÅ¡i'',
 			''btnApply''  : ''Potvrdi'',
 			''btnCancel'' : ''Prekini'',
 			''btnNo''     : ''Ne'',

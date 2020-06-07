@@ -122,7 +122,7 @@ jsi18nelfinderroJsContent
 			''cmdhome''      : ''AcasÄ'',
 			''cmdinfo''      : ''InformaÈii'',
 			''cmdmkdir''     : ''Dosar nou'',
-			''cmdmkfile''    : ''FiÈier text nou'',
+			''cmdmkfile''    : ''FiÈier nou'',
 			''cmdopen''      : ''Deschide'',
 			''cmdpaste''     : ''LipeÈte'',
 			''cmdquicklook'' : ''PrevizualizeazÄ'',

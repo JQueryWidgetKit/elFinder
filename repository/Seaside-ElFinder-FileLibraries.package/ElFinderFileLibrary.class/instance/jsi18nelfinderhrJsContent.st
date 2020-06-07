@@ -124,7 +124,7 @@ jsi18nelfinderhrJsContent
 			''cmdinfo''      : ''Info'',
 			''cmdmkdir''     : ''Nova mapa'',
 			''cmdmkdirin''   : ''U novu mapu'', // from v2.1.7 added 19.2.2016
-			''cmdmkfile''    : ''Novi tekst dokument'',
+			''cmdmkfile''    : ''Nova ÑÐ°Ð¹Ð»'',
 			''cmdopen''      : ''Otvori'',
 			''cmdpaste''     : ''Zalijepi'',
 			''cmdquicklook'' : ''Pregled'',

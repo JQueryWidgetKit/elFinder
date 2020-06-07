@@ -1,3 +1,0 @@
-seaside
-jsDialogSelectors
-  ^ #(#'jsjquerydialogelfinderJs')

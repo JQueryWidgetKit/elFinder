@@ -125,7 +125,7 @@ jsi18nelfinderhuJsContent
 			''cmdinfo''      : ''TulajdonsÃ¡gok'',
 			''cmdmkdir''     : ''Ãj mappa'',
 			''cmdmkdirin''   : ''Into new folder'', // from v2.1.7 added 19.2.2016
-			''cmdmkfile''    : ''Ãj szÃ¶veges dokumentum'',
+			''cmdmkfile''    : ''Ãj fÃ¡jl'',
 			''cmdopen''      : ''MegnyitÃ¡s'',
 			''cmdpaste''     : ''BeillesztÃ©s'',
 			''cmdquicklook'' : ''ElÅnÃ©zet'',

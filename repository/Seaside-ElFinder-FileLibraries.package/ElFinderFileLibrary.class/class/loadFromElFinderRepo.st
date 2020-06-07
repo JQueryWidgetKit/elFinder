@@ -1,4 +1,4 @@
 loading from disc
 loadFromElFinderRepo
   ElFinderFileLibrary
-    recursivelyAddAllFilesIn: '/opt/git/JupiterSmalltalk/elFinderMin'
+    recursivelyAddAllFilesIn: '/opt/git/JQueryWidgetKit/elFinderMin'

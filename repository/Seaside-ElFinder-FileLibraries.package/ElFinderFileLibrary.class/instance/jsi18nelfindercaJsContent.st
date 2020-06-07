@@ -117,7 +117,7 @@ jsi18nelfindercaJsContent
 			''cmdhome''      : ''Inici'',
 			''cmdinfo''      : ''ObtÃ© informaciÃ³'',
 			''cmdmkdir''     : ''Nova carpeta'',
-			''cmdmkfile''    : ''Nou fitxer de text'',
+			''cmdmkfile''    : ''Nou fitxer'',
 			''cmdopen''      : ''Obre'',
 			''cmdpaste''     : ''Enganxa'',
 			''cmdquicklook'' : ''Previsualitza'',

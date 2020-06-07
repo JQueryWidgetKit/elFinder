@@ -2,9 +2,9 @@ uploaded
 jsi18nelfinderskJsContent
 	^ '/**
  * Slovak translation
+ * @author RobiNN <kelcakrobo@gmail.com>
  * @author Jakub ÄuraÅ¡ <jkblmr@gmail.com>
- * @author RobiNN <admin@robonetwork.cf>
- * @version 2016-11-21
+ * @version 2020-03-15
  */
 (function(root, factory) {
 	if (typeof define === ''function'' && define.amd) {
@@ -16,11 +16,12 @@ jsi18nelfinderskJsContent
 	}
 }(this, function(elFinder) {
 	elFinder.prototype.i18.sk = {
-		translator : ''Jakub ÄuraÅ¡ &lt;jkblmr@gmail.com&gt;, RobiNN &lt;admin@robonetwork.cf&gt;'',
-		language   : ''slovenÄina'',
+		translator : ''RobiNN &lt;kelcakrobo@gmail.com&gt;, Jakub ÄuraÅ¡ &lt;jkblmr@gmail.com&gt;'',
+		language   : ''SlovenÄina'',
 		direction  : ''ltr'',
-		dateFormat : ''d.m.Y H:i'', // Mar 13, 2012 05:27 PM
-		fancyDateFormat : ''$1 H:i'', // will produce smth like: Today 12:25 PM
+		dateFormat : ''d.m.Y H:i'', // will show like: 15.03.2020 16:42
+		fancyDateFormat : ''$1 H:i'', // will show like: Dnes 16:42
+		nonameDateFormat : ''ymd-His'', // noname upload will show like: 200315-164238
 		messages   : {
 
 			/********************************** errors **********************************/
@@ -28,88 +29,95 @@ jsi18nelfinderskJsContent
 			''errUnknown''           : ''NeznÃ¡ma chyba.'',
 			''errUnknownCmd''        : ''NeznÃ¡my prÃ­kaz.'',
 			''errJqui''              : ''NesprÃ¡vna jQuery UI konfigurÃ¡cia. Selectable, draggable a droppable musia byÅ¥ naÄÃ­tanÃ©.'',
-			''errNode''              : ''elFinder vyÅ¾aduje vytvorenie DOM Elementu.'',
+			''errNode''              : ''elFinder vyÅ¾aduje vytvorenie DOM elementu.'',
 			''errURL''               : ''NesprÃ¡vna elFinder konfigurÃ¡cia! URL nie je definovanÃ¡.'',
 			''errAccess''            : ''PrÃ­stup zamietnutÃ½.'',
 			''errConnect''           : ''Nepodarilo sa pripojiÅ¥ do backendu.'',
-			''errAbort''             : ''Pripojenie zruÅ¡enÃ©.'',
-			''errTimeout''           : ''VyprÅ¡al limit pripojenia.'',
+			''errAbort''             : ''Spojenie bolo preruÅ¡enÃ©.'',
+			''errTimeout''           : ''ÄasovÃ½ limit vyprÅ¡al.'',
 			''errNotFound''          : ''Backend nenÃ¡jdenÃ½.'',
 			''errResponse''          : ''NesprÃ¡vna backend odpoveÄ.'',
 			''errConf''              : ''NesprÃ¡vna backend konfigurÃ¡cia.'',
-			''errJSON''              : ''PoÅ¾adovanÃ½ PHP JSON modul nie je nainÅ¡talovanÃ½.'',
-			''errNoVolumes''         : ''Nie je dostupnÃ© Å¾iadne ÄitateÄ¾nÃ© mÃ©dium.'',
+			''errJSON''              : ''PHP JSON modul nie je nainÅ¡talovanÃ½.'',
+			''errNoVolumes''         : ''Nie sÃº dostupnÃ© Å¾iadne ÄitateÄ¾nÃ© mÃ©dia.'',
 			''errCmdParams''         : ''NesprÃ¡vne parametre pre prÃ­kaz "$1".'',
 			''errDataNotJSON''       : ''DÃ¡ta nie sÃº formÃ¡tu JSON.'',
 			''errDataEmpty''         : ''PrÃ¡zdne dÃ¡ta.'',
-			''errCmdReq''            : ''Backend poÅ¾iadavka poÅ¾aduje meno prÃ­kazu.'',
-			''errOpen''              : ''Nie je moÅ¾nÃ© otvoriÅ¥ sÃºbor "$1".'',
+			''errCmdReq''            : ''Backend poÅ¾iadavka poÅ¾aduje nÃ¡zov prÃ­kazu.'',
+			''errOpen''              : ''Nie je moÅ¾nÃ© otvoriÅ¥ "$1".'',
 			''errNotFolder''         : ''Objekt nie je prieÄinok.'',
 			''errNotFile''           : ''Objekt nie je sÃºbor.'',
-			''errRead''              : ''Nie je moÅ¾nÃ© preÄÃ­taÅ¥ sÃºbor "$1".'',
-			''errWrite''             : ''Nie je moÅ¾nÃ© pÃ­saÅ¥ do sÃºboru "$1".'',
-			''errPerm''              : ''NepovolenÃ½ prÃ­stup.'',
-			''errLocked''            : ''"$1" je uzamknutÃ½, a nemÃ´Å¾e byÅ¥ premenovanÃ½, presunutÃ½ alebo odstrÃ¡nenÃ½.'',
-			''errExists''            : ''SÃºbor s nÃ¡zvom "$1" uÅ¾ existuje.'',
-			''errInvName''           : ''NesprÃ¡vnÃ½ nÃ¡zov sÃºboru.'',
-			''errFolderNotFound''    : ''PrieÄinok nenÃ¡jdenÃ½.'',
+			''errRead''              : ''Nie je moÅ¾nÃ© preÄÃ­taÅ¥ "$1".'',
+			''errWrite''             : ''Nie je moÅ¾nÃ© pÃ­saÅ¥ do "$1".'',
+			''errPerm''              : ''PrÃ­stup zamietnutÃ½.'',
+			''errLocked''            : ''"$1" je uzamknutÃ½ a nemÃ´Å¾e byÅ¥ premenovanÃ½, presunutÃ½ alebo odstrÃ¡nenÃ½.'',
+			''errExists''            : ''PoloÅ¾ka s nÃ¡zvom "$1" uÅ¾ existuje.'',
+			''errInvName''           : ''NeplatnÃ½ nÃ¡zov sÃºboru.'',
+			''errInvDirname''        : ''NeplatnÃ½ nÃ¡zov prieÄinka.'',  // from v2.1.24 added 12.4.2017
+			''errFolderNotFound''    : ''PrieÄinok nebol nÃ¡jdenÃ½.'',
 			''errFileNotFound''      : ''SÃºbor nenÃ¡jdenÃ½.'',
-			''errTrgFolderNotFound'' : ''ZvolenÃ½ prieÄinok "$1" nenÃ¡jdenÃ½.'',
-			''errPopup''             : ''PrehliadaÄ zablokoval otvorenie vyskakovacieho okna. Pre otvorenie sÃºboru povoÄ¾te vyskakovacie oknÃ¡.'',
-			''errMkdir''             : ''Nie je moÅ¾nÃ© vytvoriÅ¥ prieÄinok "$1".'',
-			''errMkfile''            : ''Nie je moÅ¾nÃ© vytvoriÅ¥ sÃºbor "$1".'',
-			''errRename''            : ''Nie je moÅ¾nÃ© premenovaÅ¥ "$1".'',
+			''errTrgFolderNotFound'' : ''CieÄ¾ovÃ½ prieÄinok "$1" sa nenaÅ¡iel.'',
+			''errPopup''             : ''PrehliadaÄ zabrÃ¡nil otvoreniu vyskakovacieho okna. Pre otvorenie sÃºboru povoÄ¾te vyskakovacie oknÃ¡.'',
+			''errMkdir''             : ''Nepodarilo sa vytvoriÅ¥ prieÄinok "$1".'',
+			''errMkfile''            : ''Nepodarilo sa vytvoriÅ¥ sÃºbor "$1".'',
+			''errRename''            : ''Nepodarilo sa premenovaÅ¥ "$1".'',
 			''errCopyFrom''          : ''KopÃ­rovanie sÃºborov z mÃ©dia "$1" nie je povolenÃ©.'',
 			''errCopyTo''            : ''KopÃ­rovanie sÃºborov na mÃ©dium "$1" nie je povolenÃ©.'',
 			''errMkOutLink''         : ''Nie je moÅ¾nÃ© vytvoriÅ¥ odkaz mimo koreÅovÃ©ho zvÃ¤zku.'', // from v2.1 added 03.10.2015
-			''errUpload''            : ''ProblÃ©m s nahrÃ¡vanÃ­m.'', // old name - errUploadCommon
-			''errUploadFile''        : ''Nie je moÅ¾nÃ© nahraÅ¥ "$1".'', // old name - errUpload
-			''errUploadNoFiles''     : ''Å½iadne sÃºbory neboli nÃ¡jdenÃ© na nahranie.'',
+			''errUpload''            : ''Chyba pri nahrÃ¡vanÃ­.'',  // old name - errUploadCommon
+			''errUploadFile''        : ''Nepodarilo sa nahraÅ¥ "$1".'', // old name - errUpload
+			''errUploadNoFiles''     : ''Neboli nÃ¡jdenÃ© Å¾iadne sÃºbory na nahranie.'',
 			''errUploadTotalSize''   : ''DÃ¡ta prekraÄujÃº maximÃ¡lnu povolenÃº veÄ¾kosÅ¥.'', // old name - errMaxSize
-			''errUploadFileSize''    : ''SÃºbor prekraÄuje maximÃ¡lnu povolenÃº veÄ¾kosÅ¥.'', // old name - errFileMaxSize
+			''errUploadFileSize''    : ''SÃºbor prekraÄuje maximÃ¡lnu povolenÃº veÄ¾kosÅ¥.'', //  old name - errFileMaxSize
 			''errUploadMime''        : ''NepovolenÃ½ typ sÃºboru.'',
 			''errUploadTransfer''    : ''ProblÃ©m s nahrÃ¡vanÃ­m "$1".'',
-			''errUploadTemp''        : ''Nie je moÅ¾nÃ© vytvoriÅ¥ doÄasnÃ½ sÃºbor pre nahranie.'', // from v2.1 added 26.09.2015
-			''errNotReplace''        : ''Objekt "$1" na tomto mieste uÅ¾ existuje a nemÃ´Å¾e byÅ¥ nahradenÃ½ objektom s inÃ½m typom.'',
+			''errUploadTemp''        : ''Nepodarilo sa vytvoriÅ¥ doÄasnÃ½ sÃºbor na nahranie.'', // from v2.1 added 26.09.2015
+			''errNotReplace''        : ''Objekt "$1" na tomto mieste uÅ¾ existuje a nemÃ´Å¾e byÅ¥ nahradenÃ½ objektom inÃ©ho typu.'', // new
 			''errReplace''           : ''Nie je moÅ¾nÃ© nahradiÅ¥ "$1".'',
 			''errSave''              : ''Nie je moÅ¾nÃ© uloÅ¾iÅ¥ "$1".'',
-			''errCopy''              : ''Nie je moÅ¾nÃ© kopÃ­ropvaÅ¥ "$1".'',
+			''errCopy''              : ''Nie je moÅ¾nÃ© kopÃ­rovaÅ¥ "$1".'',
 			''errMove''              : ''Nie je moÅ¾nÃ© preniesÅ¥ "$1".'',
 			''errCopyInItself''      : ''Nie je moÅ¾nÃ© kopÃ­rovaÅ¥ "$1" do seba.'',
 			''errRm''                : ''Nie je moÅ¾nÃ© vymazaÅ¥ "$1".'',
-			''errRmSrc''             : ''Nie je moÅ¾nÃ© odstrÃ¡niÅ¥ zdrojovÃ© sÃºbor(y).'',
+			''errTrash''             : ''Nie je moÅ¾nÃ© presunÃºÅ¥ do koÅ¡a.'', // from v2.1.24 added 30.4.2017
+			''errRmSrc''             : ''Nie je moÅ¾nÃ© odstrÃ¡niÅ¥ zdrojovÃ½/Ã© sÃºbor/y.'',
 			''errExtract''           : ''Nie je moÅ¾nÃ© extrahovaÅ¥ sÃºbory z "$1".'',
 			''errArchive''           : ''Nie je moÅ¾nÃ© vytvoriÅ¥ archÃ­v.'',
 			''errArcType''           : ''NepodporovanÃ½ typ archÃ­vu.'',
-			''errNoArchive''         : ''SÃºbor nie je archÃ­vom, alebo je nepodporovanÃ©ho typu.'',
+			''errNoArchive''         : ''SÃºbor nie je archÃ­v alebo mÃ¡ nepodporovanÃ½ typ archÃ­vu.'',
 			''errCmdNoSupport''      : ''Backend nepodporuje tento prÃ­kaz.'',
 			''errReplByChild''       : ''PrieÄinok "$1" nemÃ´Å¾e byÅ¥ nahradenÃ½ poloÅ¾kou, ktorÃº uÅ¾ obsahuje.'',
-			''errArcSymlinks''       : ''Z bezpeÄnostnÃ½ch dÃ´vodov bolo zakÃ¡zanÃ© extrahovanie archÃ­vov obsahujÃºcich symlinky, alebo sÃºborov s nepovolenÃ½mi menami.'',
+			''errArcSymlinks''       : ''Z bezpeÄnostnÃ½ch dÃ´vodov bolo zakÃ¡zanÃ© extrahovanie archÃ­vov obsahujÃºcich symlinky, alebo sÃºborov s nepovolenÃ½mi nÃ¡zvami.'', // edited 24.06.2012
 			''errArcMaxSize''        : ''SÃºbory archÃ­vu prekraÄujÃº maximÃ¡lnu povolenÃº veÄ¾kosÅ¥.'',
-			''errResize''            : ''Nie je moÅ¾nÃ© zmeniÅ¥ veÄ¾kost "$1".'',
-			''errResizeDegree''      : ''NeplatnÃ½ stupeÅ otoÄenia.'', // added 7.3.2013
-			''errResizeRotate''      : ''Nie je moÅ¾nÃ© otoÄiÅ¥ obrÃ¡zok.'', // added 7.3.2013
-			''errResizeSize''        : ''NeplatnÃ¡ veÄ¾kosÅ¥ obrÃ¡zka.'', // added 7.3.2013
-			''errResizeNoChange''    : ''VeÄ¾kosÅ¥ obrÃ¡zka sa nezmenÃ­.'', // added 7.3.2013
+			''errResize''            : ''Nie je moÅ¾nÃ© zmeniÅ¥ veÄ¾kosÅ¥ "$1".'',
+			''errResizeDegree''      : ''NeplatnÃ½ stupeÅ otoÄenia.'',  // added 7.3.2013
+			''errResizeRotate''      : ''Nie je moÅ¾nÃ© otoÄiÅ¥ obrÃ¡zok.'',  // added 7.3.2013
+			''errResizeSize''        : ''NeplatnÃ¡ veÄ¾kosÅ¥ obrÃ¡zka.'',  // added 7.3.2013
+			''errResizeNoChange''    : ''VeÄ¾kosÅ¥ obrÃ¡zku sa nezmenila.'',  // added 7.3.2013
 			''errUsupportType''      : ''NepodporovanÃ½ typ sÃºboru.'',
-			''errNotUTF8Content''    : ''SÃºbor "$1" nemÃ¡ obsah kÃ³dovanÃ½ v UTF-8, a nemÃ´Å¾e byÅ¥ upravenÃ½.'', // added 9.11.2011
+			''errNotUTF8Content''    : ''SÃºbor "$1" nie je v UTF-8 a nemÃ´Å¾e byÅ¥ upravenÃ½.'',  // added 9.11.2011
 			''errNetMount''          : ''Nie je moÅ¾nÃ© pripojiÅ¥ "$1".'', // added 17.04.2012
-			''errNetMountNoDriver''  : ''NepodporovanÃ½ protokol.'', // added 17.04.2012
-			''errNetMountFailed''    : ''PripÃ¡janie zlyhalo.'', // added 17.04.2012
+			''errNetMountNoDriver''  : ''NepodporovanÃ½ protokol.'',     // added 17.04.2012
+			''errNetMountFailed''    : ''PripÃ¡janie zlyhalo.'',         // added 17.04.2012
 			''errNetMountHostReq''   : ''HosÅ¥ je poÅ¾adovanÃ½.'', // added 18.04.2012
-			''errSessionExpires''    : ''PlatnosÅ¥ relÃ¡cie uplynula z dÃ´vodu neÄinnosti.'',
-			''errCreatingTempDir''   : ''NedÃ¡ sa vytvoriÅ¥ doÄasnÃ½ adresÃ¡r: "$1"'',
+			''errSessionExpires''    : ''VaÅ¡a relÃ¡cia vyprÅ¡ala kvÃ´li neÄinnosti.'',
+			''errCreatingTempDir''   : ''Nepodarilo sa vytvoriÅ¥ doÄasnÃ½ adresÃ¡r: "$1"'',
 			''errFtpDownloadFile''   : ''Nie je moÅ¾nÃ© stiahnuÅ¥ sÃºbor z FTP: "$1"'',
 			''errFtpUploadFile''     : ''Nie je moÅ¾nÃ© nahraÅ¥ sÃºbor na FTP: "$1"'',
 			''errFtpMkdir''          : ''NedÃ¡ sa vytvoriÅ¥ vzdialenÃ½ adresÃ¡r na FTP: "$1"'',
 			''errArchiveExec''       : ''Chyba pri archivÃ¡cii sÃºborov: "$1"'',
 			''errExtractExec''       : ''Chyba pri extrahovanÃ­ sÃºborov: "$1"'',
 			''errNetUnMount''        : ''Nepodarilo sa odpojiÅ¥'', // from v2.1 added 30.04.2012
-			''errConvUTF8''          : ''NedÃ¡ sa previesÅ¥ do UTF-8'', // from v2.1 added 08.04.2014
-			''errFolderUpload''      : ''Ak by ste chceli nahraÅ¥ zloÅ¾ku, skÃºste prehliadaÄ Google Chrome.'', // from v2.1 added 26.6.2015
+			''errConvUTF8''          : ''Nie je prevoditeÄ¾nÃ½ na UTF-8'', // from v2.1 added 08.04.2014
+			''errFolderUpload''      : ''VyskÃºÅ¡ajte modernÃ½ prehliadaÄ, ak chcete nahraÅ¥ prieÄinok.'', // from v2.1 added 26.6.2015
 			''errSearchTimeout''     : ''VyprÅ¡al ÄasovÃ½ limit pri hÄ¾adanÃ­ "$1". VÃ½sledok vyhÄ¾adÃ¡vania je ÄiastoÄnÃ½.'', // from v2.1 added 12.1.2016
-			''errReauthRequire''     : ''OpÃ¤tovnÃ© povolenie je nutnÃ©.'', // from v2.1.10 added 24.3.2016
-			''errMaxTargets''        : ''MaximÃ¡lny poÄet voliteÄ¾nÃ½ch predmetov je $1.'', // from v2.1.17 added 17.10.2016
+			''errReauthRequire''     : ''OpÃ¤tovnÃ© povolenie je potrebnÃ©.'', // from v2.1.10 added 24.3.2016
+			''errMaxTargets''        : ''MaximÃ¡lny poÄet voliteÄ¾nÃ½ch poloÅ¾iek je $1.'', // from v2.1.17 added 17.10.2016
+			''errRestore''           : ''Nepodarilo sa obnoviÅ¥ z koÅ¡a. CieÄ¾ obnovenia nie je moÅ¾nÃ© identifikovaÅ¥.'', // from v2.1.24 added 3.5.2017
+			''errEditorNotFound''    : ''Editor tohto typu sÃºboru nebol nÃ¡jdenÃ½.'', // from v2.1.25 added 23.5.2017
+			''errServerError''       : ''Vyskytla sa chyba na strane servera.'', // from v2.1.25 added 16.6.2017
+			''errEmpty''             : ''Nepodarilo sa vyprÃ¡zdniÅ¥ prieÄinok "$1".'', // from v2.1.25 added 22.6.2017
+			''moreErrors''           : ''ExistujÃº eÅ¡te ÄalÅ¡ie $1 chyby.'', // from v2.1.44 added 9.12.2018
 
 			/******************************* commands names ********************************/
 			''cmdarchive''   : ''VytvoriÅ¥ archÃ­v'',
@@ -121,19 +129,21 @@ jsi18nelfinderskJsContent
 			''cmdedit''      : ''UpraviÅ¥ sÃºbor'',
 			''cmdextract''   : ''ExtrahovaÅ¥ sÃºbory z archÃ­vu'',
 			''cmdforward''   : ''Äalej'',
-			''cmdgetfile''   : ''ZvoliÅ¥ sÃºbory'',
+			''cmdgetfile''   : ''VybraÅ¥ sÃºbory'',
 			''cmdhelp''      : ''O tomto softvÃ©ri'',
 			''cmdhome''      : ''Domov'',
-			''cmdinfo''      : ''ZÃ­skaÅ¥ info'',
+			''cmdinfo''      : ''Info'',
 			''cmdmkdir''     : ''NovÃ½ prieÄinok'',
 			''cmdmkdirin''   : ''Do novej zloÅ¾ky'', // from v2.1.7 added 19.2.2016
-			''cmdmkfile''    : ''NovÃ½ textovÃ½ sÃºbor'',
+			''cmdmkfile''    : ''NovÃ½ sÃºbor'',
 			''cmdopen''      : ''OtvoriÅ¥'',
 			''cmdpaste''     : ''VloÅ¾iÅ¥'',
 			''cmdquicklook'' : ''NÃ¡hÄ¾ad'',
 			''cmdreload''    : ''ObnoviÅ¥'',
 			''cmdrename''    : ''PremenovaÅ¥'',
 			''cmdrm''        : ''VymazaÅ¥'',
+			''cmdtrash''     : ''Do koÅ¡a'', //from v2.1.24 added 29.4.2017
+			''cmdrestore''   : ''ObnoviÅ¥'', //from v2.1.24 added 3.5.2017
 			''cmdsearch''    : ''NÃ¡jsÅ¥ sÃºbory'',
 			''cmdup''        : ''PrejsÅ¥ do nadradenÃ©ho prieÄinka'',
 			''cmdupload''    : ''NahraÅ¥ sÃºbory'',
@@ -142,12 +152,21 @@ jsi18nelfinderskJsContent
 			''cmdsort''      : ''ZoradiÅ¥'',
 			''cmdnetmount''  : ''PripojiÅ¥ sieÅ¥ovÃ© mÃ©dium'', // added 18.04.2012
 			''cmdnetunmount'': ''OdpojiÅ¥'', // from v2.1 added 30.04.2012
-			''cmdplaces''    : ''Na umiestnenie'', // added 28.12.2014
+			''cmdplaces''    : ''Do umiestnenÃ­'', // added 28.12.2014
 			''cmdchmod''     : ''ZmeniÅ¥ reÅ¾im'', // from v2.1 added 20.6.2015
 			''cmdopendir''   : ''OtvoriÅ¥ prieÄinok'', // from v2.1 added 13.1.2016
 			''cmdcolwidth''  : ''ResetovaÅ¥ Å¡Ã­rku stÄºpca'', // from v2.1.13 added 12.06.2016
 			''cmdfullscreen'': ''CelÃ¡ obrazovka'', // from v2.1.15 added 03.08.2016
 			''cmdmove''      : ''PosÃºvaÅ¥'', // from v2.1.15 added 21.08.2016
+			''cmdempty''     : ''VyprÃ¡zdniÅ¥ prieÄinok'', // from v2.1.25 added 22.06.2017
+			''cmdundo''      : ''Krok spÃ¤Å¥'', // from v2.1.27 added 31.07.2017
+			''cmdredo''      : ''VykonaÅ¥ znova'', // from v2.1.27 added 31.07.2017
+			''cmdpreference'': ''Preferencie'', // from v2.1.27 added 03.08.2017
+			''cmdselectall'' : ''VybraÅ¥ vÅ¡etko'', // from v2.1.28 added 15.08.2017
+			''cmdselectnone'': ''NiÄ nevyberaÅ¥'', // from v2.1.28 added 15.08.2017
+			''cmdselectinvert'': ''InvertovaÅ¥ vÃ½ber'', // from v2.1.28 added 15.08.2017
+			''cmdopennew''   : ''OtvoriÅ¥ v novom okne'', // from v2.1.38 added 3.4.2018
+			''cmdhide''      : ''SkryÅ¥ (PredvoÄ¾ba)'', // from v2.1.41 added 24.7.2018
 
 			/*********************************** buttons ***********************************/
 			''btnClose''  : ''ZavrieÅ¥'',
@@ -157,17 +176,22 @@ jsi18nelfinderskJsContent
 			''btnCancel'' : ''ZruÅ¡iÅ¥'',
 			''btnNo''     : ''Nie'',
 			''btnYes''    : ''Ãno'',
-			''btnMount''  : ''PripojiÅ¥'', // added 18.04.2012
+			''btnMount''  : ''PripojiÅ¥'',  // added 18.04.2012
 			''btnApprove'': ''ÃsÅ¥ na $1 & schvÃ¡liÅ¥'', // from v2.1 added 26.04.2012
 			''btnUnmount'': ''OdpojiÅ¥'', // from v2.1 added 30.04.2012
 			''btnConv''   : ''PreviesÅ¥'', // from v2.1 added 08.04.2014
-			''btnCwd''    : ''Tu'', // from v2.1 added 22.5.2015
-			''btnVolume'' : ''MÃ©dium'', // from v2.1 added 22.5.2015
-			''btnAll''    : ''VÅ¡etko'', // from v2.1 added 22.5.2015
+			''btnCwd''    : ''Tu'',      // from v2.1 added 22.5.2015
+			''btnVolume'' : ''MÃ©dium'',    // from v2.1 added 22.5.2015
+			''btnAll''    : ''VÅ¡etko'',       // from v2.1 added 22.5.2015
 			''btnMime''   : ''MIME typ'', // from v2.1 added 22.5.2015
-			''btnFileName'':''NÃ¡zov sÃºboru'', // from v2.1 added 22.5.2015
+			''btnFileName'':''NÃ¡zov sÃºboru'',  // from v2.1 added 22.5.2015
 			''btnSaveClose'': ''UloÅ¾iÅ¥ & zavrieÅ¥'', // from v2.1 added 12.6.2015
-			''btnBackup'' : ''ZÃ¡lohovaÅ¥'', // from v2.1 added 28.11.2015
+			''btnBackup'' : ''ZÃ¡lohovaÅ¥'', // fromv2.1 added 28.11.2015
+			''btnRename''    : ''PremenovaÅ¥'',      // from v2.1.24 added 6.4.2017
+			''btnRenameAll'' : ''PremenovaÅ¥ vÅ¡etko'', // from v2.1.24 added 6.4.2017
+			''btnPrevious'' : ''PredchÃ¡dzajÃºce ($1/$2)'', // from v2.1.24 added 11.5.2017
+			''btnNext''     : ''ÄalÅ¡ie ($1/$2)'', // from v2.1.24 added 11.5.2017
+			''btnSaveAs''   : ''UloÅ¾iÅ¥ ako'', // from v2.1.25 added 24.5.2017
 
 			/******************************** notifications ********************************/
 			''ntfopen''     : ''OtvÃ¡ranie prieÄinka'',
@@ -175,10 +199,10 @@ jsi18nelfinderskJsContent
 			''ntfreload''   : ''Znovu-naÄÃ­tanie obsahu prieÄinka'',
 			''ntfmkdir''    : ''VytvÃ¡ranie prieÄinka'',
 			''ntfmkfile''   : ''VytvÃ¡ranie sÃºborov'',
-			''ntfrm''       : ''Vymazanie sÃºborov'',
-			''ntfcopy''     : ''KopÃ­rovanie sÃºborov'',
-			''ntfmove''     : ''Premiestnenie sÃºborov'',
-			''ntfprepare''  : ''PrÃ­prava na kopÃ­rovanie sÃºborov'',
+			''ntfrm''       : ''Vymazanie poloÅ¾iek'',
+			''ntfcopy''     : ''KopÃ­rovanie poloÅ¾iek'',
+			''ntfmove''     : ''Premiestnenie poloÅ¾iek'',
+			''ntfprepare''  : ''Kontrola existujÃºcich poloÅ¾iek'',
 			''ntfrename''   : ''Premenovanie sÃºborov'',
 			''ntfupload''   : ''NahrÃ¡vanie sÃºborov'',
 			''ntfdownload'' : ''SÅ¥ahovanie sÃºborov'',
@@ -197,8 +221,17 @@ jsi18nelfinderskJsContent
 			''ntfchmod''    : ''Zmena sÃºboru'', // from v2.1 added 20.6.2015
 			''ntfpreupload'': ''Overenie nÃ¡zvu nahravanÃ©ho sÃºboru'', // from v2.1 added 31.11.2015
 			''ntfzipdl''    : ''Vytvorenie sÃºboru na stiahnutie'', // from v2.1.7 added 23.1.2016
-			''ntfparents''  : ''ZÃ­skanie informÃ¡cie o ceste'', // from v2.1.17 added 2.11.2016
+			''ntfparents''  : ''ZÃ­skanie informÃ¡ciÃ­ o ceste'', // from v2.1.17 added 2.11.2016
 			''ntfchunkmerge'': ''Spracovanie nahranÃ©ho sÃºboru'', // from v2.1.17 added 2.11.2016
+			''ntftrash''    : ''Vhadzovanie do koÅ¡a'', // from v2.1.24 added 2.5.2017
+			''ntfrestore''  : ''VykonÃ¡vanie obnovy z koÅ¡a'', // from v2.1.24 added 3.5.2017
+			''ntfchkdir''   : ''Kontrola cieÄ¾ovÃ©ho prieÄinka'', // from v2.1.24 added 3.5.2017
+			''ntfundo''     : ''ZruÅ¡iÅ¥ predchÃ¡dzajÃºcu operÃ¡ciu'', // from v2.1.27 added 31.07.2017
+			''ntfredo''     : ''Obnovenie predchÃ¡dzajÃºceho zruÅ¡enia'', // from v2.1.27 added 31.07.2017
+			''ntfchkcontent'' : ''Kontrola obsahu'', // from v2.1.41 added 3.8.2018
+
+			/*********************************** volumes *********************************/
+			''volume_Trash'' : ''KÃ´Å¡'', //from v2.1.24 added 29.4.2017
 
 			/************************************ dates **********************************/
 			''dateUnknown'' : ''neznÃ¡my'',
@@ -244,30 +277,37 @@ jsi18nelfinderskJsContent
 			''Sat''         : ''Sob'',
 
 			/******************************** sort variants ********************************/
-			''sortname''          : ''podÄ¾a mena'',
+			''sortname''          : ''podÄ¾a nÃ¡zvu'',
 			''sortkind''          : ''podÄ¾a druhu'',
 			''sortsize''          : ''podÄ¾a veÄ¾kosti'',
 			''sortdate''          : ''podÄ¾a dÃ¡tumu'',
-			''sortFoldersFirst''  : ''NajskÃ´r PrieÄinky'',
+			''sortFoldersFirst''  : ''NajskÃ´r prieÄinky'',
 			''sortperm''          : ''podÄ¾a povolenia'', // from v2.1.13 added 13.06.2016
-			''sortmode''          : ''podÄ¾a mÃ³du'', // from v2.1.13 added 13.06.2016
-			''sortowner''         : ''podÄ¾a majiteÄ¾a'', // from v2.1.13 added 13.06.2016
-			''sortgroup''         : ''podÄ¾a skupiny'', // from v2.1.13 added 13.06.2016
-			''sortAlsoTreeview''  : ''TieÅ¾ stromove zobrazenie'', // from v2.1.15 added 01.08.2016
+			''sortmode''          : ''podÄ¾a mÃ³du'',       // from v2.1.13 added 13.06.2016
+			''sortowner''         : ''podÄ¾a majiteÄ¾a'',      // from v2.1.13 added 13.06.2016
+			''sortgroup''         : ''podÄ¾a skupiny'',      // from v2.1.13 added 13.06.2016
+			''sortAlsoTreeview''  : ''TieÅ¾ stromovÃ© zobrazenie'',  // from v2.1.15 added 01.08.2016
 
 			/********************************** new items **********************************/
-			''untitled file.txt'' : ''NovÃ½ textovÃ½ sÃºbor.txt'', // added 10.11.2015
-			''untitled folder''   : ''NovÃ½ prieÄinok'', // added 10.11.2015
-			''Archive''           : ''NovÃ½ archÃ­v'', // from v2.1 added 10.11.2015
+			''untitled file.txt'' : ''NovÃ½ sÃºbor.txt'', // added 10.11.2015
+			''untitled folder''   : ''NovÃ½ prieÄinok'',   // added 10.11.2015
+			''Archive''           : ''NovÃ½ archÃ­v'',  // from v2.1 added 10.11.2015
+			''untitled file''     : ''NovÃ½ sÃºbor.$1'',  // from v2.1.41 added 6.8.2018
+			''extentionfile''     : ''$1 sÃºbor'',    // from v2.1.41 added 6.8.2018
+			''extentiontype''     : ''$1: $2'',      // from v2.1.43 added 17.10.2018
 
 			/********************************** messages **********************************/
-			''confirmReq''      : ''OÄakÃ¡vam potvrdenie'',
-			''confirmRm''       : ''UrÄite chcete vymazaÅ¥ sÃºbory?<br/>Nebude sa to daÅ¥ vrÃ¡tiÅ¥ spÃ¤Å¥!'',
-			''confirmRepl''     : ''NahradiÅ¥ starÃ½ sÃºbor novÃ½m?'',
-			''confirmConvUTF8'' : ''Nie je v UTF-8<br/>PreviesÅ¥ na UTF-8?<br/>Obsah sa stane UTF-8 uloÅ¾enÃ­m po konverzii.'', // from v2.1 added 08.04.2014
+			''confirmReq''      : ''PotrebnÃ© potvrdenie'',
+			''confirmRm''       : ''UrÄite chcete vymazaÅ¥ sÃºbory?<br/>Nie je to moÅ¾nÃ© vrÃ¡tiÅ¥ spÃ¤Å¥!'',
+			''confirmRepl''     : ''NahradiÅ¥ starÃ½ sÃºbor za novÃ½? (Ak obsahuje prieÄinky, bude zlÃºÄenÃ©. Ak chcete zÃ¡lohovaÅ¥ a nahradiÅ¥, vyberte moÅ¾nosÅ¥ ZÃ¡lohovaÅ¥.)'',
+			''confirmRest''     : ''NahradiÅ¥ existujÃºcu poloÅ¾ku s poloÅ¾kou v koÅ¡i?'', // fromv2.1.24 added 5.5.2017
+			''confirmConvUTF8'' : ''Nie je v UTF-8<br/>PreviesÅ¥ na UTF-8?<br/>Obsah bude v UTF-8 po uloÅ¾enÃ­ konverzie.'', // from v2.1 added 08.04.2014
+			''confirmNonUTF8''  : ''KÃ³dovanie tohto sÃºboru nemohlo byÅ¥ detekovanÃ©. Pre Ãºpravu doÄasne potrebujete previesÅ¥ na UTF-8 .<br/>ProsÃ­m, vyberte kÃ³dovanie znakov tohto sÃºboru.'', // from v2.1.19 added 28.11.2016
 			''confirmNotSave''  : ''Bol upravenÃ½.<br/>Ak zmeny neuloÅ¾Ã­te, stratÃ­te vykonanÃº prÃ¡cu.'', // from v2.1 added 15.7.2015
+			''confirmTrash''    : ''Naozaj chcete presunÃºÅ¥ poloÅ¾ky do koÅ¡a?'', //from v2.1.24 added 29.4.2017
+			''confirmMove''     : ''Naozaj chcete presunÃºÅ¥ poloÅ¾ky do "$1"?'', //from v2.1.50 added 27.7.2019
 			''apllyAll''        : ''PouÅ¾iÅ¥ na vÅ¡etky'',
-			''name''            : ''Meno'',
+			''name''            : ''NÃ¡zov'',
 			''size''            : ''VeÄ¾kosÅ¥'',
 			''perms''           : ''Povolenia'',
 			''modify''          : ''ZmenenÃ©'',
@@ -277,12 +317,16 @@ jsi18nelfinderskJsContent
 			''noaccess''        : ''bez prÃ­stupu'',
 			''and''             : ''a'',
 			''unknown''         : ''neznÃ¡my'',
-			''selectall''       : ''VybraÅ¥ vÅ¡etky sÃºbory'',
-			''selectfiles''     : ''VybraÅ¥ sÃºbor(y)'',
-			''selectffile''     : ''VybraÅ¥ prvÃ½ sÃºbor'',
-			''selectlfile''     : ''VybraÅ¥ poslednÃ½ sÃºbor'',
+			''selectall''       : ''VybraÅ¥ vÅ¡etky poloÅ¾ky'',
+			''selectfiles''     : ''VybraÅ¥ poloÅ¾ku(y)'',
+			''selectffile''     : ''VybraÅ¥ prvÃº poloÅ¾ku'',
+			''selectlfile''     : ''VybraÅ¥ poslednÃº poloÅ¾ku'',
 			''viewlist''        : ''Zoznam'',
 			''viewicons''       : ''Ikony'',
+			''viewSmall''       : ''MalÃ© ikony'', // from v2.1.39 added 22.5.2018
+			''viewMedium''      : ''StrednÃ© ikony'', // from v2.1.39 added 22.5.2018
+			''viewLarge''       : ''VeÄ¾kÃ© ikony'', // from v2.1.39 added 22.5.2018
+			''viewExtraLarge''  : ''Extra veÄ¾kÃ© ikony'', // from v2.1.39 added 22.5.2018
 			''places''          : ''Miesta'',
 			''calc''            : ''PrepoÄÃ­tavanie'',
 			''path''            : ''Cesta'',
@@ -309,11 +353,11 @@ jsi18nelfinderskJsContent
 			''twitter''         : ''Nasleduj nÃ¡s na Twitteri'',
 			''facebook''        : ''Pripoj sa k nÃ¡m na Facebooku'',
 			''team''            : ''TÃ­m'',
-			''chiefdev''        : ''hlavnÃ½ vÃ½vojÃ¡r'',
-			''developer''       : ''vÃ½vojÃ¡r'',
-			''contributor''     : ''prispievateÄ¾'',
-			''maintainer''      : ''sprÃ¡vca'',
-			''translator''      : ''prekladateÄ¾'',
+			''chiefdev''        : ''HlavnÃ½ vÃ½vojÃ¡r'',
+			''developer''       : ''VÃ½vojÃ¡r'',
+			''contributor''     : ''PrispievateÄ¾'',
+			''maintainer''      : ''SprÃ¡vca'',
+			''translator''      : ''PrekladateÄ¾'',
 			''icons''           : ''Ikony'',
 			''dontforget''      : ''a nezabudnite si plavky'',
 			''shortcutsof''     : ''Skratky nie sÃº povolenÃ©'',
@@ -322,6 +366,7 @@ jsi18nelfinderskJsContent
 			''selectForUpload'' : ''Vyberte sÃºbory'',
 			''moveFiles''       : ''PremiestniÅ¥ sÃºbory'',
 			''copyFiles''       : ''KopÃ­rovaÅ¥ sÃºbory'',
+			''restoreFiles''    : ''ObnoviÅ¥ poloÅ¾ky'', // from v2.1.24 added 5.5.2017
 			''rmFromPlaces''    : ''OdstrÃ¡niÅ¥ z umiestnenÃ­'',
 			''aspectRatio''     : ''Pomer zobrazenia'',
 			''scale''           : ''Mierka'',
@@ -339,12 +384,12 @@ jsi18nelfinderskJsContent
 			''port''                : ''Port'', // added 18.04.2012
 			''user''                : ''UÅ¾Ã­vateÄ¾'', // added 18.04.2012
 			''pass''                : ''Heslo'', // added 18.04.2012
-			''confirmUnmount''      : ''Chcete odpojiÅ¥ $1?'', // from v2.1 added 30.04.2012
-			''dropFilesBrowser'': ''Premiestnite alebo presunte sÃºbory z prehliadaÄa'', // from v2.1 added 30.05.2012
-			''dropPasteFiles''  : ''Tu premiestnite alebo presunte sÃºbory a adresy URL'', // from v2.1 added 07.04.2014
+			''confirmUnmount''      : ''Naozaj chcete odpojiÅ¥ $1?'',  // from v2.1 added 30.04.2012
+			''dropFilesBrowser'': ''Premiestnite alebo presuÅte sÃºbory z prehliadaÄa'', // from v2.1 added 30.05.2012
+			''dropPasteFiles''  : ''Tu premiestnite alebo presuÅte sÃºbory a adresy URL'', // from v2.1 added 07.04.2014
 			''encoding''        : ''KÃ³dovanie'', // from v2.1 added 19.12.2014
-			''locale''          : ''LokalizÃ¡cia'', // from v2.1 added 19.12.2014
-			''searchTarget''    : ''CieÄ¾: $1'', // from v2.1 added 22.5.2015
+			''locale''          : ''LokalizÃ¡cia'',   // from v2.1 added 19.12.2014
+			''searchTarget''    : ''CieÄ¾: $1'',                // from v2.1 added 22.5.2015
 			''searchMime''      : ''VyhÄ¾adÃ¡vanie podÄ¾a vstupnÃ©ho MIME typu'', // from v2.1 added 22.5.2015
 			''owner''           : ''MajiteÄ¾'', // from v2.1 added 20.6.2015
 			''group''           : ''Skupina'', // from v2.1 added 20.6.2015
@@ -353,11 +398,11 @@ jsi18nelfinderskJsContent
 			''perm''            : ''Povolenie'', // from v2.1 added 20.6.2015
 			''mode''            : ''ReÅ¾im'', // from v2.1 added 20.6.2015
 			''emptyFolder''     : ''PrieÄinok je prÃ¡zdny'', // from v2.1.6 added 30.12.2015
-			''emptyFolderDrop'' : ''PrieÄinok je prÃ¡zdny, premiestnite alebo presunte poloÅ¾ky'', // from v2.1.6 added 30.12.2015
-			''emptyFolderLTap'' : ''PrieÄinok je prÃ¡zdny, dlhÃ½m kliknutÃ­m pridÃ¡te poloÅ¾ky'', // from v2.1.6 added 30.12.2015
+			''emptyFolderDrop'' : ''PrieÄinok je prÃ¡zdny\\A Premiestnite alebo presuÅte poloÅ¾ky'', // from v2.1.6 added 30.12.2015
+			''emptyFolderLTap'' : ''PrieÄinok je prÃ¡zdny\\A DlhÃ½m kliknutÃ­m pridÃ¡te poloÅ¾ky'', // from v2.1.6 added 30.12.2015
 			''quality''         : ''Kvalita'', // from v2.1.6 added 5.1.2016
-			''autoSync''        : ''AutomatickÃ¡ synchronizÃ¡cia'', // from v2.1.6 added 10.1.2016
-			''moveUp''          : ''PosunÃºÅ¥ nahor'', // from v2.1.6 added 18.1.2016
+			''autoSync''        : ''AutomatickÃ¡ synchronizÃ¡cia'',  // from v2.1.6 added 10.1.2016
+			''moveUp''          : ''PosunÃºÅ¥ nahor'',  // from v2.1.6 added 18.1.2016
 			''getLink''         : ''ZÃ­skaÅ¥ URL odkaz'', // from v2.1.7 added 9.2.2016
 			''selectedItems''   : ''VybratÃ© poloÅ¾ky ($1)'', // from v2.1.7 added 2.19.2016
 			''folderId''        : ''ID prieÄinka'', // from v2.1.10 added 3.25.2016
@@ -366,30 +411,95 @@ jsi18nelfinderskJsContent
 			''nowLoading''      : ''PrÃ¡ve naÄÃ­tava...'', // from v2.1.12 added 4.26.2016
 			''openMulti''       : ''Otvorenie viacerÃ½ch sÃºborov'', // from v2.1.12 added 5.14.2016
 			''openMultiConfirm'': ''PokÃºÅ¡ate sa otvoriÅ¥ sÃºbor $1. Naozaj ho chcete otvoriÅ¥ v prehliadaÄi?'', // from v2.1.12 added 5.14.2016
-			''emptySearch''     : ''VÃ½sledky vyhÄ¾adÃ¡vania su prÃ¡zdne v hÄ¾adanom cieli.'', // from v2.1.12 added 5.16.2016
-			''editingFile''     : ''Upravujete sÃºbor.'', // from v2.1.13 added 6.3.2016
+			''emptySearch''     : ''VÃ½sledky vyhÄ¾adÃ¡vania sÃº prÃ¡zdne v hÄ¾adanom cieli.'', // from v2.1.12 added 5.16.2016
+			''editingFile''     : ''Je to Ãºprava sÃºboru.'', // from v2.1.13 added 6.3.2016
 			''hasSelected''     : ''Vybrali ste $1 poloÅ¾ky.'', // from v2.1.13 added 6.3.2016
 			''hasClipboard''    : ''MÃ¡te $1 poloÅ¾ky v schrÃ¡nke.'', // from v2.1.13 added 6.3.2016
 			''incSearchOnly''   : ''PrÃ­rastkovÃ© hÄ¾adanie je iba z aktuÃ¡lneho zobrazenia.'', // from v2.1.13 added 6.30.2016
-			''reinstate''       : ''ObnoviÅ¥'', // from v2.1.15 added 3.8.2016
-			''complete''        : ''$1 kompletnÃ©'', // from v2.1.15 added 21.8.2016
+			''reinstate''       : ''Obnovovanie'', // from v2.1.15 added 3.8.2016
+			''complete''        : ''$1: kompletnÃ©'', // from v2.1.15 added 21.8.2016
 			''contextmenu''     : ''KontextovÃ© menu'', // from v2.1.15 added 9.9.2016
 			''pageTurning''     : ''OtÃ¡Äanie strÃ¡nky'', // from v2.1.15 added 10.9.2016
 			''volumeRoots''     : ''Korene mÃ©dia'', // from v2.1.16 added 16.9.2016
-			''reset''           : ''Reset'', // from v2.1.16 added 1.10.2016
+			''reset''           : ''ResetovaÅ¥'', // from v2.1.16 added 1.10.2016
 			''bgcolor''         : ''Farba pozadia'', // from v2.1.16 added 1.10.2016
 			''colorPicker''     : ''VÃ½ber farby'', // from v2.1.16 added 1.10.2016
 			''8pxgrid''         : ''8px mrieÅ¾ka'', // from v2.1.16 added 4.10.2016
 			''enabled''         : ''PovolenÃ©'', // from v2.1.16 added 4.10.2016
 			''disabled''        : ''ZakÃ¡zanÃ©'', // from v2.1.16 added 4.10.2016
-			''emptyIncSearch''  : ''VÃ½sledky vyhÄ¾adÃ¡vania sÃº prÃ¡zdne v aktuÃ¡lnom zobrazenÃ­.\\StlaÄenÃ­m tlaÄidla [Enter] rozÅ¡Ã­rite vyhÄ¾adÃ¡vanie cieÄ¾a.'', // from v2.1.16 added 5.10.2016
+			''emptyIncSearch''  : ''VÃ½sledky vyhÄ¾adÃ¡vania sÃº prÃ¡zdne v aktuÃ¡lnom zobrazenÃ­. StlaÄenÃ­m tlaÄidla [Enter] rozÅ¡Ã­rite vyhÄ¾adÃ¡vanie cieÄ¾a.'', // from v2.1.16 added 5.10.2016
+			''emptyLetSearch''  : ''VÃ½sledky vyhÄ¾adÃ¡vania prvÃ©ho listu sÃº v aktuÃ¡lnom zobrazenÃ­ prÃ¡zdne.'', // from v2.1.23 added 24.3.2017
 			''textLabel''       : ''NÃ¡pis textu'', // from v2.1.17 added 13.10.2016
 			''minsLeft''        : ''$1 minÃºt ostÃ¡va'', // from v2.1.17 added 13.11.2016
+			''openAsEncoding''  : ''OtvoriÅ¥ s vybratÃ½m kÃ³dovanÃ­m'', // from v2.1.19 added 2.12.2016
+			''saveAsEncoding''  : ''UloÅ¾iÅ¥ s vybratÃ½m kÃ³dovanÃ­m'', // from v2.1.19 added 2.12.2016
+			''selectFolder''    : ''Vyberte prieÄinok'', // from v2.1.20 added 13.12.2016
+			''firstLetterSearch'': ''HÄ¾adanie prvÃ©ho listu'', // from v2.1.23 added 24.3.2017
+			''presets''         : ''Presety'', // from v2.1.25 added 26.5.2017
+			''tooManyToTrash''  : ''Je to prÃ­liÅ¡ veÄ¾a poloÅ¾iek, takÅ¾e sa nemÃ´Å¾e dostaÅ¥ do koÅ¡a.'', // from v2.1.25 added 9.6.2017
+			''TextArea''        : ''Textarea'', // from v2.1.25 added 14.6.2017
+			''folderToEmpty''   : ''VyprÃ¡zdniÅ¥ prieÄinok "$1".'', // from v2.1.25 added 22.6.2017
+			''filderIsEmpty''   : ''V prieÄinku "$1" nie sÃº Å¾iadne poloÅ¾ky.'', // from v2.1.25 added 22.6.2017
+			''preference''      : ''Preferencie'', // from v2.1.26 added 28.6.2017
+			''language''        : ''Nastavenie jazyka'', // from v2.1.26 added 28.6.2017
+			''clearBrowserData'': ''Inicializujte nastavenia uloÅ¾enÃ© v tomto prehliadaÄi'', // from v2.1.26 added 28.6.2017
+			''toolbarPref''     : ''Nastavenie panela s nÃ¡strojmi'', // from v2.1.27 added 2.8.2017
+			''charsLeft''       : ''...$1 znakov ostÃ¡va.'',  // from v2.1.29 added 30.8.2017
+			''linesLeft''       : ''...$1 riadkov ostÃ¡va.'',  // from v2.1.52 added 16.1.2020
+			''sum''             : ''SÃºÄet'', // from v2.1.29 added 28.9.2017
+			''roughFileSize''   : ''HrubÃ¡ veÄ¾kosÅ¥ sÃºboru'', // from v2.1.30 added 2.11.2017
+			''autoFocusDialog'' : ''Zameranie na prvok dialÃ³gu s mouseover'',  // from v2.1.30 added 2.11.2017
+			''select''          : ''VybraÅ¥'', // from v2.1.30 added 23.11.2017
+			''selectAction''    : ''Akcia pri vybranom sÃºbore'', // from v2.1.30 added 23.11.2017
+			''useStoredEditor'' : ''OtvoriÅ¥ pomocou naposledy pouÅ¾itÃ©ho editora'', // from v2.1.30 added 23.11.2017
+			''selectinvert''    : ''InvertovaÅ¥ vÃ½ber poloÅ¾iek'', // from v2.1.30 added 25.11.2017
+			''renameMultiple''  : ''Naozaj chcete premenovaÅ¥ $1 vybranÃ½ch poloÅ¾iek, ako naprÃ­klad $2<br/>Nie je to moÅ¾nÃ© vrÃ¡tiÅ¥ spÃ¤Å¥!'', // from v2.1.31 added 4.12.2017
+			''batchRename''     : ''Batch premenovanie'', // from v2.1.31 added 8.12.2017
+			''plusNumber''      : ''+ ÄÃ­slo'', // from v2.1.31 added 8.12.2017
+			''asPrefix''        : ''PridaÅ¥ predponu'', // from v2.1.31 added 8.12.2017
+			''asSuffix''        : ''PridaÅ¥ prÃ­ponu'', // from v2.1.31 added 8.12.2017
+			''changeExtention'' : ''ZmeniÅ¥ prÃ­ponu'', // from v2.1.31 added 8.12.2017
+			''columnPref''      : ''Nastavenia stÄºpcov (zoznamovÃ© zobrazenie)'', // from v2.1.32 added 6.2.2018
+			''reflectOnImmediate'' : ''VÅ¡etky zmeny sa okamÅ¾ite premietnu do archÃ­vu.'', // from v2.1.33 added 2.3.2018
+			''reflectOnUnmount''   : ''AkÃ©koÄ¾vek zmeny sa neodzrkadÄ¾ujÃº, kÃ½m sa toto mÃ©dium neodinÅ¡taluje.'', // from v2.1.33 added 2.3.2018
+			''unmountChildren'' : ''NasledujÃºce mÃ©dium(a) pripojenÃ© v tomto mÃ©diu je tieÅ¾ odpojenÃ©. UrÄite ho odpojiÅ¥?'', // from v2.1.33 added 5.3.2018
+			''selectionInfo''   : ''InformÃ¡cie o vÃ½bere'', // from v2.1.33 added 7.3.2018
+			''hashChecker''     : ''Algoritmy na zobrazenie hashu sÃºborov'', // from v2.1.33 added 10.3.2018
+			''infoItems''       : ''InformaÄnÃ© poloÅ¾ky (panel s informÃ¡ciami o vÃ½bere)'', // from v2.1.38 added 28.3.2018
+			''pressAgainToExit'': ''OpÃ¤tovnÃ½m stlaÄenÃ­m opustÃ­te.'', // from v2.1.38 added 1.4.2018
+			''toolbar''         : ''Panel nÃ¡strojov'', // from v2.1.38 added 4.4.2018
+			''workspace''       : ''PracovnÃ½ priestor'', // from v2.1.38 added 4.4.2018
+			''dialog''          : ''DialÃ³g'', // from v2.1.38 added 4.4.2018
+			''all''             : ''VÅ¡etko'', // from v2.1.38 added 4.4.2018
+			''iconSize''        : ''VeÄ¾kosÅ¥ ikony (zobrazenie ikon)'', // from v2.1.39 added 7.5.2018
+			''editorMaximized'' : ''Otvorte maximalizovanÃ© okno editora'', // from v2.1.40 added 30.6.2018
+			''editorConvNoApi'' : ''PretoÅ¾e konverzia podÄ¾a rozhrania API momentÃ¡lne nie je k dispozÃ­cii, skonvertujte na webovej strÃ¡nke.'', //from v2.1.40 added 8.7.2018
+			''editorConvNeedUpload'' : ''Po konverzii musÃ­te nahraÅ¥ skonvertovanÃ½ sÃºbor pomocou URL poloÅ¾ky alebo stiahnutÃ½ sÃºbor na uloÅ¾enie skonvertovanÃ©ho sÃºboru.'', //from v2.1.40 added 8.7.2018
+			''convertOn''       : ''KonvertovaÅ¥ na strÃ¡nke $1'', // from v2.1.40 added 10.7.2018
+			''integrations''    : ''IntegrÃ¡cie'', // from v2.1.40 added 11.7.2018
+			''integrationWith'' : ''Tento elFinder mÃ¡ integrovanÃ© nasledujÃºce externÃ© sluÅ¾by. Pred pouÅ¾itÃ­m skontrolujte podmienky pouÅ¾Ã­vania, zÃ¡sady ochrany osobnÃ½ch Ãºdajov atÄ.'', // from v2.1.40 added 11.7.2018
+			''showHidden''      : ''ZobraziÅ¥ skrytÃ© poloÅ¾ky'', // from v2.1.41 added 24.7.2018
+			''hideHidden''      : ''SkryÅ¥ skrytÃ© poloÅ¾ky'', // from v2.1.41 added 24.7.2018
+			''toggleHidden''    : ''ZobraziÅ¥/skryÅ¥ skrytÃ© poloÅ¾ky'', // from v2.1.41 added 24.7.2018
+			''makefileTypes''   : ''Typy sÃºborov, ktorÃ© sa majÃº povoliÅ¥ pomocou "NovÃ½ sÃºbor"'', // from v2.1.41 added 7.8.2018
+			''typeOfTextfile''  : ''Typ textovÃ©ho sÃºboru'', // from v2.1.41 added 7.8.2018
+			''add''             : ''PridaÅ¥'', // from v2.1.41 added 7.8.2018
+			''theme''           : ''TÃ©ma'', // from v2.1.43 added 19.10.2018
+			''default''         : ''PredvolenÃ¡'', // from v2.1.43 added 19.10.2018
+			''description''     : ''Popis'', // from v2.1.43 added 19.10.2018
+			''website''         : ''StrÃ¡nka'', // from v2.1.43 added 19.10.2018
+			''author''          : ''Autor'', // from v2.1.43 added 19.10.2018
+			''email''           : ''E-mail'', // from v2.1.43 added 19.10.2018
+			''license''         : ''Licencia'', // from v2.1.43 added 19.10.2018
+			''exportToSave''    : ''TÃºto poloÅ¾ku nemoÅ¾no uloÅ¾iÅ¥. Ak chcete zabrÃ¡niÅ¥ strate Ãºprav, musÃ­te ju exportovaÅ¥ do poÄÃ­taÄa.'', // from v2.1.44 added 1.12.2018
+			''dblclickToSelect'': ''DvakrÃ¡t kliknite na sÃºbor a vyberte ho.'', // from v2.1.47 added 22.1.2019
+			''useFullscreen''   : ''PouÅ¾iÅ¥ reÅ¾im celej obrazovky'', // from v2.1.47 added 19.2.2019
 
 			/********************************** mimetypes **********************************/
 			''kindUnknown''     : ''NeznÃ¡my'',
 			''kindRoot''        : ''KoreÅ mÃ©dia'', // from v2.1.16 added 16.10.2016
 			''kindFolder''      : ''PrieÄinok'',
+			''kindSelects''     : ''VÃ½bery'', // from v2.1.29 added 29.8.2017
 			''kindAlias''       : ''Alias'',
 			''kindAliasBroken'' : ''PoruÅ¡enÃ½ alias'',
 			// applications
@@ -469,4 +579,5 @@ jsi18nelfinderskJsContent
 		}
 	};
 }));
+
 '

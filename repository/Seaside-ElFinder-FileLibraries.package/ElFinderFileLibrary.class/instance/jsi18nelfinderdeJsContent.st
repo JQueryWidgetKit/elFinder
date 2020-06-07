@@ -1,11 +1,14 @@
 uploaded
 jsi18nelfinderdeJsContent
 	^ '/**
- * German translation
+ * German Translation / Deutsche Ãbersetzung
  * @author JPG & Mace <dev@flying-datacenter.de>
  * @author tora60 from pragmaMx.org
  * @author Timo-Linde <info@timo-linde.de>
- * @version 2015-11-16
+ * @author OSWorX <https://osworx.net>
+ * @author Maximilian Schwarz <info@deefuse.de>
+ * @author SF Webdesign <webdesign@stephan-frank.de>
+ * @version 2019-12-13
  */
 (function(root, factory) {
 	if (typeof define === ''function'' && define.amd) {
@@ -17,20 +20,21 @@ jsi18nelfinderdeJsContent
 	}
 }(this, function(elFinder) {
 	elFinder.prototype.i18.de = {
-		translator : ''JPG & Mace &lt;dev@flying-datacenter.de&gt;, tora60 from pragmaMx.org, osworx.net'',
+		translator : ''JPG & Mace &lt;dev@flying-datacenter.de&gt;, tora60 from pragmaMx.org, Timo-Linde &lt;info@timo-linde.de&gt;, OSWorX &lt;info@osworx.net&gt;, Maximilian Schwarz &lt;info@deefuse.de&gt;, SF Webdesign &lt;webdesign@stephan-frank.de&gt;'',
 		language   : ''Deutsch'',
 		direction  : ''ltr'',
-		dateFormat : ''d. M Y H:i'', // 13. Mai 2012 15:27
-		fancyDateFormat : ''$1 H:i'', // will produce smth like: Heute 13:25
-		messages   : {
-			
+		dateFormat : ''j. F Y H:i'', // 3. MÃ¤rz 2020 14:58
+		fancyDateFormat : ''$1 H:i'', // will produce smth like: Today 12:25 PM
+		nonameDateFormat : ''ymd-His'', // to apply if upload file is noname: 120513172700
+		messages : {
+
 			/********************************** errors **********************************/
 			''error''                : ''Fehler'',
 			''errUnknown''           : ''Unbekannter Fehler.'',
 			''errUnknownCmd''        : ''Unbekannter Befehl.'',
 			''errJqui''              : ''UngÃ¼ltige jQuery UI-Konfiguration. Die Komponenten Selectable, Draggable und Droppable mÃ¼ssen inkludiert sein.'',
 			''errNode''              : ''FÃ¼r elFinder muss das DOM-Element erstellt werden.'',
-			''errURL''               : ''UngÃ¼ltige elFinder Konfiguration! Die URL-Option ist nicht gesetzt.'',
+			''errURL''               : ''UngÃ¼ltige elFinder-Konfiguration! Die URL-Option ist nicht gesetzt.'',
 			''errAccess''            : ''Zugriff verweigert.'',
 			''errConnect''           : ''Verbindung zum Backend fehlgeschlagen.'',
 			''errAbort''             : ''Verbindung abgebrochen.'',
@@ -39,7 +43,7 @@ jsi18nelfinderdeJsContent
 			''errResponse''          : ''UngÃ¼ltige Backend-Antwort.'',
 			''errConf''              : ''UngÃ¼ltige Backend-Konfiguration.'',
 			''errJSON''              : ''PHP JSON-Modul nicht vorhanden.'',
-			''errNoVolumes''         : ''Keine lesbaren Volumes vorhanden.'',
+			''errNoVolumes''         : ''Keine lesbaren Laufwerke vorhanden.'',
 			''errCmdParams''         : ''UngÃ¼ltige Parameter fÃ¼r Befehl: "$1".'',
 			''errDataNotJSON''       : ''Daten nicht im JSON-Format.'',
 			''errDataEmpty''         : ''Daten sind leer.'',
@@ -53,63 +57,72 @@ jsi18nelfinderdeJsContent
 			''errLocked''            : ''"$1" ist gesperrt und kann nicht umbenannt, verschoben oder gelÃ¶scht werden.'',
 			''errExists''            : ''Die Datei "$1" existiert bereits.'',
 			''errInvName''           : ''UngÃ¼ltiger Dateiname.'',
+			''errInvDirname''        : ''UngÃ¼ltiger Ordnername.'',  // from v2.1.24 added 12.4.2017
 			''errFolderNotFound''    : ''Ordner nicht gefunden.'',
 			''errFileNotFound''      : ''Datei nicht gefunden.'',
 			''errTrgFolderNotFound'' : ''Zielordner "$1" nicht gefunden.'',
-			''errPopup''             : ''Der Browser hat das Pop-Up-Fenster unterbunden. Um die Datei zu Ã¶ffnen, Pop-Ups in den Browser Einstellungen aktivieren.'',
+			''errPopup''             : ''Der Browser hat das Pop-Up-Fenster unterbunden. Um die Datei zu Ã¶ffnen, Pop-Ups in den Browsereinstellungen aktivieren.'',
 			''errMkdir''             : ''Kann Ordner "$1" nicht erstellen.'',
 			''errMkfile''            : ''Kann Datei "$1" nicht erstellen.'',
 			''errRename''            : ''Kann "$1" nicht umbenennen.'',
 			''errCopyFrom''          : ''Kopieren von Dateien von "$1" nicht erlaubt.'',
 			''errCopyTo''            : ''Kopieren von Dateien nach "$1" nicht erlaubt.'',
-                        ''errMkOutLink''         : ''Der Link kann nicht auÃerhalb der Partition fÃ¼hren.'',
-			''errUpload''            : ''Upload-Fehler.'',
-			''errUploadFile''        : ''Kann "$1" nicht hochladen.'',
+			''errMkOutLink''         : ''Der Link kann nicht auÃerhalb der Partition fÃ¼hren.'', // from v2.1 added 03.10.2015
+			''errUpload''            : ''Upload-Fehler.'',  // old name - errUploadCommon
+			''errUploadFile''        : ''Kann "$1" nicht hochladen.'', // old name - errUpload
 			''errUploadNoFiles''     : ''Keine Dateien zum Hochladen gefunden.'',
-			''errUploadTotalSize''   : ''Daten Ã¼berschreiten die MaximalgrÃ¶Ãe.'',
-			''errUploadFileSize''    : ''Die Datei Ã¼berschreitet die MaximalgrÃ¶Ãe.'',
-			''errUploadMime''        : ''Dateityp nicht zulÃ¤ssig.'',
-			''errUploadTransfer''    : ''"$1" Transfer-Fehler.'',
-                        ''errUploadTemp''        : ''Kann temporÃ¤re Datei nicht erstellen.'',
-			''errNotReplace''        : ''Das Objekt "$1" existiert bereits an dieser Stelle und kann nicht durch ein Objekt eines anderen Typs ersetzt werden.'',
+			''errUploadTotalSize''   : ''GesamtgrÃ¶Ãe Ã¼berschreitet die MaximalgrÃ¶Ãe.'', // old name - errMaxSize
+			''errUploadFileSize''    : ''Die Datei Ã¼berschreitet die MaximalgrÃ¶Ãe.'', //  old name - errFileMaxSize
+			''errUploadMime''        : ''Dateiart (mime) nicht zulÃ¤ssig.'',
+			''errUploadTransfer''    : ''"$1" Ãbertragungsfehler.'',
+			''errUploadTemp''        : ''Kann temporÃ¤re Datei nicht erstellen.'', // from v2.1 added 26.09.2015
+			''errNotReplace''        : ''Das Objekt "$1" existiert bereits an dieser Stelle und kann nicht durch ein Objekt eines anderen Typs ersetzt werden.'', // new
 			''errReplace''           : ''Kann "$1" nicht ersetzen.'',
 			''errSave''              : ''Kann "$1" nicht speichern.'',
 			''errCopy''              : ''Kann "$1" nicht kopieren.'',
 			''errMove''              : ''Kann "$1" nicht verschieben.'',
 			''errCopyInItself''      : ''"$1" kann sich nicht in sich selbst kopieren.'',
 			''errRm''                : ''Kann "$1" nicht entfernen.'',
+			''errTrash''             : ''Kann Objekt nicht in MÃ¼lleimer legen.'', // from v2.1.24 added 30.4.2017
 			''errRmSrc''             : ''Kann Quelldatei(en) nicht entfernen.'',
 			''errExtract''           : ''Kann "$1" nicht entpacken.'',
 			''errArchive''           : ''Archiv konnte nicht erstellt werden.'',
 			''errArcType''           : ''Archivtyp nicht untersÃ¼tzt.'',
-			''errNoArchive''         : ''Bei der Datei handelt es sich nicht um ein Archiv, oder der Archivtyp wird nicht unterstÃ¼tzt.'',
+			''errNoArchive''         : ''Bei der Datei handelt es sich nicht um ein Archiv, oder die Archivart wird nicht unterstÃ¼tzt.'',
 			''errCmdNoSupport''      : ''Das Backend unterstÃ¼tzt diesen Befehl nicht.'',
 			''errReplByChild''       : ''Der Ordner "$1" kann nicht durch etwas ersetzt werden, das ihn selbst enthÃ¤lt.'',
-			''errArcSymlinks''       : ''Aus SicherheitsgrÃ¼nden ist es verboten, ein Archiv mit symbolischen Links zu extrahieren.'',
+			''errArcSymlinks''       : ''Aus SicherheitsgrÃ¼nden ist es verboten, ein Archiv mit symbolischen Links zu extrahieren.'', // edited 24.06.2012
 			''errArcMaxSize''        : ''Die Archivdateien Ã¼bersteigen die maximal erlaubte GrÃ¶Ãe.'',
 			''errResize''            : ''GrÃ¶Ãe von "$1" kann nicht geÃ¤ndert werden.'',
-			''errResizeDegree''      : ''UngÃ¼ltiger Rotationswert.'',
-			''errResizeRotate''      : ''Bild konnte nicht gedreht werden.'',
-			''errResizeSize''        : ''UngÃ¼ltige BildgrÃ¶Ãe.'',
-			''errResizeNoChange''    : ''BildmaÃe nicht geÃ¤ndert.'',
-			''errUsupportType''      : ''Nicht unterstÃ¼tzter Dateityp.'',
-			''errNotUTF8Content''    : ''Die Datei "$1" ist nicht im UTF-8-Format und kann nicht editiert werden.'',
-			''errNetMount''          : ''Verbindung mit "$1" nicht mÃ¶glich.'',
-			''errNetMountNoDriver''  : ''Nicht unterstÃ¼tztes Protokoll.'',
-			''errNetMountFailed''    : ''Verbindung fehlgeschlagen.'',
-			''errNetMountHostReq''   : ''Host benÃ¶tigt.'',
+			''errResizeDegree''      : ''UngÃ¼ltiger Rotationswert.'',  // added 7.3.2013
+			''errResizeRotate''      : ''Bild konnte nicht gedreht werden.'',  // added 7.3.2013
+			''errResizeSize''        : ''UngÃ¼ltige BildgrÃ¶Ãe.'',  // added 7.3.2013
+			''errResizeNoChange''    : ''BildmaÃe nicht geÃ¤ndert.'',  // added 7.3.2013
+			''errUsupportType''      : ''Nicht unterstÃ¼tzte Dateiart.'',
+			''errNotUTF8Content''    : ''Die Datei "$1" ist nicht im UTF-8-Format und kann nicht bearbeitet werden.'',  // added 9.11.2011
+			''errNetMount''          : ''Verbindung mit "$1" nicht mÃ¶glich.'', // added 17.04.2012
+			''errNetMountNoDriver''  : ''Nicht unterstÃ¼tztes Protokoll.'',     // added 17.04.2012
+			''errNetMountFailed''    : ''Verbindung fehlgeschlagen.'',         // added 17.04.2012
+			''errNetMountHostReq''   : ''Host benÃ¶tigt.'', // added 18.04.2012
 			''errSessionExpires''    : ''Diese Sitzung ist aufgrund von InaktivitÃ¤t abgelaufen.'',
 			''errCreatingTempDir''   : ''Erstellung des temporÃ¤ren Ordners nicht mÃ¶glich: "$1"'',
 			''errFtpDownloadFile''   : ''Download der Datei Ã¼ber FTP nicht mÃ¶glich: "$1"'',
 			''errFtpUploadFile''     : ''Upload der Datei zu FTP nicht mÃ¶glich: "$1"'',
-			''errFtpMkdir''          : ''Erstellung des Remote-Ordners auf FTP nicht mÃ¶glich: "$1"'',
+			''errFtpMkdir''          : ''Erstellung des Remote-Ordners mit FTP nicht mÃ¶glich: "$1"'',
 			''errArchiveExec''       : ''Fehler beim Archivieren der Dateien: "$1"'',
 			''errExtractExec''       : ''Fehler beim Extrahieren der Dateien: "$1"'',
-                        ''errNetUnMount''        : ''Kann nicht ausgeworfen werden.'',
-			''errConvUTF8''          : ''Kann nicht zu UTF-8 konvertiert werden.'',
-			''errFolderUpload''      : ''Versuchen Sie es mit Google Chrome, wenn Sie einen Ordner hochladen mÃ¶chten.'',
-			''errSearchTimeout''     : ''ZeitÃ¼berschreitung wÃ¤hrend der Suche nach "$1". Suchergebnis ist unvollstÃ¤ndig.'',
-			''errReauthRequire''     : ''Erneutes Anmelden ist erforderlich.'',
+			''errNetUnMount''        : ''Kann nicht ausgehÃ¤ngt werden.'', // from v2.1 added 30.04.2012
+			''errConvUTF8''          : ''Kann nicht zu UTF-8 konvertiert werden.'', // from v2.1 added 08.04.2014
+			''errFolderUpload''      : ''Ordner kann nich hochladen werden, eventuell mit Google Chrome versuchen.'', // from v2.1 added 26.6.2015
+			''errSearchTimeout''     : ''ZeitÃ¼berschreitung wÃ¤hrend der Suche nach "$1". Suchergebnis ist unvollstÃ¤ndig.'', // from v2.1 added 12.1.2016
+			''errReauthRequire''     : ''Erneutes Anmelden ist erforderlich.'', // from v2.1.10 added 24.3.2016
+			''errMaxTargets''        : ''Die maximale Anzahl auswÃ¤hlbarer Elemente ist $1'', // from v2.1.17 added 17.10.2016
+			''errRestore''           : ''Datei konnte nicht aus MÃ¼lleimer wieder hergestellt werden bzw. Ziel fÃ¼r Wiederherstellung nicht gefunden.'', // from v2.1.24 added 3.5.2017
+			''errEditorNotFound''    : ''Kein Editor fÃ¼r diesen Dateityp gefunden.'', // from v2.1.25 added 23.5.2017
+			''errServerError''       : ''Ein serverseitiger Fehler trat auf.'', // from v2.1.25 added 16.6.2017
+			''errEmpty''             : ''Konnte Ordner "$1" nicht Leeren.'', // from v2.1.25 added 22.6.2017
+			''moreErrors''           : ''Es sind noch $1 weitere Fehler.'', // from v2.1.44 added 13.12.2019
+
 			/******************************* commands names ********************************/
 			''cmdarchive''   : ''Archiv erstellen'',
 			''cmdback''      : ''ZurÃ¼ck'',
@@ -125,31 +138,41 @@ jsi18nelfinderdeJsContent
 			''cmdhome''      : ''Startordner'',
 			''cmdinfo''      : ''Informationen'',
 			''cmdmkdir''     : ''Neuer Ordner'',
-			''cmdmkdirin''   : ''In neuen Ordner'',
-			''cmdmkfile''    : ''Neue Textdatei'',
+			''cmdmkdirin''   : ''In neuen Ordner'', // from v2.1.7 added 19.2.2016
+			''cmdmkfile''    : ''Neuer Datei'',
 			''cmdopen''      : ''Ãffnen'',
 			''cmdpaste''     : ''EinfÃ¼gen'',
 			''cmdquicklook'' : ''Vorschau'',
 			''cmdreload''    : ''Aktualisieren'',
 			''cmdrename''    : ''Umbenennen'',
 			''cmdrm''        : ''LÃ¶schen'',
+			''cmdtrash''     : ''In den MÃ¼lleimer legen'', //from v2.1.24 added 29.4.2017
+			''cmdrestore''   : ''Wiederherstellen'', //from v2.1.24 added 3.5.2017
 			''cmdsearch''    : ''Suchen'',
 			''cmdup''        : ''In Ã¼bergeordneten Ordner wechseln'',
 			''cmdupload''    : ''Datei hochladen'',
 			''cmdview''      : ''Ansehen'',
 			''cmdresize''    : ''GrÃ¶Ãe Ã¤ndern & drehen'',
 			''cmdsort''      : ''Sortieren'',
-			''cmdnetmount''  : ''Verbinde mit Netzwerkspeicher'',
-                        ''cmdnetunmount'': ''Auswerfen'', 
-			''cmdplaces''    : ''Orte'',
-			''cmdchmod''     : ''Berechtigung Ã¤ndern'',
-			''cmdopendir''   : ''Einen Ordner Ã¶ffnen'',
-			''cmdcolwidth''  : ''Spaltenbreite zurÃ¼cksetzen'',
-			''cmdfullscreen'': ''Vollbild'',
-			''cmdmove''      : ''Verschieben'',
-			
-			
-			/*********************************** buttons ***********************************/ 
+			''cmdnetmount''  : ''Verbinde mit Netzwerkspeicher'', // added 18.04.2012
+			''cmdnetunmount'': ''AbhÃ¤ngen'', // from v2.1 added 30.04.2012
+			''cmdplaces''    : ''Favoriten'', // added 28.12.2014
+			''cmdchmod''     : ''Berechtigung Ã¤ndern'', // from v2.1 added 20.6.2015
+			''cmdopendir''   : ''Einen Ordner Ã¶ffnen'', // from v2.1 added 13.1.2016
+			''cmdcolwidth''  : ''Spaltenbreite zurÃ¼cksetzen'', // from v2.1.13 added 12.06.2016
+			''cmdfullscreen'': ''Vollbild'', // from v2.1.15 added 03.08.2016
+			''cmdmove''      : ''Verschieben'', // from v2.1.15 added 21.08.2016
+			''cmdempty''     : ''Ordner Leeren'', // from v2.1.25 added 22.06.2017
+			''cmdundo''      : ''RÃ¼ckgÃ¤ngig'', // from v2.1.27 added 31.07.2017
+			''cmdredo''      : ''Wiederholen'', // from v2.1.27 added 31.07.2017
+			''cmdpreference'': ''Einstellungen'', // from v2.1.27 added 03.08.2017
+			''cmdselectall'' : ''Alle auswÃ¤hlen'', // from v2.1.28 added 15.08.2017
+			''cmdselectnone'': ''Keine auswÃ¤hlen'', // from v2.1.28 added 15.08.2017
+			''cmdselectinvert'': ''Auswahl rÃ¼ckgÃ¤ngig machen'', // from v2.1.28 added 15.08.2017
+			''cmdopennew''   : ''In neuem Fenster Ã¶ffnen'', // from v2.1.38 added 3.4.2018
+			''cmdhide''      : ''Verstecken'', // from v2.1.41 added 13.12.2019
+
+			/*********************************** buttons ***********************************/
 			''btnClose''  : ''SchlieÃen'',
 			''btnSave''   : ''Speichern'',
 			''btnRm''     : ''Entfernen'',
@@ -157,18 +180,23 @@ jsi18nelfinderdeJsContent
 			''btnCancel'' : ''Abbrechen'',
 			''btnNo''     : ''Nein'',
 			''btnYes''    : ''Ja'',
-			''btnMount''  : ''Verbinden'',
-                        ''btnApprove'': ''Goto $1 & approve'', 
-			''btnUnmount'': ''Auswerfen'',
-			''btnConv''   : ''Konvertieren'',
-			''btnCwd''    : ''Arbeitspfad'',
-			''btnVolume'' : ''Partition'',
-			''btnAll''    : ''Alle'',
-			''btnMime''   : ''MIME-Typ'',
-			''btnFileName'': ''Dateiname'',
-			''btnSaveClose'': ''Speichern & SchlieÃen'',
-			''btnBackup'' : ''Backup'',
-			
+			''btnMount''  : ''Verbinden'',  // added 18.04.2012
+			''btnApprove'': ''Gehe zu $1 und genehmige'', // from v2.1 added 26.04.2012
+			''btnUnmount'': ''Auswerfen'', // from v2.1 added 30.04.2012
+			''btnConv''   : ''Konvertieren'', // from v2.1 added 08.04.2014
+			''btnCwd''    : ''Arbeitspfad'',      // from v2.1 added 22.5.2015
+			''btnVolume'' : ''Partition'',    // from v2.1 added 22.5.2015
+			''btnAll''    : ''Alle'',       // from v2.1 added 22.5.2015
+			''btnMime''   : ''MIME-Typ'', // from v2.1 added 22.5.2015
+			''btnFileName'':''Dateiname'',  // from v2.1 added 22.5.2015
+			''btnSaveClose'': ''Speichern & SchlieÃen'', // from v2.1 added 12.6.2015
+			''btnBackup'' : ''Sicherung'', // fromv2.1 added 28.11.2015
+			''btnRename''    : ''Umbenennen'',      // from v2.1.24 added 6.4.2017
+			''btnRenameAll'' : ''Alle Umbenennen'', // from v2.1.24 added 6.4.2017
+			''btnPrevious'' : ''ZurÃ¼ck ($1/$2)'', // from v2.1.24 added 11.5.2017
+			''btnNext''     : ''Weiter ($1/$2)'', // from v2.1.24 added 11.5.2017
+			''btnSaveAs''   : ''Speichern als'', // from v2.1.25 added 24.5.2017
+
 			/******************************** notifications ********************************/
 			''ntfopen''     : ''Ãffne Ordner'',
 			''ntffile''     : ''Ãffne Datei'',
@@ -187,17 +215,28 @@ jsi18nelfinderdeJsContent
 			''ntfextract''  : ''Entpacke Dateien'',
 			''ntfsearch''   : ''Suche'',
 			''ntfresize''   : ''BildgrÃ¶Ãen Ã¤ndern'',
-			''ntfsmth''     : ''Bin beschÃ¤ftigt'',
-			''ntfloadimg''  : ''Bild laden'',
-			''ntfnetmount'' : ''Mit Netzwerkspeicher verbinden'',
-                        ''ntfnetunmount'': ''Netzwerkspeicher auswerfen'',
-			''ntfdim''      : ''BildgrÃ¶Ãe erfassen'',
-			''ntfreaddir''  : ''Lese Ordner Informationen'',
-			''ntfurl''      : ''Hole URL von Link'',
-			''ntfchmod''    : ''Ãndere Dateiberechtigungen'',
-			''ntfpreupload'': ''Upload-Dateinamen Ã¼berprÃ¼fen'',
-			''ntfzipdl''    : ''Erstelle Datei zum Download'',
-			
+			''ntfsmth''     : ''Bin beschÃ¤ftigt ..'',
+			''ntfloadimg''  : ''Lade Bild ..'',
+			''ntfnetmount'' : ''Mit Netzwerkspeicher verbinden'', // added 18.04.2012
+			''ntfnetunmount'': ''Netzwerkspeicher auswerfen'', // from v2.1 added 30.04.2012
+			''ntfdim''      : ''BildgrÃ¶Ãe erfassen'', // added 20.05.2013
+			''ntfreaddir''  : ''Lese Ordnerinformationen'', // from v2.1 added 01.07.2013
+			''ntfurl''      : ''Hole URL von Link'', // from v2.1 added 11.03.2014
+			''ntfchmod''    : ''Ãndere Dateiberechtigungen'', // from v2.1 added 20.6.2015
+			''ntfpreupload'': ''Upload-Dateinamen Ã¼berprÃ¼fen'', // from v2.1 added 31.11.2015
+			''ntfzipdl''    : ''Erstelle Datei zum Download'', // from v2.1.7 added 23.1.2016
+			''ntfparents''  : ''Beziehe Pfad Informationen'', // from v2.1.17 added 2.11.2016
+			''ntfchunkmerge'': ''Upload lÃ¤uft'', // from v2.1.17 added 2.11.2016
+			''ntftrash''    : ''Bewege in den MÃ¼lleimer'', // from v2.1.24 added 2.5.2017
+			''ntfrestore''  : ''Wiederherstellung aus MÃ¼lleimer'', // from v2.1.24 added 3.5.2017
+			''ntfchkdir''   : ''PrÃ¼fe Zielordner'', // from v2.1.24 added 3.5.2017
+			''ntfundo''     : ''Vorherige Operation rÃ¼ckgÃ¤ngig machen'', // from v2.1.27 added 31.07.2017
+			''ntfredo''     : ''Wiederherstellen'', // from v2.1.27 added 31.07.2017
+			''ntfchkcontent'' : ''ÃberprÃ¼fe Inhalte'', // from v2.1.41 added 13.12.2019
+
+			/*********************************** volumes *********************************/
+			''volume_Trash'' : ''MÃ¼lleimer'', //from v2.1.24 added 29.4.2017
+
 			/************************************ dates **********************************/
 			''dateUnknown'' : ''unbekannt'',
 			''Today''       : ''Heute'',
@@ -233,42 +272,49 @@ jsi18nelfinderdeJsContent
 			''Thursday''    : ''Donnerstag'',
 			''Friday''      : ''Freitag'',
 			''Saturday''    : ''Samstag'',
-			''Sun''         : ''So'', 
-			''Mon''         : ''Mo'', 
-			''Tue''         : ''Di'', 
-			''Wed''         : ''Mi'', 
-			''Thu''         : ''Do'', 
-			''Fri''         : ''Fr'', 
+			''Sun''         : ''So'',
+			''Mon''         : ''Mo'',
+			''Tue''         : ''Di'',
+			''Wed''         : ''Mi'',
+			''Thu''         : ''Do'',
+			''Fri''         : ''Fr'',
 			''Sat''         : ''Sa'',
 
 			/******************************** sort variants ********************************/
-			''sortname''         : ''nach Name'',
-			''sortkind''         : ''nach Art'',
-			''sortsize''         : ''nach GrÃ¶Ãe'',
-			''sortdate''         : ''nach Datum'',
-			''sortFoldersFirst'' : ''Ordner zuerst'',
-			''sortperm''         : ''nach Berechtigung'',
-			''sortmode''         : ''nach Modus'',
-			''sortowner''        : ''nach Besitzer'',
-			''sortgroup''        : ''nach Gruppe'',
-			''sortAlsoTreeview'' : ''auch Baumansicht'',
-                        
-                        /********************************** new items **********************************/
-			''untitled file.txt'' : ''Neues Textdokument.txt'', 
-			''untitled folder''   : ''Neuer Ordner'',
-			''Archive''           : ''Neues Archiv'',
+			''sortname''          : ''nach Name'',
+			''sortkind''          : ''nach Art'',
+			''sortsize''          : ''nach GrÃ¶Ãe'',
+			''sortdate''          : ''nach Datum'',
+			''sortFoldersFirst''  : ''Ordner zuerst'',
+			''sortperm''          : ''nach Berechtigung'', // from v2.1.13 added 13.06.2016
+			''sortmode''          : ''nach Modus'',       // from v2.1.13 added 13.06.2016
+			''sortowner''         : ''nach Besitzer'',      // from v2.1.13 added 13.06.2016
+			''sortgroup''         : ''nach Gruppe'',      // from v2.1.13 added 13.06.2016
+			''sortAlsoTreeview''  : ''auch Baumansicht'',  // from v2.1.15 added 01.08.2016
+
+			/********************************** new items **********************************/
+			''untitled file.txt'' : ''Neues Textdokument (.txt)'', // added 10.11.2015
+			''untitled folder''   : ''Neuer Ordner'',   // added 10.11.2015
+			''Archive''           : ''Neues Archiv'',  // from v2.1 added 10.11.2015
+			''untitled file''     : ''Neue Datei $1'',  // from v2.1.41 added 13.12.2019
+			''extentionfile''     : ''$1: Datei'',    // from v2.1.41 added 13.12.2019
+			''extentiontype''     : ''$1: $2'',      // from v2.1.43 added 13.12.2018
 
 			/********************************** messages **********************************/
 			''confirmReq''      : ''BestÃ¤tigung benÃ¶tigt'',
-			''confirmRm''       : ''Sollen die Dateien gelÃ¶scht werden?<br/>Dies kann nicht rÃ¼ckgÃ¤ngig gemacht werden!'',
-                        ''confirmConvUTF8'' : ''Nicht in UTF-8<br/>Zu UTF-8 konvertieren?<br/>Inhalte werden zu UTF-8 konvertiert, wenn Sie speichern.'',
-			''confirmNotSave''  : ''Die Datei wurde geÃ¤ndert.<br/>Sie werden die Ãnderungen verlieren, wenn Sie nicht speichern.'',
+			''confirmRm''       : ''Sollen die Dateien gelÃ¶scht werden?<br>Vorgang ist endgÃ¼ltig!'',
 			''confirmRepl''     : ''Datei ersetzen?'',
+			''confirmRest''     : ''Vorhandenes Element durch das Element aus MÃ¼lleimer ersetzen?'', // fromv2.1.24 added 5.5.2017
+			''confirmConvUTF8'' : ''Nicht UTF-8 kodiert<br>Zu UTF-8 konvertieren?<br>Inhalte werden zu UTF-8 konvertiert bei Speicherung.'', // from v2.1 added 08.04.2014
+			''confirmNonUTF8''  : ''Die Zeichencodierung dieser Datei konnte nicht erkannt werden. Es muss vorÃ¼bergehend in UTF-8 zur Bearbeitung konvertiert werden.<br> Bitte eine Zeichenkodierung dieser Datei auswÃ¤hlen.'', // from v2.1.19 added 28.11.2016
+			''confirmNotSave''  : ''Die Datei wurde geÃ¤ndert.<br>Ãnderungen gehen verloren wenn nicht gespeichert wird.'', // from v2.1 added 15.7.2015
+			''confirmTrash''    : ''Sicher diese Elemente in den MÃ¼lleimer verschieben?'', // from v2.1.24 added 29.4.2017
+			''confirmMove''     : ''Sicher alle Elemente nach "$1" verschieben?'', // from v2.1.50 added 13.12.2019
 			''apllyAll''        : ''Alles bestÃ¤tigen'',
 			''name''            : ''Name'',
 			''size''            : ''GrÃ¶Ãe'',
 			''perms''           : ''Berechtigungen'',
-			''modify''          : ''Ãnderungsdatum'',
+			''modify''          : ''GeÃ¤ndert'',
 			''kind''            : ''Typ'',
 			''read''            : ''Lesen'',
 			''write''           : ''Schreiben'',
@@ -281,7 +327,11 @@ jsi18nelfinderdeJsContent
 			''selectlfile''     : ''Letzte Datei auswÃ¤hlen'',
 			''viewlist''        : ''Spaltenansicht'',
 			''viewicons''       : ''Symbolansicht'',
-			''places''          : ''Orte'',
+			''viewSmall''       : ''Kleine Icons'', // from v2.1.39 added 13.12.2019
+			''viewMedium''      : ''Medium Icons'', // from v2.1.39 added 13.12.2019
+			''viewLarge''       : ''GroÃe Icons'', // from v2.1.39 added 13.12.2019
+			''viewExtraLarge''  : ''ExtragroÃe Icons'', // from v2.1.39 added 13.12.2019
+			''places''          : ''Favoriten'',
 			''calc''            : ''Berechne'',
 			''path''            : ''Pfad'',
 			''aliasfor''        : ''VerknÃ¼pfung zu'',
@@ -313,14 +363,15 @@ jsi18nelfinderdeJsContent
 			''maintainer''      : ''Maintainer'',
 			''translator''      : ''Ãbersetzer'',
 			''icons''           : ''Icons'',
-			''dontforget''      : ''und vergiss dein Handtuch nicht'',
+			''dontforget''      : ''und vergiss nicht .. morgen ist auch noch ein Tag ..'',
 			''shortcutsof''     : ''Tastenkombinationen deaktiviert'',
 			''dropFiles''       : ''Dateien hier ablegen'',
 			''or''              : ''oder'',
 			''selectForUpload'' : ''Dateien zum Upload auswÃ¤hlen'',
 			''moveFiles''       : ''Dateien verschieben'',
 			''copyFiles''       : ''Dateien kopieren'',
-			''rmFromPlaces''    : ''LÃ¶sche von Orten'',
+			''restoreFiles''    : ''Elemente wiederherstellen'', // from v2.1.24 added 5.5.2017
+			''rmFromPlaces''    : ''LÃ¶sche von Favoriten'',
 			''aspectRatio''     : ''SeitenverhÃ¤ltnis'',
 			''scale''           : ''MaÃstab'',
 			''width''           : ''Breite'',
@@ -331,64 +382,138 @@ jsi18nelfinderdeJsContent
 			''rotate-cw''       : ''Drehe 90Â° im Uhrzeigersinn'',
 			''rotate-ccw''      : ''Drehe 90Â° gegen Uhrzeigersinn'',
 			''degree''          : ''Â°'',
-			''netMountDialogTitle'' : ''verbinde Netzwerkspeicher'',
-			''protocol''            : ''Protokoll'',
-			''host''                : ''Host'',
-			''port''                : ''Port'',
-			''user''                : ''Benutzer'',
-			''pass''                : ''Passwort'',
-                        ''confirmUnmount''      : ''MÃ¶chten Sie "$1" auswerfen?'',
-			''dropFilesBrowser'': ''Sie kÃ¶nnen Dateien in den Browser ziehen'', 
-			''dropPasteFiles''  : ''Lassen Sie die Dateien hier los'',
-			''encoding''        : ''Codierung'', 
-			''locale''          : ''Locale'', 
-			''searchTarget''    : ''Ziel: $1'',
-			''searchMime''      : ''Suche nach MIME-Typ'',
-			''owner''           : ''Besitzer'',
-			''group''           : ''Gruppe'',
-			''other''           : ''Andere'',
-			''execute''         : ''AusfÃ¼hren'',
-			''perm''            : ''Berechtigung'',
-			''mode''            : ''Modus'',
-			''emptyFolder''     : ''Der Ordner ist leer'',
-			''emptyFolderDrop'' : ''Der Ordner ist leer\\A FÃ¼gen Sie Elemente durch Ziehen hinzu'',
-			''emptyFolderLTap'' : ''Der Ordner ist leer\\A FÃ¼gen Sie Elemente durch langes Tippen hinzu'',
-			''quality''         : ''QualitÃ¤t'',
-			''autoSync''        : ''Auto sync'',
-			''moveUp''          : ''Nach oben bewegen'',
-			''getLink''         : ''URL-Link holen'',
-			''selectedItems''   : ''AusgewÃ¤hlte Objekte ($1)'',
-			''folderId''        : ''Ordner-ID'',
-			''offlineAccess''   : ''Offline-Zugriff erlauben'',
-			''reAuth''          : ''Erneut anmelden'',
-			''nowLoading''      : ''Wird geladen...'',
-			''openMulti''       : ''mehrere Dateien Ã¶ffnen'',
-			''openMultiConfirm'': ''Sie versuchen, die $1 Dateien zu Ã¶ffnen. Sind Sie sicher, dass sie im Browser Ã¶ffnen wollen ?'',
-			''emptySearch''     : ''Suchergebnisse sind leer'',
-			''editingFile''     : ''Datei wird bearbeitet.'',
-			''hasSelected''     : ''Sie haben $1 Objekte ausgewÃ¤hlt.'',
-			''hasClipboard''    : ''Sie haben $1 Objekte im Clipboard.'',
-			''incSearchOnly''   : ''Inkrementelle Suche bezieht sich nur auf die aktuelle Ansicht.'',
-			''reinstate''       : ''Wiederherstellen'',
-			''complete''        : ''$1 abgeschlossen'',
-			''contextmenu''     : ''KontextmenÃ¼'',
-			''pageTurning''     : ''Seite umblÃ¤ttern'',
-			''volumeRoots''     : ''Volume-Rootverzeichnisse'',
+			''netMountDialogTitle'' : ''verbinde Netzwerkspeicher'', // added 18.04.2012
+			''protocol''            : ''Protokoll'', // added 18.04.2012
+			''host''                : ''Host'', // added 18.04.2012
+			''port''                : ''Port'', // added 18.04.2012
+			''user''                : ''Benutzer'', // added 18.04.2012
+			''pass''                : ''Passwort'', // added 18.04.2012
+			''confirmUnmount''      : ''Soll "$1" ausgehÃ¤ngt werden'',  // from v2.1 added 30.04.2012
+			''dropFilesBrowser'': ''Dateien in den Browser ziehen'', // from v2.1 added 30.05.2012
+			''dropPasteFiles''  : ''Dateien hier loslassen'', // from v2.1 added 07.04.2014
+			''encoding''        : ''Kodierung'', // from v2.1 added 19.12.2014
+			''locale''          : ''Lokal'',   // from v2.1 added 19.12.2014
+			''searchTarget''    : ''Ziel: $1'',                // from v2.1 added 22.5.2015
+			''searchMime''      : ''Suche nach MIME-Typ'', // from v2.1 added 22.5.2015
+			''owner''           : ''Besitzer'', // from v2.1 added 20.6.2015
+			''group''           : ''Gruppe'', // from v2.1 added 20.6.2015
+			''other''           : ''Andere'', // from v2.1 added 20.6.2015
+			''execute''         : ''AusfÃ¼hren'', // from v2.1 added 20.6.2015
+			''perm''            : ''Berechtigung'', // from v2.1 added 20.6.2015
+			''mode''            : ''Modus'', // from v2.1 added 20.6.2015
+			''emptyFolder''     : ''Der Ordner ist leer'', // from v2.1.6 added 30.12.2015
+			''emptyFolderDrop'' : ''Der Ordner ist leer\\A Elemente durch Ziehen hinzufÃ¼gen'', // from v2.1.6 added 30.12.2015
+			''emptyFolderLTap'' : ''Der Ordner ist leer\\A Elemente durch langes Tippen hinzufÃ¼gen'', // from v2.1.6 added 30.12.2015
+			''quality''         : ''QualitÃ¤t'', // from v2.1.6 added 5.1.2016
+			''autoSync''        : ''Automatische Synchronisation'',  // from v2.1.6 added 10.1.2016
+			''moveUp''          : ''Nach oben bewegen'',  // from v2.1.6 added 18.1.2016
+			''getLink''         : ''URL-Link holen'', // from v2.1.7 added 9.2.2016
+			''selectedItems''   : ''AusgewÃ¤hlte Objekte ($1)'', // from v2.1.7 added 2.19.2016
+			''folderId''        : ''Ordner-ID'', // from v2.1.10 added 3.25.2016
+			''offlineAccess''   : ''Offline-Zugriff erlauben'', // from v2.1.10 added 3.25.2016
+			''reAuth''          : ''Erneut anmelden'', // from v2.1.10 added 3.25.2016
+			''nowLoading''      : ''Wird geladen...'', // from v2.1.12 added 4.26.2016
+			''openMulti''       : ''mehrere Dateien Ã¶ffnen'', // from v2.1.12 added 5.14.2016
+			''openMultiConfirm'': ''Es wird versucht die $1 Dateien zu Ã¶ffnen .. sicher im Browser Ã¶ffnen?'', // from v2.1.12 added 5.14.2016
+			''emptySearch''     : ''Kein Suchergebnis'', // from v2.1.12 added 5.16.2016
+			''editingFile''     : ''Datei wird bearbeitet.'', // from v2.1.13 added 6.3.2016
+			''hasSelected''     : ''$1 Objekt(e) ausgewÃ¤hlt.'', // from v2.1.13 added 6.3.2016
+			''hasClipboard''    : ''$1 Objekte im Clipboard.'', // from v2.1.13 added 6.3.2016
+			''incSearchOnly''   : ''Inkrementelle Suche bezieht sich nur auf die aktuelle Ansicht.'', // from v2.1.13 added 6.30.2016
+			''reinstate''       : ''Wiederherstellen'', // from v2.1.15 added 3.8.2016
+			''complete''        : ''$1 abgeschlossen'', // from v2.1.15 added 21.8.2016
+			''contextmenu''     : ''KontextmenÃ¼'', // from v2.1.15 added 9.9.2016
+			''pageTurning''     : ''Seite umblÃ¤ttern'', // from v2.1.15 added 10.9.2016
+			''volumeRoots''     : ''Volume-Rootverzeichnisse'', // from v2.1.16 added 16.9.2016
+			''reset''           : ''Neustart'', // from v2.1.16 added 1.10.2016
+			''bgcolor''         : ''Hintergrund Farbe'', // from v2.1.16 added 1.10.2016
+			''colorPicker''     : ''Farbauswahl'', // from v2.1.16 added 1.10.2016
+			''8pxgrid''         : ''8px Raster'', // from v2.1.16 added 4.10.2016
+			''enabled''         : ''Ein'', // from v2.1.16 added 4.10.2016
+			''disabled''        : ''Aus'', // from v2.1.16 added 4.10.2016
+			''emptyIncSearch''  : ''Keine Ergebnisse in der aktuellen Anzeige'', // from v2.1.16 added 5.10.2016
+			''emptyLetSearch''  : ''Die Ergebnisse der ersten Buchstabensuche sind in der aktuellen Ansicht leer.'', // from v2.1.23 added 24.3.2017
+			''textLabel''       : ''Text Bezeichnung'', // from v2.1.17 added 13.10.2016
+			''minsLeft''        : ''$1 Minuten Ã¼brig'', // from v2.1.17 added 13.11.2016
+			''openAsEncoding''  : ''WiedererÃ¶ffnen mit ausgewÃ¤hlter Codierung'', // from v2.1.19 added 2.12.2016
+			''saveAsEncoding''  : ''Speichern mit der gewÃ¤hlten Kodierung'', // from v2.1.19 added 2.12.2016
+			''selectFolder''    : ''Verzeichnis auswÃ¤hlen'', // from v2.1.20 added 13.12.2016
+			''firstLetterSearch'': ''Erster Buchstabe suche'', // from v2.1.23 added 24.3.2017
+			''presets''         : ''Voreinstellungen'', // from v2.1.25 added 26.5.2017
+			''tooManyToTrash''  : ''Zu viele Elemente auf einmal fÃ¼r den MÃ¼lleimer.'', // from v2.1.25 added 9.6.2017
+			''TextArea''        : ''Textbereich'', // from v2.1.25 added 14.6.2017
+			''folderToEmpty''   : ''Leere Ordner "$1".'', // from v2.1.25 added 22.6.2017
+			''filderIsEmpty''   : ''Es befinden sich keine Elemente im Ordner "$1".'', // from v2.1.25 added 22.6.2017
+			''preference''      : ''Einstellungen'', // from v2.1.26 added 28.6.2017
+			''language''        : ''Spracheinstellungen'', // from v2.1.26 added 28.6.2017
+			''clearBrowserData'': ''Initialisiere die Einstellungen, welche in diesem Browser gespeichert sind'', // from v2.1.26 added 28.6.2017
+			''toolbarPref''     : ''Toolbareinstellung'', // from v2.1.27 added 2.8.2017
+			''charsLeft''       : ''... $1 Zeichen Ã¼brig'',  // from v2.1.29 added 30.8.2017
+			''sum''             : ''Summe'', // from v2.1.29 added 28.9.2017
+			''roughFileSize''   : ''UngefÃ¤hre DateigrÃ¶Ãe'', // from v2.1.30 added 2.11.2017
+			''autoFocusDialog'' : ''Fokussierung auf das Element Dialog mit Mouseover'',  // from v2.1.30 added 2.11.2017
+			''select''          : ''AuswÃ¤hlen'', // from v2.1.30 added 23.11.2017
+			''selectAction''    : ''Aktion bei der Auswahl der Datei'', // from v2.1.30 added 23.11.2017
+			''useStoredEditor'' : ''Ãffnen mit dem zuletzt verwendeten Editor'', // from v2.1.30 added 23.11.2017
+			''selectinvert''    : ''Auswahl umkehren'', // from v2.1.30 added 25.11.2017
+			''renameMultiple''  : ''Sicher $1 ausgewÃ¤hlte Elemente in $2 umbenennen?<br>RÃ¼ckgÃ¤ngig nicht mÃ¶glich!'', // from v2.1.31 added 4.12.2017
+			''batchRename''     : ''Stapelumbenennung'', // from v2.1.31 added 8.12.2017
+			''plusNumber''      : ''+ Nummer'', // from v2.1.31 added 8.12.2017
+			''asPrefix''        : ''Vorzeichen hinzufÃ¼gen'', // from v2.1.31 added 8.12.2017
+			''asSuffix''        : ''Nachzeichen hinzufÃ¼gen'', // from v2.1.31 added 8.12.2017
+			''changeExtention'' : ''Erweiterung Ã¤ndern'', // from v2.1.31 added 8.12.2017
+			''columnPref''      : ''Spalteneinstellungen (Listenansicht)'', // from v2.1.32 added 6.2.2018
+			''reflectOnImmediate'' : ''Alle Ãnderungen werden sofort im Archiv angewendet.'', // from v2.1.33 added 2.3.2018
+			''reflectOnUnmount''   : ''Alle Ãnderungen werden nicht angewendet bis dieses Volume entfernt wird.'', // from v2.1.33 added 2.3.2018
+			''unmountChildren'' : ''Die folgenden DatentrÃ¤ger, die auf diesem DatentrÃ¤ger eingehÃ¤ngt sind, werden ebenfalls ausgehÃ¤ngt. Sicher dass alle aushÃ¤ngt werden sollen?'', // from v2.1.33 added 5.3.2018
+			''selectionInfo''   : ''Auswahl Info'', // from v2.1.33 added 7.3.2018
+			''hashChecker''     : ''Datei-Hash-Algorithmen'', // from v2.1.33 added 10.3.2018
+			''infoItems''       : ''Info-Elemente (Auswahl-Info-Panel)'', // from v2.1.38 added 28.3.2018
+			''pressAgainToExit'': ''DrÃ¼cken Sie erneut, um zu beenden.'', // from v2.1.38 added 1.4.2018
+			''toolbar''         : ''Symbolleiste'', // from v2.1.38 added 4.4.2018
+			''workspace''       : ''Arbeitsplatz'', // from v2.1.38 added 4.4.2018
+			''dialog''          : ''Dialog'', // from v2.1.38 added 4.4.2018
+			''all''             : ''Alle'', // from v2.1.38 added 4.4.2018
+			''iconSize''        : ''IcongrÃ¶Ãe (Symbolansicht)'', // form v2.1.39 added 7.5.2018
+			''editorMaximized'' : ''Ãffne Editorfenster in voller GrÃ¶Ãe'', // from v2.1.40 added 30.6.2018
+			''editorConvNoApi'' : ''Aktuell keine API zur Bearbeitung verfÃ¼gbar, bitte auf Webseite bearbeiten'', //from v2.1.40 added 13.12.2019
+			''editorConvNeedUpload'' : ''Um zu speichern nach der Bearbeitung Element entweder mit URL hochladen oder mit herunter geladener Datei'', // from v2.1.40 added 13.12.2019
+			''convertOn''       : ''Bearbeiten auf Seite $1'', // from v2.1.40 added 13.12.2019
+			''integrations''    : ''Integrationen'', // from v2.1.40 added 13.12.2019
+			''integrationWith'' : ''Diese Software hat folgende externe Dienste integriert. Vor Anwendung bitte die jeweiligen Nutzungsbedingungen usw. beachten'', // from v2.1.40 added 13.12.2019
+			''showHidden''      : ''Zeige versteckte Elemente'', // from v2.1.41 added 13.12.2019
+			''hideHidden''      : ''Verberge versteckte Elemente'', // from v2.1.41 added 13.12.2019
+			''toggleHidden''    : ''Zeige/Verberge versteckte Elemente'', // from v2.1.41 added 13.12.2019
+			''makefileTypes''   : ''Dateiarten bei "Neue Datei" aktivieren'', // from v2.1.41 added 13.12.2019
+			''typeOfTextfile''  : ''Art der Textdatei'', // from v2.1.41 added 13.12.2019
+			''add''             : ''Neu'', // from v2.1.41 added 13.12.2019
+			''theme''           : ''Thema'', // from v2.1.43 added 13.12.2019
+			''default''         : ''Standard'', // from v2.1.43 added 13.12.2019
+			''description''     : ''Beschreibung'', // from v2.1.43 added 13.12.2019
+			''website''         : ''Webseite'', // from v2.1.43 added 13.12.2019
+			''author''          : ''Autor'', // from v2.1.43 added 13.12.2019
+			''email''           : ''Email'', // from v2.1.43 added 13.12.2019
+			''license''         : ''Lizenz'', // from v2.1.43 added 13.12.2019
+			''exportToSave''    : ''Dieses Element kann nicht gespeichert werden. Um Ãnderungen nicht zu verlieren, muss es auf den lokalen PC exportiert werden'', // from v2.1.44 added 13.12.2019
+			''dblclickToSelect'': ''Doppelt auf Datei klicken um auszuwÃ¤hlen'', // from v2.1.47 added 13.12.2019
+			''useFullscreen''   : ''Gesamter Bildschirm'', // from v2.1.47 added 13.12.2019
 
 			/********************************** mimetypes **********************************/
 			''kindUnknown''     : ''Unbekannt'',
+			''kindRoot''        : ''Stammverzeichnis'', // from v2.1.16 added 16.10.2016
 			''kindFolder''      : ''Ordner'',
+			''kindSelects''     : ''Auswahlkriterien'', // from v2.1.29 added 29.8.2017
 			''kindAlias''       : ''VerknÃ¼pfung'',
 			''kindAliasBroken'' : ''Defekte VerknÃ¼pfung'',
 			// applications
 			''kindApp''         : ''Programm'',
 			''kindPostscript''  : ''Postscript-Dokument'',
-			''kindMsOffice''    : ''Microsoft Office-Dokument'',
-			''kindMsWord''      : ''Microsoft Word-Dokument'',
-			''kindMsExcel''     : ''Microsoft Excel-Dokument'',
-			''kindMsPP''        : ''Microsoft Powerpoint-PrÃ¤sentation'',
+			''kindMsOffice''    : ''MS Office-Dokument'',
+			''kindMsWord''      : ''MS Word-Dokument'',
+			''kindMsExcel''     : ''MS Excel-Dokument'',
+			''kindMsPP''        : ''MS Powerpoint-PrÃ¤sentation'',
 			''kindOO''          : ''Open Office-Dokument'',
-			''kindAppFlash''    : ''Flash-Programm'',
+			''kindAppFlash''    : ''Flash'',
 			''kindPDF''         : ''Portables Dokumentenformat (PDF)'',
 			''kindTorrent''     : ''Bittorrent-Datei'',
 			''kind7z''          : ''7z-Archiv'',
@@ -406,7 +531,7 @@ jsi18nelfinderdeJsContent
 			''kindText''        : ''Text-Dokument'',
 			''kindTextPlain''   : ''Text-Dokument'',
 			''kindPHP''         : ''PHP-Quelltext'',
-			''kindCSS''         : ''Cascading Stylesheet'',
+			''kindCSS''         : ''CSS Stilvorlage'',
 			''kindHTML''        : ''HTML-Dokument'',
 			''kindJS''          : ''Javascript-Quelltext'',
 			''kindRTF''         : ''Formatierte Textdatei'',
@@ -422,9 +547,9 @@ jsi18nelfinderdeJsContent
 			''kindSQL''         : ''SQL-Quelltext'',
 			''kindXML''         : ''XML-Dokument'',
 			''kindAWK''         : ''AWK-Quelltext'',
-			''kindCSV''         : ''Komma-separierte Daten'',
+			''kindCSV''         : ''Kommagetrennte Daten'',
 			''kindDOCBOOK''     : ''Docbook XML-Dokument'',
-                        ''kindMarkdown''    : ''Markdown-Text'',
+			''kindMarkdown''    : ''Markdown-Text'', // added 20.7.2015
 			// images
 			''kindImage''       : ''Bild'',
 			''kindBMP''         : ''Bitmap-Bild'',
@@ -445,15 +570,15 @@ jsi18nelfinderdeJsContent
 			''kindAudioWAV''    : ''WAV Audio'',
 			''AudioPlaylist''   : ''MP3-Playlist'',
 			''kindVideo''       : ''Videodatei'',
-			''kindVideoDV''     : ''DV-Film'',
-			''kindVideoMPEG''   : ''MPEG-Film'',
-			''kindVideoMPEG4''  : ''MPEG4-Film'',
-			''kindVideoAVI''    : ''AVI-Film'',
-			''kindVideoMOV''    : ''QuickTime-Film'',
-			''kindVideoWM''     : ''Windows Media-Film'',
-			''kindVideoFlash''  : ''Flash-Film'',
-			''kindVideoMKV''    : ''Matroska-Film'',
-			''kindVideoOGG''    : ''Ogg-Film''
+			''kindVideoDV''     : ''DV Film'',
+			''kindVideoMPEG''   : ''MPEG Film'',
+			''kindVideoMPEG4''  : ''MPEG4 Film'',
+			''kindVideoAVI''    : ''AVI Film'',
+			''kindVideoMOV''    : ''QuickTime Film'',
+			''kindVideoWM''     : ''Windows Media Film'',
+			''kindVideoFlash''  : ''Flash Film'',
+			''kindVideoMKV''    : ''Matroska Film'',
+			''kindVideoOGG''    : ''Ogg Film''
 		}
 	};
 }));

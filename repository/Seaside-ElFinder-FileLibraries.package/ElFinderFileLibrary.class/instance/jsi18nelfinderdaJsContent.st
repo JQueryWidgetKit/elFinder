@@ -117,7 +117,7 @@ jsi18nelfinderdaJsContent
 			''cmdhome''      : ''Hjem'',
 			''cmdinfo''      : ''Information'',
 			''cmdmkdir''     : ''Ny mappe'',
-			''cmdmkfile''    : ''Ny tekst fil'',
+			''cmdmkfile''    : ''Ny fil'',
 			''cmdopen''      : ''Ãben'',
 			''cmdpaste''     : ''IndsÃ¦t'',
 			''cmdquicklook'' : ''Vis'',

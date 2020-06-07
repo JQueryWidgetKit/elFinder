@@ -1,0 +1,3 @@
+seaside
+jsExtrasSelectors
+  ^ #(#'jsextraseditorsdefaultminJs' #'jsextrasquicklookgoogledocsminJs')

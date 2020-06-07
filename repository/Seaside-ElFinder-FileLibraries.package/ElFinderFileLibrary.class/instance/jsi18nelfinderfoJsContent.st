@@ -122,7 +122,7 @@ jsi18nelfinderfoJsContent
 			''cmdhome''      : ''Heim'',
 			''cmdinfo''      : ''FÃ¡ upplÃ½singar'',
 			''cmdmkdir''     : ''NÃ½ggja mappu'',
-			''cmdmkfile''    : ''NÃ½ggja tekst fÃ­lu'',
+			''cmdmkfile''    : ''NÃ½ggja fÃ­lu'',
 			''cmdopen''      : ''Opna'',
 			''cmdpaste''     : ''Set inn'',
 			''cmdquicklook'' : ''ForsÃ½ning'',
