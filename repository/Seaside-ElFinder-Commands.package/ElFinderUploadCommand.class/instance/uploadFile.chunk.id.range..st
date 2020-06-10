@@ -22,11 +22,12 @@ uploadFile: file chunk: chunk id: chunkId range: range
     ifFalse: [ connector uploadTempDirectory oldFileNamed: fileName ].
   uploadFile
     binary;
-    position: uploadFile fileSize;
+    position: rangeStart;
     nextPutAllBytes: file rawContents;
-    close.
-  payload at: 'added' ifAbsentPut: [ OrderedCollection new ].
+    close.	"uploadFile fileSize"
   partNumber == partTotal
     ifTrue: [ 
       "Move into place"
-      self moveFile: uploadFile toDirectory: target ]
+      self moveFile: uploadFile toDirectory: target.
+      (payload at: 'added' ifAbsentPut: [ OrderedCollection new ])
+        add: (target childNamed: file fileName) ]

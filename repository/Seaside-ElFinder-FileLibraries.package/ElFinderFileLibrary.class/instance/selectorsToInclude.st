@@ -1,4 +1,3 @@
 seaside
 selectorsToInclude
-  ^ self cssSelectors , self jsCoreSelectors , self jsExtrasSelectors
-    , self jsWorkerSelectors , self jsProxySelectors
+  ^ self cssSelectors , self jsCoreSelectors

@@ -1,3 +1,3 @@
 seaside
 jsCoreSelectors
-  ^ #(#'maindefaultJs' #'jselfinderminJs')
+  ^ #(#'maindefaultJs' #'jselfinderfullJs')

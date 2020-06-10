@@ -12,5 +12,6 @@ handleRequest: request response: response
     on: Error
     do: [ :ex | 
       exception := ex.
+      self respondWith: (self serverError: ex greaseString) response: response.
       ex pass ] ]
     timeToRun

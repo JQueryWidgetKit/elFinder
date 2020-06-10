@@ -1,10 +1,19 @@
 request handling
 handleRequest
-  | name |
-  (arguments at: 'target')
-    ifNotNil: [ :targetHash | target := self find: targetHash ].
-  name := arguments at: 'name'.
-  target fileDirectory createDirectory: name.
-  (payload at: 'added' ifAbsentPut: [ OrderedCollection new ])
-    add: (target childNamed: name)	" (arguments at: 'dirs')
-    do: [ :directoryToCreate | target asFileDirectory forceNewDirectoryNamed: (arguments at: 'name') ]"
+  | dirs hashes |
+  target := self find: (arguments at: 'target').	"Single Directory Created"
+  arguments
+    at: 'name'
+    ifPresent: [ :name | 
+      "Create Single Directory"
+      target fileDirectory createDirectory: name.
+      (payload at: 'added' ifAbsentPut: [ OrderedCollection new ])
+        add: (target childNamed: name).
+      ^ self ].
+  (dirs := arguments at: 'dirs')
+    do: [ :directoryToCreate | 
+      "Multiple Directories Created - array of new directories path (requests at pre-flight of folder upload)"
+      target fileDirectory forceNewDirectoryNamed: directoryToCreate allButFirst ].	"If multiple dirs were created, return their hashes"
+  hashes := payload at: 'hashes' ifAbsentPut: [ GRSmallDictionary new ].
+  dirs
+    do: [ :dir | hashes at: dir put: (self findPath: dir inTarget: target) hash ]
