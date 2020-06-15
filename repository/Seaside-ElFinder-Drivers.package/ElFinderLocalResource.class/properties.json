@@ -6,7 +6,9 @@
 		 ],
 	"commentStamp" : "jupiter 12/28/2016 16:43",
 	"instvars" : [
-		"directoryEntry" ],
+		"directoryEntry",
+		"canRead",
+		"canWrite" ],
 	"name" : "ElFinderLocalResource",
 	"pools" : [
 		 ],

@@ -2,9 +2,12 @@
 	"class" : {
 		"parent:directoryEntry:" : "jupiter 12/27/2016 15:57" },
 	"instance" : {
+		"canRead:" : "jupiter 06/15/2020 22:30",
+		"canWrite:" : "jupiter 06/15/2020 22:30",
 		"childNamed:" : "jupiter 01/03/2017 23:21",
 		"directoryEntry:" : "jupiter 01/04/2017 16:33",
 		"driverId" : "jupiter 12/27/2016 17:37",
+		"initialize" : "jupiter 06/15/2020 22:28",
 		"locked" : "jupiter 12/28/2016 19:15",
 		"mime" : "jupiter 12/28/2016 17:11",
 		"mimeType" : "jupiter 01/03/2017 14:39",
@@ -14,10 +17,10 @@
 		"pathRelativeToRootVolume" : "jupiter 12/28/2016 14:49",
 		"printOn:" : "jupiter 06/10/2020 14:28",
 		"printString" : "jupiter 06/10/2020 14:27",
-		"read" : "jupiter 12/28/2016 19:15",
+		"read" : "jupiter 06/15/2020 22:29",
 		"rootVolume" : "jupiter 12/27/2016 17:49",
 		"size" : "jupiter 01/04/2017 21:06",
 		"stat" : "jupiter 12/28/2016 19:15",
 		"ts" : "jupiter 12/28/2016 18:43",
 		"volumeId" : "jupiter 12/27/2016 17:55",
-		"write" : "jupiter 12/28/2016 19:15" } }
+		"write" : "jupiter 06/15/2020 22:29" } }

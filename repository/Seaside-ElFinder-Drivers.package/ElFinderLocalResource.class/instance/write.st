@@ -2,4 +2,6 @@ options - permissions
 write
   "(Number) 1 - is writable, 0 - is not"
 
+  canWrite
+    ifFalse: [ ^ 0 ].
   ^ 1
