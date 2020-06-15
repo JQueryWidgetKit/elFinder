@@ -2,6 +2,5 @@
 	"class" : {
 		"commands" : "jupiter 01/05/2017 01:04" },
 	"instance" : {
-		"findPath:inTarget:" : "jupiter 06/09/2020 16:07",
 		"handleRequest" : "jupiter 06/10/2020 11:23",
 		"requestArguments" : "jupiter 01/05/2017 01:05" } }
