@@ -1,5 +1,5 @@
 accessing arguments
 uploadPathAt: index
-  ^ (arguments at: 'uploadPath')
+  ^ (arguments at: 'upload_path')
     ifEmpty: [ nil ]
     ifNotEmpty: [ :uploadPath | uploadPath at: index ]

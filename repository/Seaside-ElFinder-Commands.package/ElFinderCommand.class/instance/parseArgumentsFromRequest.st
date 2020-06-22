@@ -7,7 +7,8 @@ parseArgumentsFromRequest
           (request at: argument ifAbsent: [ nil ])
             ifNotNil: [ :argumentString | arguments at: argument put: (self coerce: argumentString toClass: class) ] ]
         ifTrue: [ 
-          | array "Deal with the weird way elFinder sends arrays" |
+          | array |
+          "Deal with the weird way elFinder sends arrays. Also the edge case where the array is actually not an array, just a string"
           arguments at: argument put: (array := OrderedCollection new).
           request fields keys
             withIndexDo: [ :key :index | 

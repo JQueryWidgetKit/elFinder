@@ -1,7 +1,7 @@
 request handling
 targetDirectoryForFilePath: filePath index: index
   ^ (self uploadPathAt: index)
-    ifNotNil: [ :uploadPath | self findPath: uploadPath inTarget: target ]
+    ifNotNil: [ :uploadPath | self find: uploadPath ]
     ifNil: [ 
       filePath
         ifEmpty: [ nil ]

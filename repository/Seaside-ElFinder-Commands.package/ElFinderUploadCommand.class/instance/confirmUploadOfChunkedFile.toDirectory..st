@@ -1,4 +1,4 @@
 response
-confirmUploadOfChunkedFile: file toDirectory: targetDirectory
-  payload at: '_chunkmerged' put: file fileName.
-  payload at: '_name' put: file fileName
+confirmUploadOfChunkedFile: fileName toDirectory: targetDirectory
+  payload at: '_chunkmerged' put: fileName.
+  payload at: '_name' put: fileName

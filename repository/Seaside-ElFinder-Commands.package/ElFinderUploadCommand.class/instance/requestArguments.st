@@ -12,7 +12,7 @@ hashes[hash] : array of hash: filename pairs"
   ^ Dictionary new
     at: 'target' put: String;
     at: 'upload' put: Array;
-    at: 'uploadPath' put: Array;
+    at: 'upload_path' put: Array;
     at: 'mtime' put: Array;
     at: 'renames' put: Array;
     at: 'sufix' put: String;

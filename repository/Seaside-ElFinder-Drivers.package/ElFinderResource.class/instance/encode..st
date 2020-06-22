@@ -1,6 +1,9 @@
 base64 codec
 encode: aString
-  ^ ((((Base64MimeConverter mimeEncode: aString readStream) contents
-    copyReplaceAll: '/'
-    with: '_') copyReplaceAll: '+' with: '-') copyReplaceAll: '=' with: '.')
-    trimRight: [ :char | char = $. ]
+  | encoder |
+  encoder := ZnBase64Encoder new
+    breakLinesAt: 400;
+    yourself.
+  ^ ((((encoder encode: aString asByteArray) copyReplaceAll: '/' with: '_')
+    copyReplaceAll: '+'
+    with: '-') copyReplaceAll: '=' with: '.') trimRight: [ :char | char = $. ]
