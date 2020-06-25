@@ -8,7 +8,8 @@
 	"instvars" : [
 		"directoryEntry",
 		"canRead",
-		"canWrite" ],
+		"canWrite",
+		"locked" ],
 	"name" : "ElFinderLocalResource",
 	"pools" : [
 		 ],
