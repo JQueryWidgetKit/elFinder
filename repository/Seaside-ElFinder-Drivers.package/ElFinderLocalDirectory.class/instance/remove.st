@@ -1,3 +1,3 @@
 actions
 remove
-  directoryEntry sourceDirectory deleteDirectory: self name
+  directoryEntry asFileDirectory recursiveDelete
