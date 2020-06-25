@@ -8,7 +8,8 @@
 	"instvars" : [
 		"id",
 		"osPath",
-		"url" ],
+		"url",
+		"readOnlyFileSystem" ],
 	"name" : "ElFinderLocalFileSystem",
 	"pools" : [
 		 ],

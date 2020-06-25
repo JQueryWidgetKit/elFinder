@@ -2,6 +2,6 @@ options - permissions
 write
   "(Number) 1 - is writable, 0 - is not"
 
-  canWrite
-    ifFalse: [ ^ 0 ].
-  ^ 1
+  ^ (self fileSystem readOnlyFileSystem not and: [ canWrite ])
+    ifTrue: [ 1 ]
+    ifFalse: [ 0 ]
