@@ -4,10 +4,10 @@
 	"instance" : {
 		"canRead:" : "jupiter 06/15/2020 22:30",
 		"canWrite:" : "jupiter 06/15/2020 22:30",
-		"childNamed:" : "jupiter 01/03/2017 23:21",
 		"deHash" : "jupiter 06/23/2020 11:40",
 		"directoryEntry:" : "jupiter 01/04/2017 16:33",
 		"driverId" : "jupiter 12/27/2016 17:37",
+		"fullPath" : "jupiter 06/30/2020 07:10",
 		"hash" : "jupiter 06/23/2020 11:41",
 		"initialize" : "jupiter 06/25/2020 20:14",
 		"locked" : "jupiter 06/25/2020 20:48",
