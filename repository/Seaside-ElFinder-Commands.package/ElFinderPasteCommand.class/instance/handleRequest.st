@@ -4,7 +4,7 @@ handleRequest
   destination := self find: (arguments at: 'dst').
   isMove := arguments at: 'cut'.
   (arguments at: 'targets')
-    do: [ :hashToMoveOrCopy | 
+    withIndexDo: [ :hashToMoveOrCopy :index | 
       (self find: hashToMoveOrCopy)
         ifNotNil: [ :fileDirectoryToMoveOrCopy | 
           isMove
