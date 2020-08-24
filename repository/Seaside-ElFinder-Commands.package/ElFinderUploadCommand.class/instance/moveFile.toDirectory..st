@@ -1,7 +1,8 @@
 request handling
 moveFile: uploadFile toDirectory: targetDirectory
   | targetFile |
-  targetFile := targetDirectory fileDirectory newFileNamed: uploadFile localName.
+  targetFile := targetDirectory fileDirectory
+    forceNewFileNamed: uploadFile localName.
   uploadFile
     reopen;
     rewind.
